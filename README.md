@@ -59,6 +59,21 @@ Você pode editar as páginas na pasta `app/`. As páginas atulizam automaticame
 
 ## Requisitos Funcionais
 
+> Legenda:
+> | code| descrição |
+> | :-- | :-------- |
+> | RF xxx | Requerimento Funcional |
+> | RNF xxx | Requerimento Não-Funcional |
+>
+> | status | descrição            |
+> | :----: | :------------------- |
+> |   ▪️   | Não Iniciado         |
+> |   🚧   | Em Desenvolvimento   |
+> |   ✅   | Feito                |
+> |   ❌   | Erro / Incompleto    |
+> |   ⚠️   | Aviso / Experimental |
+> |   🚀   | Pronto pra uso       |
+
 | code   | descrição                                           | prioridade | status |
 | :----- | :-------------------------------------------------- | :--------: | :----: |
 | RF 001 | Criar e autenticar usuários                         |    N/A     |   🚧   |

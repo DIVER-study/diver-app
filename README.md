@@ -10,6 +10,7 @@
 	- [Como desenvolver](#como-desenvolver)
 	- [Requisitos Funcionais](#requisitos-funcionais)
 	- [Requisitos Não-Funcionais](#requisitos-não-funcionais)
+	- [História do Usuário](#história-do-usuário)
 
 ## Sobre
 
@@ -109,3 +110,5 @@ Você pode editar as páginas na pasta `app/`. As páginas atulizam automaticame
 | RNF 006 | O sistema deve garantir proteção aos dados dos usuários         |    N/A     |   ▪️   |
 | RNF 007 | Existência de backup dos dados                                  |    N/A     |   ▪️   |
 | RNF 008 | Autenticação de usuário                                         |    N/A     |   🚧   |
+
+## [História do Usuário](/USER-STORY.md)

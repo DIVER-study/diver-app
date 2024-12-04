@@ -8,9 +8,7 @@
 	- [Nossa Equipe](#nossa-equipe)
 	- [Tecnologias](#tecnologias)
 	- [Como desenvolver](#como-desenvolver)
-	- [Requisitos Funcionais](#requisitos-funcionais)
-	- [Requisitos Não-Funcionais](#requisitos-não-funcionais)
-	- [História do Usuário](#história-do-usuário)
+	- [Requisitos Funcionais e Não-Funcionais](#requisitos-funcionais-e-não-funcionais)
 
 ## Sobre
 
@@ -48,6 +46,18 @@ Clone esse repositório localmente:
 git clone https://github.com/DIVER-study/diver-app.git
 ```
 
+Configure o ambiente:
+
+crie um arquivo com nome: `.env.local`<br/>
+_recomendado que tenha ativada a opção "mostrar arquivos ocultos" do explorer_
+
+Dentro do `.env.local`:
+```env
+NEXT_PUBLIC_SUPABASE_URL=<url-publico-do-projeto-no-supabase>
+NEXT_PUBLIC_SUPABASE_ANON_KEY=<chave-anonima-do-supabase>
+```
+> Pegue as chaves secretas com um dos devs
+
 Em seguida instale os pacotes do projeto:
 
 ```bash
@@ -78,58 +88,6 @@ Abra [http://localhost:3000](http://localhost:3000) no seu navegador e veja o re
 
 Você pode editar as páginas na pasta `app/`. As páginas atulizam automaticamente conforme você as edita.
 
-## Requisitos Funcionais
+## Requisitos Funcionais e Não-Funcionais
 
-> Legenda:
-> | code| descrição |
-> | :-- | :-------- |
-> | RF xxx | Requerimento Funcional |
-> | RNF xxx | Requerimento Não-Funcional |
->
-> | status | descrição            |
-> | :----: | :------------------- |
-> |   ▪️   | Não Iniciado         |
-> |   🚧   | Em Desenvolvimento   |
-> |   ✅   | Feito                |
-> |   ❌   | Erro / Incompleto    |
-> |   ⚠️   | Aviso / Experimental |
-> |   🚀   | Pronto pra uso       |
-
-| code   | descrição                                           | prioridade | status |
-| :----- | :-------------------------------------------------- | :--------: | :----: |
-| RF 001 | Cadastrar usuários                                  |    N/A     |   🚧    |
-| RF 002 | Autenticar usuários                                 |    N/A     |   🚧    |
-| RF 003 | Adicionar e exibir ranking de alunos                |    N/A     |   ▪️    |
-| RF 004 | Adicionar e exibir exercícios interativos           |    N/A     |   ▪️    |
-| RF 005 | Adicionar e exibir sistema de conquistas            |    N/A     |   ▪️    |
-| RF 006 | Adicionar e exibir sistema de pontuação             |    N/A     |   ▪️    |
-| RF 007 | Adicionar e exibir histórico de atividades          |    N/A     |   ▪️    |
-| RF 008 | Atribuição de tarefas e exercícios                  |    N/A     |   ▪️    |
-| RF 009 | Adicionar e exibir feedback dos professores         |    N/A     |   ▪️    |
-| RF 010 | Adicionar e exibir notificações e alertas           |    N/A     |   ▪️    |
-| RF 011 | Adicionar e exibir dashboard de administração       |    N/A     |   ▪️    |
-| RF 012 | Adicionar controle de progresso do aluno            |    N/A     |   ▪️    |
-| RF 013 | Adicionar gestão de conteúdos de ensino             |    N/A     |   ▪️    |
-| RF 014 | Adicionar suporte ao aluno em dispositivos móveis   |    N/A     |   ▪️    |
-| RF 015 | Adicionar e exibir tutorial inicial                 |    N/A     |   ▪️    |
-| RF 016 | Adicionar e exibir relatórios e análises            |    N/A     |   ▪️    |
-| RF 017 | Adicionar suporte do conteúdo                       |    N/A     |   ▪️    |
-| RF 018 | Adicionar e exibir correções das tarefas dos alunos |    N/A     |   ▪️    |
-| RF 019 | Adicionar biblioteca de recursos/materiais/vídeos   |    N/A     |   ▪️    |
-| RF 020 | Adicionar modularzação do conteúdo                  |    N/A     |   ▪️    |
-| RF 021 | Gerenciar os perfis dos usuários                    |    N/A     |   ▪️    |
-
-## Requisitos Não-Funcionais
-
-| code    | descrição                                                       | prioridade | status |
-| :------ | :-------------------------------------------------------------- | :--------: | :----: |
-| RNF 001 | O sistema deve suportar mais de um usuário ao mesmo tempo       |    N/A     |   ▪️    |
-| RNF 002 | O sistema deve ser protegido por autenticação usando senha      |    N/A     |   ▪️    |
-| RNF 003 | A aplicação deve ser funcional em dispositivos móveis           |    N/A     |   ▪️    |
-| RNF 004 | O sistema deve ser compatível com navegadores populares         |    N/A     |   ▪️    |
-| RNF 005 | O código deve ser organizado e comentado, para fácil manutenção |    N/A     |   ▪️    |
-| RNF 006 | O sistema deve garantir proteção aos dados dos usuários         |    N/A     |   ▪️    |
-| RNF 007 | Existência de backup dos dados                                  |    N/A     |   ▪️    |
-| RNF 008 | Autenticação de usuário                                         |    N/A     |   🚧    |
-
-## [História do Usuário](/USER-STORY.md)
+Acesse a tabela nesse link: [Tabela de Requisitos](https://royal-deal-c64.notion.site/Tabela-de-requisitos-151da11da8b18085b76bcd3c85f80c29)

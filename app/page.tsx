@@ -1,3 +1,4 @@
+import LogOutButton from '@/components/LogOut';
 import { createClient } from '@/utils/supabase/server';
 
 export default async function Home() {
@@ -15,6 +16,9 @@ export default async function Home() {
       </div>
       <div className='mx-auto text-xl font-poppins font-medium text-orange-400/80 text-center mt-12'>
         {data.user ? data.user.user_metadata.email : ''}
+      </div>
+      <div className="mx-auto text-xl font-poppins font-medium text-center mt-12">
+        <LogOutButton />
       </div>
     </div>
   );

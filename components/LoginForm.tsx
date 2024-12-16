@@ -1,59 +1,42 @@
 'use client';
 
-import { createClient } from '@/utils/supabase/client';
+import { signInWithPassword, signUpWithPassword } from '@/app/login/actions';
 import { redirect } from 'next/navigation';
 import { toast } from 'sonner';
 
 function LoginForm() {
   const login = async (formData: FormData) => {
-    toast.loading('Signing In...', {
+    toast.loading('Entrando...', {
+      dismissible: true,
       id: 'loading-toast',
     });
 
-    const supabase = createClient();
+    const { data, error } = await signInWithPassword(formData);
 
-    const data = {
-      email: formData.get('email') as string,
-      password: formData.get('password') as string,
-    };
+    if (data || error) toast.dismiss('loading-toast');
 
-    const { error } = await supabase.auth.signInWithPassword(data);
-
-    if (error) {
-      toast.error(`Error: ${error.message}`);
-      toast.dismiss('loading-toast');
-    } else {
-      toast.success('Signed In Successfuly');
-      toast.dismiss('loading-toast');
+    if (error) toast.error(`Erro: ${error.message}`);
+    else {
+      toast.success(`Boas Vindas! ${data.user.user_metadata.email}`);
       redirect('/');
     }
   };
 
   const signup = async (formData: FormData) => {
-    toast.loading('Signing Up...', {
+    toast.loading('Cadastrando...', {
+      dismissible: true,
       id: 'loading-toast',
     });
 
-    const supabase = createClient();
+    const { data, error } = await signUpWithPassword(formData);
 
-    const data = {
-      email: formData.get('email') as string,
-      password: formData.get('password') as string,
-    };
+    if (data || error) toast.dismiss('loading-toast');
 
-    const { error } = await supabase.auth.signUp(data);
-
-    if (error) {
-      toast.error(`Error: ${error.message}`);
-      toast.dismiss('loading-toast');
-    } else {
-      toast.success('Signed Up Successfuly');
-      toast.dismiss('loading-toast');
-      toast('Verifique seu email para confirmar seu usuário', {
-        dismissible: true,
-        duration: 4000,
-      });
-    }
+    if (error) toast.error(`Erro: ${error.message}`);
+    else
+      toast.success(
+        `Boas Vindas! ${data.user?.user_metadata.email}. Verifique sua caixa de email para confirmar seu login!`
+      );
   };
 
   return (

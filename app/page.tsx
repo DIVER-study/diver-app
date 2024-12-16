@@ -17,7 +17,7 @@ export default async function Home() {
       <div className='mx-auto text-xl font-poppins font-medium text-orange-400/80 text-center mt-12'>
         {data.user ? data.user.user_metadata.email : ''}
       </div>
-      <div className="mx-auto text-xl font-poppins font-medium text-center mt-12">
+      <div className='mx-auto text-xl font-poppins font-medium text-center mt-12'>
         <LogOutButton />
       </div>
     </div>

@@ -14,12 +14,12 @@ export default function LogOutButton() {
 
     const { error } = await supabase.auth.signOut();
 
+    toast.dismiss('loading-toast');
+
     if (error) {
       toast.error(`Error ${error.code}; ${error.message}`);
-      toast.dismiss('loading-toast');
     } else {
       toast.success('Signed Out Successfuly');
-      toast.dismiss('loading-toast');
       redirect('/login');
     }
   };
@@ -27,7 +27,8 @@ export default function LogOutButton() {
   return (
     <button
       onClick={logOut}
-      className='p-2 mt-4 text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500'>
+      className="p-2 mt-4 text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+    >
       Log Out
     </button>
   );

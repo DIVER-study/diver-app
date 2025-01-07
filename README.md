@@ -1,18 +1,24 @@
-![logo](/public/Logo.png)
-
 # Diver App (nome a ser decidido)
 
+![logo](/public/Logo.png)
+
+<!--toc:start-->
+
 - [Diver App (nome a ser decidido)](#diver-app-nome-a-ser-decidido)
-	- [Sobre](#sobre)
-	- [Mockups (WIP)](#mockups-wip)
-	- [Nossa Equipe](#nossa-equipe)
-	- [Tecnologias](#tecnologias)
-	- [Como desenvolver](#como-desenvolver)
-	- [Requisitos Funcionais e Não-Funcionais](#requisitos-funcionais-e-não-funcionais)
+  - [Sobre](#sobre)
+  - [Mockups (WIP)](#mockups-wip)
+  - [Nossa Equipe](#nossa-equipe)
+  - [Tecnologias](#tecnologias)
+  - [Como desenvolver](#como-desenvolver)
+  - [Requisitos Funcionais e Não-Funcionais](#requisitos-funcionais-e-não-funcionais)
+  <!--toc:end-->
 
 ## Sobre
 
-Nosso projeto tem a intenção de ajudar alunos que estão estudando os conceitos de Teoria Sociocultural e estejam com dificuldades na cadeira de Cognição e suas Tecnologias Digitais. A plataforma funcionará como uma atividade interativa e gamificada, trazendo um conteúdo mais fácil e rápido de digerir aos poucos.
+Nosso projeto tem a intenção de ajudar alunos que estão estudando os conceitos de
+Teoria Sociocultural e estejam com dificuldades na cadeira de Cognição e suas
+Tecnologias Digitais. A plataforma funcionará como uma atividade interativa e
+gamificada, trazendo um conteúdo mais fácil e rápido de digerir aos poucos.
 
 ## Mockups (WIP)
 
@@ -30,15 +36,15 @@ Nosso projeto tem a intenção de ajudar alunos que estão estudando os conceito
 
 ## Tecnologias
 
--   Node.js
--   Next.js
--   Typescript
--   Supabase
--   Tailwindcss
+- Node.js
+- Next.js
+- Typescript
+- Supabase
+- Tailwindcss
 
 ## Como desenvolver
 
-Tenha certeza de ter o [Node.js](https://nodejs.org/en/download) instalado em seu computador.
+Tenha certeza de ter o [Node.js](https://nodejs.org/en/download) instalado.
 
 Clone esse repositório localmente:
 
@@ -46,17 +52,26 @@ Clone esse repositório localmente:
 git clone https://github.com/DIVER-study/diver-app.git
 ```
 
+> OBS: A branch mais atualizada do repositório é a [main](https://github.com/DIVER-study/diver-app/tree/main)
+
 Configure o ambiente:
 
-crie um arquivo com nome: `.env.local`<br/>
-_recomendado que tenha ativada a opção "mostrar arquivos ocultos" do explorer_
+crie um arquivo com nome: `.env.local`
+
+> Recomendado que tenha ativada as opções 'mostrar arquivos ocultos' e
+> 'mostar extensõe de arquivos' do explorer
 
 Dentro do `.env.local`:
-```env
-NEXT_PUBLIC_SUPABASE_URL=<url-publico-do-projeto-no-supabase>
-NEXT_PUBLIC_SUPABASE_ANON_KEY=<chave-anonima-do-supabase>
+
+```dotenv
+NEXT_PUBLIC_SUPABASE_URL=url-publico-do-projeto-no-supabase
+NEXT_PUBLIC_SUPABASE_ANON_KEY=chave-anonima-do-supabase
 ```
+
 > Pegue as chaves secretas com um dos devs
+> Como o projeto ainda está em desenvolvimento,
+> voce pode criar uma conta com um projeto vazio no [Supabase](https://supabase.com/)
+> e utilizar as chaves do projeto criado
 
 Em seguida instale os pacotes do projeto:
 
@@ -70,23 +85,31 @@ pnpm install
 bun install
 ```
 
-Isso é um projeto [Next.js](https://nextjs.org) criado com [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+> Apesar das opções do npm, pnpm, e bun estarem listadas,
+> Nosso projeto utiliza o [yarn](https://yarnpkg.com/getting-started/install)
+> e recomendamos que faça o mesmo.
+
+Nosso projeto utiliza [Next.js](https://nextjs.org) e foi inicializado com [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 Agora, inicialize o servidor de desenvolvimento:
 
 ```bash
 npm run dev
-# or
+# ou
 yarn dev
-# or
+# ou
 pnpm dev
-# or
+# ou
 bun dev
 ```
 
+> Apesar das opções do npm, pnpm, e bun estarem listadas,
+> Nosso projeto utiliza o [yarn](https://yarnpkg.com/getting-started/install)
+> e recomendamos que faça o mesmo.
+
 Abra [http://localhost:3000](http://localhost:3000) no seu navegador e veja o resultado.
 
-Você pode editar as páginas na pasta `app/`. As páginas atulizam automaticamente conforme você as edita.
+Você pode editar as páginas na pasta `app/`. As páginas atulizam conforme as edita.
 
 ## Requisitos Funcionais e Não-Funcionais
 

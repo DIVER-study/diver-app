@@ -1,19 +1,22 @@
-import LoginForm from '@/components/LoginForm';
+import SignupForm from '@/components/SignupForm';
 import Link from 'next/link';
+import React from 'react';
 
-export default function LoginPage() {
+function SignUpPage() {
   return (
     <div className='flex items-center justify-center h-screen bg-center bg-cover gap-2 flex-col'>
-      <LoginForm />
+      <SignupForm />
       <div className='inline-flex gap-1'>
-        Não tem uma conta?
+        Já tem uma conta?
         <Link
-          href='/register'
+          href='/login'
           className='underline text-blue-500'
         >
-          Cadastre-se!
+          Entre aqui!
         </Link>
       </div>
     </div>
   );
 }
+
+export default SignUpPage;

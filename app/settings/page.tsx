@@ -26,6 +26,8 @@ function UserSettings() {
       toast.error(`Erro: ${error.message}`);
     } else {
       toast.success('Nome de usuário modificado com sucesso!');
+      const popover = document.getElementById('change-form');
+      popover?.hidePopover();
     }
   };
 
@@ -46,8 +48,6 @@ function UserSettings() {
             className='ring-1 ring-neutral-600 col-span-2'
           />
           <button
-            popoverTarget='change-form'
-            popoverTargetAction='hide'
             formAction={changeDisplayName}
             className='bg-blue-500 hover:bg-blue-500/80 p-4'
           >

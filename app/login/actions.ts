@@ -7,23 +7,14 @@ import { type AuthResponse, type AuthTokenResponsePassword } from '@supabase/sup
 export type UserData = {
   email: string;
   password: string;
-  display_name: string;
-  avatar_url: string;
 };
 
-export async function signInWithPassword(formData: FormData): Promise<AuthTokenResponsePassword> {
+export async function signInWithPassword(userData: UserData): Promise<AuthTokenResponsePassword> {
   const supabase = await createClient();
-
-  const data = {
-    email: formData.get('email') as string,
-    password: formData.get('password') as string,
-  };
-
-  return supabase.auth.signInWithPassword(data);
+  return supabase.auth.signInWithPassword(userData);
 }
 
-export async function signUpWithPassword(userData: UserData): Promise<AuthResponse> {
+export async function signUpWithPassword(userData: UserData & { options?: object }): Promise<AuthResponse> {
   const supabase = await createClient();
-
   return supabase.auth.signUp(userData);
 }

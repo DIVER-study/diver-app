@@ -57,7 +57,7 @@ git clone https://github.com/DIVER-study/diver-app.git
 > O desenvolvimento dos requerimentos são feitos em branchs separadas
 
 <details>
-    <summary><h4>Clonar uma branch específica</h4><summary>
+    <summary><h4>Clonar uma branch específica</h4></summary>
 
     Você pode clonar uma branch específica com esse comando:
 

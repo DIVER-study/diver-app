@@ -3,7 +3,6 @@
 ![logo](/public/Logo.png)
 
 <!--toc:start-->
-
 - [Diver App (nome a ser decidido)](#diver-app-nome-a-ser-decidido)
   - [Sobre](#sobre)
   - [Mockups (WIP)](#mockups-wip)
@@ -46,6 +45,8 @@ gamificada, trazendo um conteúdo mais fácil e rápido de digerir aos poucos.
 
 Tenha certeza de ter o [Node.js](https://nodejs.org/en/download) instalado.
 
+### Repositório
+
 Clone esse repositório localmente:
 
 ```bash
@@ -55,31 +56,52 @@ git clone https://github.com/DIVER-study/diver-app.git
 > OBS: A branch mais atualizada do repositório é a [main](https://github.com/DIVER-study/diver-app/tree/main).
 > O desenvolvimento dos requerimentos são feitos em branchs separadas
 
-Você pode clonar uma branch específica com esse comando:
+<details>
+    <summary>Clonar uma branch específica<summary>
 
-```bash
-# git clone https://github.com/DIVER-study/diver-app.git -b <nome-da-branch>
-git clone https://github.com/DIVER-study/diver-app.git -b main
-```
+    Você pode clonar uma branch específica com esse comando:
 
-Configure o ambiente:
+    ```bash
+    # git clone https://github.com/DIVER-study/diver-app.git -b <nome-da-branch>
+    git clone https://github.com/DIVER-study/diver-app.git -b main
+    ```
+</details>
 
-crie um arquivo com nome: `.env.local`
+### Variáveis de ambiente
+
+Na pasta do projeto, crie um arquivo com nome: `.env.local`
 
 > Recomendado que tenha ativada as opções 'mostrar arquivos ocultos' e
-> 'mostar extensõe de arquivos' do explorer
+> 'mostar extensões de arquivos' do explorer
 
-Dentro do `.env.local`:
+Dentro do `.env.local` coloque:
 
 ```dotenv
-NEXT_PUBLIC_SUPABASE_URL=url-publico-do-projeto-no-supabase
-NEXT_PUBLIC_SUPABASE_ANON_KEY=chave-anonima-do-supabase
+NEXT_PUBLIC_SUPABASE_URL=<url-publico-do-projeto-no-supabase>
+NEXT_PUBLIC_SUPABASE_ANON_KEY=<chave-anonima-do-supabase>
 ```
 
-> Pegue as chaves secretas com um dos devs.
-> Como o projeto ainda está em desenvolvimento,
-> voce pode criar uma conta com um novo projeto no [Supabase](https://supabase.com/)
-> e utilizar as chaves do projeto criado
+> Pegue as chaves secretas com um dos devs e coloque elas nos lugares adequados.
+
+<details>
+    <summary>Como utilizar suas próprias chaves secretas</summary>
+
+Como o projeto ainda está em inicio de desenvolvimento ainda
+é possível utilizar um projeto qualquer do Supabase
+
+No site do [Supabase](https://supabase.com), faça ou entre em uma conta e crie um novo projeto.
+Preencha todos os detalhes que o supabase pedir.
+
+Com um novo projeto criado, na barra de naavegação clique em connect:
+![barra de navegação do supabase com o nome de um projeto e um botão destacado nomeado 'connect'](/.github/assets/supanav.png)
+
+Um novo popup aparecerar com novas opções.
+Procure por App Frameworks, selecione as opções de NextJS e SupabaseJS
+e suas chaves secretas estrão disponíveis.
+![janela do supabase mostrando as chaves secretas de um projeto borradas](/.github/assets/supapopup.png)
+</details>
+
+### Instalando pacotes
 
 Em seguida instale os pacotes do projeto:
 
@@ -112,6 +134,8 @@ yarn install
   ```
 
 </details>
+
+### Desenvolvendo
 
 Nosso projeto utiliza [Next.js](https://nextjs.org) e foi inicializado com [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 

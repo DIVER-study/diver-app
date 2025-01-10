@@ -52,7 +52,15 @@ Clone esse repositório localmente:
 git clone https://github.com/DIVER-study/diver-app.git
 ```
 
-> OBS: A branch mais atualizada do repositório é a [main](https://github.com/DIVER-study/diver-app/tree/main)
+> OBS: A branch mais atualizada do repositório é a [main](https://github.com/DIVER-study/diver-app/tree/main).
+> O desenvolvimento dos requerimentos são feitos em branchs separadas
+
+Você pode clonar uma branch específica com esse comando:
+
+```bash
+# git clone https://github.com/DIVER-study/diver-app.git -b <nome-da-branch>
+git clone https://github.com/DIVER-study/diver-app.git -b main
+```
 
 Configure o ambiente:
 
@@ -68,9 +76,9 @@ NEXT_PUBLIC_SUPABASE_URL=url-publico-do-projeto-no-supabase
 NEXT_PUBLIC_SUPABASE_ANON_KEY=chave-anonima-do-supabase
 ```
 
-> Pegue as chaves secretas com um dos devs
+> Pegue as chaves secretas com um dos devs.
 > Como o projeto ainda está em desenvolvimento,
-> voce pode criar uma conta com um projeto vazio no [Supabase](https://supabase.com/)
+> voce pode criar uma conta com um novo projeto no [Supabase](https://supabase.com/)
 > e utilizar as chaves do projeto criado
 
 Em seguida instale os pacotes do projeto:
@@ -79,15 +87,31 @@ Em seguida instale os pacotes do projeto:
 npm install
 # ou
 yarn install
-# ou
-pnpm install
-# ou
-bun install
 ```
 
-> Apesar das opções do npm, pnpm, e bun estarem listadas,
-> Nosso projeto utiliza o [yarn](https://yarnpkg.com/getting-started/install)
+> Apesar de npm estar no exemplo,
+> Nosso projeto utiliza o [yarn](https://yarnpkg.com/getting-started/install),
 > e recomendamos que faça o mesmo.
+
+<details>
+  <summary>Como instalar o Yarn</summary>
+
+  ```bash
+  npm i -g yarn
+  # ou se você estiver em uma distribuição linux,
+  # utilize os pacotes da sua distribuição
+
+  sudo corepack enable
+  # no windows, abra o prompt de comando como admin
+
+  # dentro da pasta do projeto
+  yarn set version berry
+  yarn install
+
+  # e aguarde
+  ```
+
+</details>
 
 Nosso projeto utiliza [Next.js](https://nextjs.org) e foi inicializado com [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
@@ -97,14 +121,10 @@ Agora, inicialize o servidor de desenvolvimento:
 npm run dev
 # ou
 yarn dev
-# ou
-pnpm dev
-# ou
-bun dev
 ```
 
-> Apesar das opções do npm, pnpm, e bun estarem listadas,
-> Nosso projeto utiliza o [yarn](https://yarnpkg.com/getting-started/install)
+> Apesar de npm estar no exemplo,
+> Nosso projeto utiliza o [yarn](https://yarnpkg.com/getting-started/install),
 > e recomendamos que faça o mesmo.
 
 Abra [http://localhost:3000](http://localhost:3000) no seu navegador e veja o resultado.

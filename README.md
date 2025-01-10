@@ -57,7 +57,7 @@ git clone https://github.com/DIVER-study/diver-app.git
 > O desenvolvimento dos requerimentos são feitos em branchs separadas
 
 <details>
-    <summary>Clonar uma branch específica<summary>
+    <summary><h4>Clonar uma branch específica</h4><summary>
 
     Você pode clonar uma branch específica com esse comando:
 
@@ -84,21 +84,22 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=<chave-anonima-do-supabase>
 > Pegue as chaves secretas com um dos devs e coloque elas nos lugares adequados.
 
 <details>
-    <summary>Como utilizar suas próprias chaves secretas</summary>
+    <summary><h4>Como utilizar suas próprias chaves secretas</h4></summary>
 
-Como o projeto ainda está em inicio de desenvolvimento ainda
-é possível utilizar um projeto qualquer do Supabase
+    Como o projeto ainda está em inicio de desenvolvimento ainda
+    é possível utilizar um projeto qualquer do Supabase
 
-No site do [Supabase](https://supabase.com), faça ou entre em uma conta e crie um novo projeto.
-Preencha todos os detalhes que o supabase pedir.
+    No site do [Supabase](https://supabase.com), faça ou entre em uma conta e crie um novo projeto.
+    Preencha todos os detalhes que o supabase pedir.
 
-Com um novo projeto criado, na barra de naavegação clique em connect:
-![barra de navegação do supabase com o nome de um projeto e um botão destacado nomeado 'connect'](/.github/assets/supanav.png)
+    Com um novo projeto criado, na barra de naavegação clique em connect:
+    ![barra de navegação do supabase com o nome de um projeto e um botão destacado nomeado 'connect'](/.github/assets/supanav.png)
 
-Um novo popup aparecerar com novas opções.
-Procure por App Frameworks, selecione as opções de NextJS e SupabaseJS
-e suas chaves secretas estrão disponíveis.
-![janela do supabase mostrando as chaves secretas de um projeto borradas](/.github/assets/supapopup.png)
+    Um novo popup aparecerar com novas opções.
+    Procure por App Frameworks, selecione as opções de NextJS e SupabaseJS
+    e suas chaves secretas estrão disponíveis.
+    ![janela do supabase mostrando as chaves secretas de um projeto borradas](/.github/assets/supapopup.png)
+
 </details>
 
 ### Instalando pacotes
@@ -116,21 +117,25 @@ yarn install
 > e recomendamos que faça o mesmo.
 
 <details>
-  <summary>Como instalar o Yarn</summary>
+  <summary><h4>Como instalar o Yarn</h4></summary>
 
+  Instale o yarn com o npm ou com sua distribuição linux
   ```bash
   npm i -g yarn
-  # ou se você estiver em uma distribuição linux,
-  # utilize os pacotes da sua distribuição
+  ```
+  Ative o corepack como admin
 
+  ```bash
   sudo corepack enable
   # no windows, abra o prompt de comando como admin
+  # corepack enable
+  ```
 
-  # dentro da pasta do projeto
+  E dentro da pasta de projeto atualize o yarn
+  e instale os pacotes
+  ```bash
   yarn set version berry
   yarn install
-
-  # e aguarde
   ```
 
 </details>

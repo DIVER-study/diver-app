@@ -27,7 +27,7 @@ export function SideBar() {
       <aside
         popover='auto'
         id='signout-popup'
-        className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 p-4 hidden grid-cols-2 gap-4 [&:popover-open]:grid'
+        className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 p-4 hidden grid-cols-2 gap-4 [&:popover-open]:grid ring-1 ring-neutral-500'
       >
         <div className='col-span-2'>Você tem Certeza?? :(</div>
         <button
@@ -61,7 +61,7 @@ export function SideBar() {
             <p className='invisible group-hover:visible'>HOME</p>
           </Link>
           <Link
-            href='/'
+            href='/realms'
             className='bg-blue-500 hover:bg-blue-500/80 p-2 text-neutral-50 text-ellipsis overflow-hidden'
           >
             <p className='invisible group-hover:visible'>REINOS</p>
@@ -73,7 +73,7 @@ export function SideBar() {
             <p className='invisible group-hover:visible'>BIBLIOTECA</p>
           </Link>
           <Link
-            href='/'
+            href='/ranking'
             className='bg-blue-500 hover:bg-blue-500/80 p-2 text-neutral-50 text-ellipsis overflow-hidden'
           >
             <p className='invisible group-hover:visible'>RANKING</p>

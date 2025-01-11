@@ -52,6 +52,7 @@ export function SideBar() {
             width={1020}
             height={364}
             alt='imagem da logo Diver, a palavra DIVER escrita onde a letra D possui um rostinho e tentáculos de polvo'
+            priority
             className='h-[40px] object-cover object-left'
           />
           <Link

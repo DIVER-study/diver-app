@@ -1,7 +1,8 @@
 'use client';
 
+import { SideBar } from '@/components/SideBar';
 import { createClient } from '@/utils/supabase/client';
-import Link from 'next/link';
+// import Link from 'next/link';
 import React from 'react';
 import { toast } from 'sonner';
 
@@ -32,14 +33,19 @@ function UserSettings() {
   };
 
   return (
-    <div className='space-x-4'>
+    <div className='flex h-screen'>
       <div
         popover='manual'
         id='change-form'
-        className='absolute left-1/2 top-1/2 ring-1 ring-neutral-600 p-20 -translate-x-1/2 -translate-y-1/2'
+        className='absolute left-1/2 top-1/2 ring-1 ring-neutral-600 p-4 -translate-x-1/2 -translate-y-1/2'
       >
         <form className='grid gap-2 grid-cols-2'>
-          <label htmlFor='display_name'>Novo Nome de Usuário:</label>
+          <label
+            htmlFor='display_name'
+            className='col-span-2'
+          >
+            Novo Nome de Usuário:
+          </label>
           <input
             type='text'
             name='display_name'
@@ -63,19 +69,16 @@ function UserSettings() {
           </button>
         </form>
       </div>
-      <Link
-        href='/'
-        className='bg-blue-500 hover:bg-blue-500/80 p-4'
-      >
-        <strong>{'<'}</strong>Voltar
-      </Link>
-      <button
-        popoverTarget='change-form'
-        popoverTargetAction='show'
-        className='bg-blue-500 hover:bg-blue-500/80 p-4'
-      >
-        Mudar nome de usuário
-      </button>
+      <SideBar />
+      <div className='p-4'>
+        <button
+          popoverTarget='change-form'
+          popoverTargetAction='show'
+          className='bg-blue-500 hover:bg-blue-500/80 p-4'
+        >
+          Mudar nome de usuário
+        </button>
+      </div>
     </div>
   );
 }

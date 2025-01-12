@@ -1,12 +1,11 @@
 import React from 'react';
 import ResetPassword from '@/components/ResetPassword';
 
-const ResetPasswords = () => {
+export default function ResetPasswords() {
   return (
-    <div>
+    <div className='h-screen content-center'>
       <ResetPassword />
     </div>
   );
-};
+}
 
-export default ResetPasswords;

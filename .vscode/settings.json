@@ -13,5 +13,6 @@
   "prettier.tabWidth": 2,
   "prettier.useTabs": false,
   "prettier.experimentalTernaries": true,
-  "prettier.withNodeModules": true
+  "prettier.withNodeModules": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode"
 }

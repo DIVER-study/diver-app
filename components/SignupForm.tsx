@@ -15,15 +15,40 @@ export default function SignupForm() {
 
     const formData = new FormData(event.target as HTMLFormElement);
 
-    /* TODO: validação se o email é institucional */
-    /* TODO: validação do display_name */
+    const email = formData.get('email') as string;
+    const password = formData.get('password') as string;
+    const confirmPassword = formData.get('confirm_password') as string;
+    const displayName = formData.get('display_name') as string;
+
+    await new Promise((resolve) => setTimeout(resolve, 500));
+
+    // Validação do email institucional
+    if (!email.endsWith('@alu.ufc.br')) {
+      toast.error('Utilize um email institucional da UFC (@alu.ufc.br)');
+      toast.dismiss('loading-toast');
+      return;
+    }
+
+    // Validação do nome de usuário
+    if (!displayName || displayName.length < 3) {
+      toast.error('O nome de usuário deve ter pelo menos 3 caracteres.');
+      toast.dismiss('loading-toast');
+      return;
+    }
+
+    // Validação da senha e confirmação
+    if (password !== confirmPassword) {
+      toast.error('As senhas não coincidem.');
+      toast.dismiss('loading-toast');
+      return;
+    }
 
     const userData = {
-      email: formData.get('email') as string,
-      password: formData.get('password') as string,
+      email,
+      password,
       options: {
         data: {
-          display_name: formData.get('display_name') as string,
+          display_name: displayName,
           avatar_url: '',
         },
       },
@@ -35,9 +60,8 @@ export default function SignupForm() {
 
     if (error) {
       toast.error(`Erro: ${error.message}`);
-      return;
     } else {
-      toast.success(`Boas Vindas! Verifique sua caixa de email para confirmar seu login!`);
+      toast.success('Boas Vindas! Verifique sua caixa de email para confirmar seu login!');
       redirect('/login');
     }
   };
@@ -51,7 +75,7 @@ export default function SignupForm() {
         htmlFor='display_name'
         className='text-sm font-medium'
       >
-        Nome de Usuário
+        Nome de Usuário:
       </label>
       <input
         id='display_name'
@@ -88,12 +112,26 @@ export default function SignupForm() {
         required
         className='p-2 rounded-md bg-neutral-200 focus:outline-none focus:ring-2 focus:ring-blue-500 invalid:ring-red-500 invalid:text-red-600 valid:valid:text-green-600 valid:ring-green-500'
       />
-      {/* TODO:confirmação de senha  */}
+
+      <label
+        htmlFor='confirm_password'
+        className='text-sm font-medium'
+      >
+        Confirmar Senha:
+      </label>
+      <input
+        id='confirm_password'
+        name='confirm_password'
+        type='password'
+        required
+        className='p-2 rounded-md bg-neutral-200 focus:outline-none focus:ring-2 focus:ring-blue-500 invalid:ring-red-500 invalid:text-red-600 valid:valid:text-green-600 valid:ring-green-500'
+      />
+
       <button
         className='p-2 mt-4 text-white bg-green-600 rounded-md hover:bg-green-600/80 focus:outline-none focus:ring-2 focus:ring-green-500'
         type='submit'
       >
-        Cadstre-se
+        Cadastre-se
       </button>
     </form>
   );

@@ -48,12 +48,12 @@ export function SideBar() {
       <nav className='navbar fixed top-0 left-0 flex flex-col w-20 hover:w-40 h-screen transition-all p-4 gap-4 justify-between group bg-neutral-200'>
         <div className='flex-1 flex flex-col gap-4'>
           <Image
-            src='/Logo.png'
-            width={1020}
-            height={364}
+            src='/logo-sm.png'
+            width={112}
+            height={40}
             alt='imagem da logo Diver, a palavra DIVER escrita onde a letra D possui um rostinho e tentáculos de polvo'
             priority
-            className='h-[40px] object-cover object-left'
+            className='h-[40px] object-none object-left'
           />
           <Link
             href='/'

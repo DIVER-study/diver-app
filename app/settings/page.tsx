@@ -2,57 +2,54 @@
 
 import { SideBar } from '@/components/SideBar';
 import { createClient } from '@/utils/supabase/client';
-import React, { useState } from 'react';
+import { uploadImage } from '@/utils/supabase/storage/client';
+import React, { useRef, useState, useTransition } from 'react';
 import { toast } from 'sonner';
 
 function UserSettings() {
   const supabase = createClient();
-  const [profilePicture, setProfilePicture] = useState<File | null>(null);
+  const [uploadedImage, setUploadedImage] = useState<File | null>(null);
+  const imageInputRef = useRef<HTMLInputElement>(null);
+  const [isPending, startTransition] = useTransition();
 
   const updateDisplayName = async (formData: FormData) => {
     toast.loading('Aguarde...', { id: 'loading-toast' });
 
     const displayName = formData.get('display_name') as string;
 
-    const { error: updateError } = await supabase.auth.updateUser({
+    // TODO: Validação de nome de usuário.
+
+    const { error } = await supabase.auth.updateUser({
       data: { display_name: displayName },
     });
 
     toast.dismiss('loading-toast');
 
-    if (updateError) {
-      toast.error(`Erro ao atualizar nome: ${updateError.message}`);
+    if (error) {
+      toast.error(`Erro ao atualizar nome: ${error.message}`);
     } else {
       toast.success('Nome de usuário atualizado com sucesso!');
       document.getElementById('name-form')?.hidePopover();
     }
   };
 
-  const updateProfilePicture = async () => {
-    if (!profilePicture) return;
-
+  const handleUploadedImage = () => {
     toast.loading('Enviando imagem...', { id: 'loading-toast' });
-
-    const { error: uploadError } = await supabase.storage
-      .from('profile-pictures')
-      .upload(`profiles/${profilePicture.name}`, profilePicture, {
-        cacheControl: '3600',
-        upsert: true,
+    startTransition(async () => {
+      const { imageURL, error } = await uploadImage({
+        file: uploadedImage!,
+        bucket: 'profile-pictures',
+        folder: 'profiles',
       });
 
-    if (uploadError) {
       toast.dismiss('loading-toast');
-      toast.error(`Erro ao enviar imagem: ${uploadError.message}`);
-      return;
-    }
 
-    const { data: publicURL } = supabase.storage
-      .from('profile-pictures')
-      .getPublicUrl(`profiles/${profilePicture.name}`);
+      if (error) {
+        toast.error(`Erro ao enviar imagem: ${error.message}`);
+      }
 
-    if (publicURL) {
       const { error: updateError } = await supabase.auth.updateUser({
-        data: { avatar_url: publicURL.publicUrl },
+        data: { avatar_url: imageURL },
       });
 
       toast.dismiss('loading-toast');
@@ -63,12 +60,14 @@ function UserSettings() {
         toast.success('Foto de perfil atualizada com sucesso!');
         document.getElementById('photo-form')?.hidePopover();
       }
-    }
+
+      setUploadedImage(null);
+    });
   };
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0] || null;
-    setProfilePicture(file);
+    setUploadedImage(file);
   };
 
   return (
@@ -77,7 +76,7 @@ function UserSettings() {
       <div
         popover='manual'
         id='name-form'
-        className='absolute left-1/2 top-1/2 ring-1 ring-neutral-600 p-4 -translate-x-1/2 -translate-y-1/2'
+        className='absolute left-1/2 top-1/2 ring-1 ring-neutral-600 p-4 -translate-x-1/2 -translate-y-1/2 hidden [&:popover-open]:block'
       >
         <form
           className='grid gap-4 grid-cols-2'
@@ -103,6 +102,7 @@ function UserSettings() {
           <button
             type='submit'
             className='bg-blue-500 hover:bg-blue-500/80 p-4'
+            disabled={isPending}
           >
             Atualizar
           </button>
@@ -111,6 +111,7 @@ function UserSettings() {
             className='ring-1 ring-neutral-500 hover:bg-neutral-400/80 p-4'
             popoverTarget='name-form'
             popoverTargetAction='hide'
+            disabled={isPending}
           >
             Cancelar
           </button>
@@ -120,13 +121,13 @@ function UserSettings() {
       <div
         popover='manual'
         id='photo-form'
-        className='absolute left-1/2 top-1/2 ring-1 ring-neutral-600 p-4 -translate-x-1/2 -translate-y-1/2'
+        className='absolute left-1/2 top-1/2 ring-1 ring-neutral-600 p-4 -translate-x-1/2 -translate-y-1/2 hidden [&:popover-open]:block'
       >
         <form
           className='grid gap-4 grid-cols-2'
           onSubmit={(e) => {
             e.preventDefault();
-            updateProfilePicture();
+            handleUploadedImage();
           }}
         >
           <label
@@ -139,11 +140,21 @@ function UserSettings() {
             type='file'
             id='profile_picture'
             accept='image/*'
-            className='ring-1 ring-neutral-600 p-2 col-span-2'
+            ref={imageInputRef}
+            hidden
             onChange={handleFileChange}
           />
           <button
+            disabled={isPending}
+            type='button'
+            className='ring-1 ring-neutral-500 p-2 text-center col-span-2 hover:bg-neutral-500/80'
+            onClick={() => imageInputRef.current?.click()}
+          >
+            Selecionar imagens
+          </button>
+          <button
             type='submit'
+            disabled={isPending}
             className='bg-green-500 hover:bg-green-500/80 p-4'
           >
             Atualizar
@@ -152,6 +163,7 @@ function UserSettings() {
             type='button'
             className='ring-1 ring-neutral-500 hover:bg-neutral-400/80 p-4'
             popoverTarget='photo-form'
+            disabled={isPending}
             popoverTargetAction='hide'
           >
             Cancelar
@@ -159,7 +171,7 @@ function UserSettings() {
         </form>
       </div>
       <SideBar />
-      <div className='p-4 space-y-4'>
+      <div className='p-4 space-x-4'>
         <button
           popoverTarget='name-form'
           popoverTargetAction='show'

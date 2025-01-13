@@ -4,6 +4,7 @@ import { createClient } from '@/utils/supabase/client';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { toast } from 'sonner';
+import { CogTecLogo } from './Svgs';
 
 export function SideBar({ activeTab = 'home' }: { activeTab?: string }) {
   const signOut = async () => {
@@ -54,7 +55,8 @@ export function SideBar({ activeTab = 'home' }: { activeTab?: string }) {
       </div>
       <aside className='navbar sticky top-0 left-0 flex flex-col w-64 h-screen p-4 gap-8 group bg-blue-600 text-white'>
         <div>
-          <h1 className='text-3xl font-bold mb-4'>Cog Tec</h1>
+          {/* <h1 className='text-3xl font-bold mb-4' hidden>Cog Tec</h1> */}
+          <CogTecLogo />
         </div>
         <nav className='flex-1 flex flex-col gap-4'>
           {['home', 'reinos', 'biblioteca', 'ranking', 'perfil'].map((tab) => (

@@ -4,12 +4,18 @@
 
 <!--toc:start-->
 
-- [Diver App (nome a ser decidido)](#diver-app-nome-a-ser-decidido)
+- [Cog Tec](#cog-tec)
   - [Sobre](#sobre)
   - [Mockups (WIP)](#mockups-wip)
   - [Nossa Equipe](#nossa-equipe)
   - [Tecnologias](#tecnologias)
   - [Como desenvolver](#como-desenvolver)
+    - [Repositório](#repositório)
+    - [Variáveis de ambiente](#variáveis-de-ambiente)
+      - [Atualizando templates de email](#atualizando-templates-de-email)
+      - [Configurando tabelas](#configurando-tabelas)
+    - [Instalando pacotes](#instalando-pacotes)
+    - [Desenvolvendo](#desenvolvendo)
   - [Requisitos Funcionais e Não-Funcionais](#requisitos-funcionais-e-não-funcionais)
   <!--toc:end-->
 

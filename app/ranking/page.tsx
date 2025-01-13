@@ -1,11 +1,11 @@
 import { SideBar } from '@/components/SideBar';
 import { createClient } from '@/utils/supabase/server';
+import Image from 'next/image';
 
 export default async function RankingPage() {
   const supabase = await createClient();
 
-  // TODO: criar e usar uma tabela oficial de usuários. Temporariamente utilizando uma gerada aleatoriamente.
-  const { data: users, error } = await supabase.from('temp_profiles').select('*');
+  const { data: users, error } = await supabase.from('profiles').select('*');
 
   if (error) console.error(`Erro: ${error.message}`);
 
@@ -26,7 +26,18 @@ export default async function RankingPage() {
             {users?.map((user, index) => (
               <tr key={index}>
                 <td>#{index + 1}</td>
-                <td>{user.display_name}</td>
+                <td className='flex gap-2 items-center'>
+                  <div className='relative overflow-hidden rounded-full size-8'>
+                    <Image
+                      src={user.avatar_url}
+                      alt=''
+                      fill
+                      sizes='100%'
+                      className='object-cover'
+                    />
+                  </div>
+                  {user.display_name}
+                </td>
                 <td>50xp</td>
               </tr>
             ))}

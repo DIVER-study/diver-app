@@ -164,29 +164,15 @@ set search_path = ''
 as $$
 begin
   insert into public.profiles (id, display_name, avatar_url, email)
-  values (new.id, new.raw_user_meta_data->>'display_name', new.raw_user_meta_data->>'avatar_url', new.email);
+  values (new.id, new.raw_user_meta_data->>'display_name', new.raw_user_meta_data->>'avatar_url', new.email)
+  on conflict (id) do update
+  set (display_name, avatar_url, email) = (new.raw_user_meta_data ->> 'display_name', new.raw_user_meta_data ->> 'avatar_url', new.email);
   return new;
 end;
 $$ language plpgsql security definer;
 create or replace trigger on_auth_user_created
-  after insert on auth.users
+  after insert or update on auth.users
   for each row execute procedure public.handle_new_user();
-
--- This trigger automatically updates a profile entry when a user metadata updates.
-create or replace function public.handle_update_user()
-returns trigger
-set search_path = ''
-as $$
-begin
-  update public.profiles
-  set (display_name, avatar_url, email) = (new.raw_user_meta_data ->> 'display_name', new.raw_user_meta_data ->> 'avatar_url', new.email)
-  where old.id = new.id;
-  return new;
-end;
-$$ language plpgsql security definer;
-create or replace trigger on_auth_user_update
-  after update on auth.users
-  for each row execute procedure public.handle_update_user();
 
 -- Set up Storage!
 insert into storage.buckets (id, name)

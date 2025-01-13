@@ -28,13 +28,13 @@ export default async function RankingPage() {
                 <td>#{index + 1}</td>
                 <td className='flex gap-2 items-center'>
                   <div className='relative overflow-hidden rounded-full size-8'>
-                    <Image
+                    {user.avatar_url !== '' ? <Image
                       src={user.avatar_url}
                       alt=''
                       fill
                       sizes='100%'
                       className='object-cover'
-                    />
+                    /> : <div className='rounded-full size-full bg-gray-300' />}
                   </div>
                   {user.display_name}
                 </td>

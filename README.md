@@ -133,10 +133,10 @@ Nossas tabelas, funções, triggers, políticas e buckets podem ser criadas com 
 -- Create a table for public profiles
 create table if not exists profiles (
   id uuid references auth.users on delete cascade not null primary key,
-  updated_at timestamp with time zone,
-  display_name text unique,
-  avatar_url text,
-  email text,
+  updated_at timestamp with time zone not null default now(),
+  display_name text not null unique default '',
+  avatar_url text not null default '',
+  email text not null,
 
   constraint display_name_length check (char_length(display_name) >= 3)
 );

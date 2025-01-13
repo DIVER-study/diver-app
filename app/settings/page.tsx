@@ -170,8 +170,8 @@ function UserSettings() {
           </button>
         </form>
       </div>
-      <SideBar />
-      <div className='p-4 space-x-4'>
+      <SideBar activeTab='perfil' />
+      <main className='p-4 space-x-4'>
         <button
           popoverTarget='name-form'
           popoverTargetAction='show'
@@ -186,7 +186,7 @@ function UserSettings() {
         >
           Alterar Foto de Perfil
         </button>
-      </div>
+      </main>
     </div>
   );
 }

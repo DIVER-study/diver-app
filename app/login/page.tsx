@@ -14,6 +14,16 @@ export default function LoginPage() {
           Cadastre-se!
         </Link>
       </div>
+      {/* Botão para "Esqueci a senha" */}
+      <div className='inline-flex gap-1'>
+        <Link
+          href='/reset-password'
+          className='underline text-blue-500'
+        >
+          Esqueci minha senha
+        </Link>
+      </div>
     </div>
   );
 }
+

@@ -11,8 +11,8 @@ export default async function RankingPage() {
 
   return (
     <div className='flex h-screen'>
-      <SideBar />
-      <div className='flex-1 overflow-y-scroll content-center'>
+      <SideBar activeTab='ranking' />
+      <main className='flex-1 overflow-y-scroll content-center'>
         <table className='border-collapse my-4 min-w-[400px] [&_th]:p-4 [&_td]:p-4 mx-auto w-full max-w-[600px]'>
           <caption>Ranking</caption>
           <thead>
@@ -32,7 +32,7 @@ export default async function RankingPage() {
             ))}
           </tbody>
         </table>
-      </div>
+      </main>
     </div>
   );
 }

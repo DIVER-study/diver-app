@@ -127,31 +127,80 @@ você pode encontrar os templates aqui:
 
 #### Configurando tabelas
 
-Até o momento de escrita _(12/01/2025:22:35)_ nossa única
-tabela é uma tabela temporária com o único propósito de teste,
-e pode ser gerada com o seguinte SQL:
+Nossas tabelas, funções, triggers, políticas e buckets podem ser criadas com o seguinte SQL:
 
 ```sql
-create table
-  public.temp_profiles (
-    id uuid primary key default gen_random_uuid (),
-    email text not null,
-    display_name text unique not null
-  );
+-- Create a table for public profiles
+create table if not exists profiles (
+  id uuid references auth.users on delete cascade not null primary key,
+  updated_at timestamp with time zone,
+  display_name text unique,
+  avatar_url text,
+  email text,
 
-insert into
-  public.temp_profiles (email, display_name)
-values
-  ('user1@example.com', 'User One'),
-  ('user2@example.com', 'User Two'),
-  ('user3@example.com', 'User Three'),
-  ('user4@example.com', 'User Four'),
-  ('user5@example.com', 'User Five'),
-  ('user6@example.com', 'User Six'),
-  ('user7@example.com', 'User Seven'),
-  ('user8@example.com', 'User Eight'),
-  ('user9@example.com', 'User Nine'),
-  ('user10@example.com', 'User Ten');
+  constraint display_name_length check (char_length(display_name) >= 3)
+);
+
+-- Set up Row Level Security (RLS)
+alter table if exists profiles
+  enable row level security;
+
+drop policy if exists "Public profiles are viewable by everyone." on public.profiles;
+create policy "Public profiles are viewable by everyone." on profiles
+  for select using (true);
+
+drop policy if exists "Users can insert their own profile." on public.profiles;
+create policy "Users can insert their own profile." on profiles
+  for insert with check ((select auth.uid()) = id);
+
+drop policy if exists "Users can update own profile." on public.profiles;
+create policy "Users can update own profile." on profiles
+  for update using ((select auth.uid()) = id);
+
+-- This trigger automatically creates a profile entry when a new user signs up via Supabase Auth.
+create or replace function public.handle_new_user()
+returns trigger
+set search_path = ''
+as $$
+begin
+  insert into public.profiles (id, display_name, avatar_url, email)
+  values (new.id, new.raw_user_meta_data->>'display_name', new.raw_user_meta_data->>'avatar_url', new.email);
+  return new;
+end;
+$$ language plpgsql security definer;
+create or replace trigger on_auth_user_created
+  after insert on auth.users
+  for each row execute procedure public.handle_new_user();
+
+-- This trigger automatically updates a profile entry when a user metadata updates.
+create or replace function public.handle_update_user()
+returns trigger
+set search_path = ''
+as $$
+begin
+  update public.profiles
+  set (display_name, avatar_url, email) = (new.raw_user_meta_data ->> 'display_name', new.raw_user_meta_data ->> 'avatar_url', new.email)
+  where old.id = new.id;
+  return new;
+end;
+$$ language plpgsql security definer;
+create or replace trigger on_auth_user_update
+  after update on auth.users
+  for each row execute procedure public.handle_update_user();
+
+-- Set up Storage!
+insert into storage.buckets (id, name)
+  values ('profile-pictures', 'profile-pictures')
+  on conflict (id) do nothing;
+
+-- Set up access controls for storage.
+drop policy if exists "Avatar images are publicly accessible." on storage.objects;
+create policy "Avatar images are publicly accessible." on storage.objects
+  for select using (bucket_id = 'profile-pictures');
+
+drop policy if exists "Anyone can upload an avatar." on storage.objects;
+create policy "Anyone can upload an avatar." on storage.objects
+  for insert with check (bucket_id = 'profile-pictures');
 ```
 
 </details>

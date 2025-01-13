@@ -1,8 +1,9 @@
-# Diver App (nome a ser decidido)
+# Cog Tec
 
-![logo](/public/Logo.png)
+![logo da cog tec com uma cabeça com formato de ponto de interrogação e a palavra cog tec](/.github/assets/cog-tec-logo.jpg)
 
 <!--toc:start-->
+
 - [Diver App (nome a ser decidido)](#diver-app-nome-a-ser-decidido)
   - [Sobre](#sobre)
   - [Mockups (WIP)](#mockups-wip)
@@ -65,6 +66,7 @@ Você pode clonar uma branch específica com esse comando:
 # git clone https://github.com/DIVER-study/diver-app.git -b <nome-da-branch>
 git clone https://github.com/DIVER-study/diver-app.git -b main
 ```
+
 </details>
 
 ### Variáveis de ambiente
@@ -100,6 +102,46 @@ Procure por App Frameworks, selecione as opções de NextJS e SupabaseJS
 e suas chaves secretas estrão disponíveis.
 ![janela do supabase mostrando as chaves secretas de um projeto borradas](/.github/assets/supapopup.png)
 
+#### Atualizando templates de email
+
+Supabase utiliza templates de email para enviar links
+para os usuários confirmarem seu email ou redefinir sua senha.
+
+Para que possa fazer isso no seu próprio projeto do Supabase,
+utilize os templetas encontrados para
+
+- Confirmação de email [confirmation.html](/supabase/templates/confirmation.html)
+- Redefinição de senha [recovery.html](/supabase/templates/recovery.html)
+
+#### Configurando tabelas
+
+Até o momento de escrita _(12/01/2025:22:35)_ nossa única
+tabela é uma tabela temporária com o único propósito de teste,
+e pode ser gerada com o seguinte SQL:
+
+```sql
+create table
+  public.temp_profiles (
+    id uuid primary key default gen_random_uuid (),
+    email text not null,
+    display_name text unique not null
+  );
+
+insert into
+  public.temp_profiles (email, display_name)
+values
+  ('user1@example.com', 'User One'),
+  ('user2@example.com', 'User Two'),
+  ('user3@example.com', 'User Three'),
+  ('user4@example.com', 'User Four'),
+  ('user5@example.com', 'User Five'),
+  ('user6@example.com', 'User Six'),
+  ('user7@example.com', 'User Seven'),
+  ('user8@example.com', 'User Eight'),
+  ('user9@example.com', 'User Nine'),
+  ('user10@example.com', 'User Ten');
+```
+
 </details>
 
 ### Instalando pacotes
@@ -107,22 +149,18 @@ e suas chaves secretas estrão disponíveis.
 Em seguida instale os pacotes do projeto:
 
 ```bash
-npm install
-# ou
 yarn install
 ```
-
-> Apesar de npm estar no exemplo,
-> Nosso projeto utiliza o [yarn](https://yarnpkg.com/getting-started/install),
-> e recomendamos que faça o mesmo.
 
 <details>
 <summary><h4>Como instalar o Yarn</h4></summary>
 
 Instale o yarn com o npm ou com sua distribuição linux
+
 ```bash
 npm i -g yarn
 ```
+
 Ative o corepack como admin
 
 ```bash
@@ -133,6 +171,7 @@ sudo corepack enable
 
 E dentro da pasta de projeto atualize o yarn
 e instale os pacotes
+
 ```bash
 yarn set version berry
 yarn install
@@ -147,14 +186,8 @@ Nosso projeto utiliza [Next.js](https://nextjs.org) e foi inicializado com [`cre
 Agora, inicialize o servidor de desenvolvimento:
 
 ```bash
-npm run dev
-# ou
 yarn dev
 ```
-
-> Apesar de npm estar no exemplo,
-> Nosso projeto utiliza o [yarn](https://yarnpkg.com/getting-started/install),
-> e recomendamos que faça o mesmo.
 
 Abra [http://localhost:3000](http://localhost:3000) no seu navegador e veja o resultado.
 

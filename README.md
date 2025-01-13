@@ -119,6 +119,12 @@ utilize os templetas encontrados para
 - Confirmação de email [confirmation.html](/supabase/templates/confirmation.html)
 - Redefinição de senha [recovery.html](/supabase/templates/recovery.html)
 
+Copie o html desses arquivos e cole eles nos templates adequados
+
+você pode encontrar os templates aqui:
+
+![a imagem mostra a interface do supabase com a seção email templates selecionada](/.github/assets/email-templates.png)
+
 #### Configurando tabelas
 
 Até o momento de escrita _(12/01/2025:22:35)_ nossa única

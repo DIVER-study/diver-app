@@ -8,8 +8,8 @@ import { SideBar } from '@/components/SideBar';
 export default function LibraryPage() {
   return (
     <div className='flex h-screen'>
-      <SideBar />
-      <div className='flex-1 h-full space-y-8'>
+      <SideBar activeTab='biblioteca' />
+      <main className='flex-1 h-full space-y-8'>
         <section className='space-y-4'>
           <h2>Behaviorismo</h2>
           <hr className='bg-neutrals-700' />
@@ -40,7 +40,7 @@ export default function LibraryPage() {
             <div className='bg-neutral-400 size-40' />
           </div>
         </section>
-      </div>
+      </main>
     </div>
   );
 }

@@ -1,12 +1,11 @@
 'use client';
 
 import { createClient } from '@/utils/supabase/client';
-import Image from 'next/image';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { toast } from 'sonner';
 
-export function SideBar() {
+export function SideBar({ activeTab = 'home' }: { activeTab?: string }) {
   const signOut = async () => {
     const popup = document.getElementById('signout-popup');
     popup?.hidePopover();
@@ -22,12 +21,21 @@ export function SideBar() {
       redirect('/login');
     }
   };
+
+  const tabRoutes: { [key: string]: string } = {
+    perfil: 'settings',
+    biblioteca: 'library',
+    home: '/',
+    reinos: 'realms',
+    ranking: 'ranking',
+  };
+
   return (
     <>
-      <aside
+      <div
         popover='auto'
         id='signout-popup'
-        className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 p-4 hidden grid-cols-2 gap-4 [&:popover-open]:grid ring-1 ring-neutral-500'
+        className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 p-4 hidden grid-cols-2 gap-4 [&:popover-open]:grid ring-1 ring-neutral-500 rounded-lg'
       >
         <div className='col-span-2'>Você tem Certeza?? :(</div>
         <button
@@ -43,57 +51,31 @@ export function SideBar() {
         >
           Não
         </button>
-      </aside>
-      <div className='invisible w-20 h-screen' />
-      <nav className='navbar fixed top-0 left-0 flex flex-col w-20 hover:w-40 h-screen transition-all p-4 gap-4 justify-between group bg-neutral-200'>
-        <div className='flex-1 flex flex-col gap-4'>
-          <Image
-            src='/logo-sm.png'
-            width={112}
-            height={40}
-            alt='imagem da logo Diver, a palavra DIVER escrita onde a letra D possui um rostinho e tentáculos de polvo'
-            priority
-            className='h-[40px] object-none object-left'
-          />
-          <Link
-            href='/'
-            className='bg-blue-500 hover:bg-blue-500/80 p-2 text-neutral-50 text-ellipsis overflow-hidden'
-          >
-            <p className='invisible group-hover:visible'>HOME</p>
-          </Link>
-          <Link
-            href='/realms'
-            className='bg-blue-500 hover:bg-blue-500/80 p-2 text-neutral-50 text-ellipsis overflow-hidden'
-          >
-            <p className='invisible group-hover:visible'>REINOS</p>
-          </Link>
-          <Link
-            href='/library'
-            className='bg-blue-500 hover:bg-blue-500/80 p-2 text-neutral-50 text-ellipsis overflow-hidden'
-          >
-            <p className='invisible group-hover:visible'>BIBLIOTECA</p>
-          </Link>
-          <Link
-            href='/ranking'
-            className='bg-blue-500 hover:bg-blue-500/80 p-2 text-neutral-50 text-ellipsis overflow-hidden'
-          >
-            <p className='invisible group-hover:visible'>RANKING</p>
-          </Link>
-          <Link
-            href='/settings'
-            className='bg-blue-500 hover:bg-blue-500/80 p-2 text-neutral-50 text-ellipsis overflow-hidden'
-          >
-            <p className='invisible group-hover:visible'>PERFIL</p>
-          </Link>
+      </div>
+      <aside className='navbar sticky top-0 left-0 flex flex-col w-64 h-screen p-4 gap-8 group bg-blue-600 text-white'>
+        <div>
+          <h1 className='text-3xl font-bold mb-4'>Cog Tec</h1>
         </div>
+        <nav className='flex-1 flex flex-col gap-4'>
+          {['home', 'reinos', 'biblioteca', 'ranking', 'perfil'].map((tab) => (
+            <Link
+              href={'/' + tabRoutes[tab]}
+              className='w-full text-left p-2 rounded-lg hover:bg-blue-500 data-[active=true]:bg-blue-700'
+              data-active={activeTab === tab}
+              key={tab}
+            >
+              {tab.charAt(0).toUpperCase() + tab.slice(1)}
+            </Link>
+          ))}
+        </nav>
         <button
-          className='bg-red-500 hover:bg-red-500/80 p-2 text-neutral-50 text-ellipsis overflow-hidden'
+          className='bg-red-500 hover:bg-red-400 p-2 text-white rounded-lg'
           popoverTarget='signout-popup'
           popoverTargetAction='show'
         >
-          <p className='invisible group-hover:visible'>SAIR</p>
+          Sair
         </button>
-      </nav>
+      </aside>
     </>
   );
 }

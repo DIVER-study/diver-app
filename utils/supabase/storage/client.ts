@@ -13,6 +13,11 @@ type UploadProps = {
   folder?: string;
 };
 
+type RemoveProps = {
+  imagePaths: string[];
+  bucket: string;
+};
+
 export async function uploadImage({ file, bucket, folder }: UploadProps) {
   const fileName = file.name;
   const fileExtension = fileName.slice(fileName.lastIndexOf('.') + 1);
@@ -38,4 +43,17 @@ export async function uploadImage({ file, bucket, folder }: UploadProps) {
   const { data: imageData } = storage.from(bucket).getPublicUrl(data.path);
 
   return { imageURL: imageData.publicUrl, error: null };
+}
+
+export async function removeImage({ imagePaths, bucket }: RemoveProps) {
+  const storage = getStorage();
+
+  console.log(imagePaths);
+  const { error } = await storage.from(bucket).remove(imagePaths);
+
+  if (error) {
+    return { error: error };
+  }
+
+  return { error: null };
 }

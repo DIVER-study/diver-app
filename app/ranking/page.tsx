@@ -1,6 +1,6 @@
 import { SideBar } from '@/components/SideBar';
+import { UserRankingItem } from '@/components/UserRankingItem';
 import { createClient } from '@/utils/supabase/server';
-import Image from 'next/image';
 
 export default async function RankingPage() {
   const supabase = await createClient();
@@ -23,23 +23,14 @@ export default async function RankingPage() {
             </tr>
           </thead>
           <tbody>
-            {users?.map((user, index) => (
-              <tr key={index}>
-                <td>#{index + 1}</td>
-                <td className='flex gap-2 items-center'>
-                  <div className='relative overflow-hidden rounded-full size-8'>
-                    {user.avatar_url !== '' ? <Image
-                      src={user.avatar_url}
-                      alt=''
-                      fill
-                      sizes='100%'
-                      className='object-cover'
-                    /> : <div className='rounded-full size-full bg-gray-300' />}
-                  </div>
-                  {user.display_name}
-                </td>
-                <td>50xp</td>
-              </tr>
+            {users?.map(({ avatar_url, display_name }, index) => (
+              <UserRankingItem
+                key={display_name}
+                avatarUrl={avatar_url}
+                displayName={display_name}
+                index={index}
+                exp={50}
+              />
             ))}
           </tbody>
         </table>

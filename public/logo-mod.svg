@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg
-   viewBox="0 0 130 40"
+   viewBox="0 0 140 40"
    version="1.1"
    id="svg3"
    sodipodi:docname="logo-mod.svg"
@@ -39,8 +39,8 @@
     <text
        id="logo-text"
        inkscape:label="LogoText"
-       x="35"
-       y="27"><tspan
+       x="45.106667"
+       y="27.365"><tspan
          id="tspan3"
          style="font-style:italic;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:30px;font-family:'New Zen';-inkscape-font-specification:'New Zen Bold Italic'">CogTec</tspan></text>
   </g>

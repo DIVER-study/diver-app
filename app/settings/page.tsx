@@ -2,7 +2,7 @@
 
 import { SideBar } from '@/components/SideBar';
 import { createClient } from '@/utils/supabase/client';
-import { uploadImage } from '@/utils/supabase/storage/client';
+import { removeImage, uploadImage } from '@/utils/supabase/storage/client';
 import React, { useRef, useState, useTransition } from 'react';
 import { toast } from 'sonner';
 
@@ -36,7 +36,23 @@ function UserSettings() {
   const handleUploadedImage = () => {
     toast.loading('Enviando imagem...', { id: 'loading-toast' });
     startTransition(async () => {
-      const { imageURL, error } = await uploadImage({
+      const errorMessages = [];
+      const { data: userData } = await supabase.auth.getUser();
+      const userId = userData.user?.id;
+      const { data: oldData } = await supabase.from('profiles').select('avatar_url').eq('id', userId!);
+      const oldImageUrl = oldData![0].avatar_url;
+      const oldImagePath = oldImageUrl
+        .slice(oldImageUrl.lastIndexOf('profile-pictures/'))
+        .replace('profile-pictures/', '');
+
+      const { error: removeError } = await removeImage({
+        bucket: 'profile-pictures',
+        imagePaths: [oldImagePath],
+      });
+
+      if (removeError) errorMessages.push(removeError.message);
+
+      const { imageURL, error: uploadError } = await uploadImage({
         file: uploadedImage!,
         bucket: 'profile-pictures',
         folder: 'profiles',
@@ -44,18 +60,18 @@ function UserSettings() {
 
       toast.dismiss('loading-toast');
 
-      if (error) {
-        toast.error(`Erro ao enviar imagem: ${error.message}`);
-      }
+      if (uploadError) errorMessages.push(uploadError.message);
 
       const { error: updateError } = await supabase.auth.updateUser({
         data: { avatar_url: imageURL },
       });
 
+      if (updateError) errorMessages.push(updateError.message);
+
       toast.dismiss('loading-toast');
 
-      if (updateError) {
-        toast.error(`Erro ao atualizar imagem: ${updateError.message}`);
+      if (errorMessages.length > 0) {
+        errorMessages.forEach((msg) => toast.error(`Erro: ${msg}`));
       } else {
         toast.success('Foto de perfil atualizada com sucesso!');
         document.getElementById('photo-form')?.hidePopover();

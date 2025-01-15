@@ -56,7 +56,10 @@ export function SideBar({ activeTab = 'home' }: { activeTab?: string }) {
       <aside className='navbar sticky top-0 left-0 flex flex-col w-64 h-screen p-4 gap-8 group bg-blue-600 text-white'>
         <div>
           {/* <h1 className='text-3xl font-bold mb-4' hidden>Cog Tec</h1> */}
-          <CogTecLogo />
+          <CogTecLogo
+            height={40}
+            className='fill-white'
+          />
         </div>
         <nav className='flex-1 flex flex-col gap-4'>
           {['home', 'reinos', 'biblioteca', 'ranking', 'perfil'].map((tab) => (

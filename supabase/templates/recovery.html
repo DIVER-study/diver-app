@@ -2,7 +2,9 @@
 
 <p>Siga este link para redefinir a senha do seu usuário:</p>
 <p>
-  <a href="{{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&type=recovery&next=/new-password">Redefinir senha</a>
+  <a href="{{ .SiteURL }}/api/auth/confirm?token_hash={{ .TokenHash }}&type=recovery&next=/new-password"
+    >Redefinir senha</a
+  >
 </p>
 
 <p>Se você não solicitou uma redefinição de senha, ignore este e-mail.</p>

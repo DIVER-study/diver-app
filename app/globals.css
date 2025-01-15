@@ -5,7 +5,7 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: 'NewZen-ExtraBoldItalic';
+  font-family: 'New Zen';
   src: url('/fonts/new-zen-bold-italic.otf') format('opentype');
 }
 

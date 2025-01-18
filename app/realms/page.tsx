@@ -8,7 +8,7 @@ export default function RealmsPage() {
   ];
   return (
     <div className='flex h-screen'>
-      <SideBar activeTab='reinos' />
+      <SideBar activeTab='estudos' />
       <main className='flex-1 flex justify-center items-center p-8'>
         <div className='space-y-4'>
           <h1 className='text-3xl font-bold mb-8 text-center'>Teorias</h1>

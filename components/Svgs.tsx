@@ -17,3 +17,16 @@ export function CogTecLogo(props: SVGProps<SVGSVGElement>) {
     </svg>
   );
 }
+
+export function ExitIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      xmlns='http://www.w3.org/2000/svg'
+      fill='currentColor'
+      viewBox='0 0 36 31'
+      {...props}
+    >
+      <path d='M13.232 0v4.41h17.642v22.053H13.232v4.41h22.052V0H13.232Zm-4.41 8.821L0 15.437l8.821 6.616v-4.41h17.642v-4.411H8.821v-4.41Z' />
+    </svg>
+  );
+}

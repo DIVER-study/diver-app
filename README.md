@@ -187,6 +187,10 @@ create policy "Avatar images are publicly accessible." on storage.objects
 drop policy if exists "Anyone can upload an avatar." on storage.objects;
 create policy "Anyone can upload an avatar." on storage.objects
   for insert with check (bucket_id = 'profile-pictures');
+
+drop policy if exists "Authenticated users can remove their avatar" on storage.objects;
+create policy "Authenticated users can remove their avatar" on storage.objects
+  for remove with check (bucket_id = 'profile-pictures' and (select auth.role()) = 'authenticated');
 ```
 
 </details>

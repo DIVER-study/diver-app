@@ -4,7 +4,7 @@ import { createClient } from '@/utils/supabase/client';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { toast } from 'sonner';
-import { CogTecLogo, ExitIcon } from './Svgs';
+import { ArrowIndicator, CogTecLogo, ExitIcon } from './Svgs';
 
 export function SideBar({ activeTab = 'home' }: { activeTab?: string }) {
   const signOut = async () => {
@@ -53,7 +53,7 @@ export function SideBar({ activeTab = 'home' }: { activeTab?: string }) {
           Não
         </button>
       </div>
-      <aside className='sticky top-0 left-0 flex flex-col w-64 h-screen p-4 gap-8 group text-black'>
+      <aside className='sticky top-0 left-0 flex flex-col w-64 h-screen p-4 gap-8 group text-black [&_+_*]:rounded-l-[2rem] [&_+_*]:border-2 [&_+_*]:border-black'>
         <div className='bg-black p-4 rounded-[1.5rem]'>
           <CogTecLogo
             height={40}
@@ -64,19 +64,20 @@ export function SideBar({ activeTab = 'home' }: { activeTab?: string }) {
           {['estudos', 'biblioteca', 'ranking', 'perfil'].map((tab) => (
             <Link
               href={tabRoutes[tab]}
-              className='relative w-full text-left p-2 rounded-xl ring-2 ring-black hover:bg-neutral-700 data-[active=true]:bg-black data-[active=true]:text-white uppercase'
+              className='relative w-full text-left p-2 rounded-xl border-2 border-black hover:bg-neutral-800 hover:text-white data-[active=true]:bg-black data-[active=true]:text-white uppercase'
               data-active={activeTab === tab}
               key={tab}
             >
               {tab}
               {activeTab === tab && (
-                <div className='rounded-full bg-black absolute right-[-8%] top-1/2 size-2 -translate-y-1/2' />
+                <ArrowIndicator className='absolute right-[-20%] top-1/2 size-10 -translate-y-1/2' />
               )}
+              {/* <div className='rounded-full bg-black absolute right-[-8%] top-1/2 size-2 -translate-y-1/2' /> */}
             </Link>
           ))}
         </nav>
         <button
-          className='hover:bg-neutral-700 p-2 text-black rounded-lg uppercase flex gap-2 items-center'
+          className='hover:bg-neutral-800 hover:text-white p-2 text-black rounded-lg uppercase flex gap-2 items-center'
           popoverTarget='signout-popup'
           popoverTargetAction='show'
         >

@@ -30,3 +30,33 @@ export function ExitIcon(props: SVGProps<SVGSVGElement>) {
     </svg>
   );
 }
+
+export function ArrowIndicator(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      xmlns='http://www.w3.org/2000/svg'
+      fill='none'
+      viewBox='0 0 24 24'
+      {...props}
+    >
+      <g clipPath='url(#a)'>
+        <path
+          fill='#000'
+          d='M22 10.268c1.333.77 1.333 2.694 0 3.464L10 20.66c-1.333.77-3-.192-3-1.732V5.072c0-1.54 1.667-2.502 3-1.732l12 6.928Z'
+        />
+        <path
+          fill='#fff'
+          d='M19 10.268c1.333.77 1.333 2.694 0 3.464L7 20.66c-1.333.77-3-.192-3-1.732V5.072C4 3.532 5.667 2.57 7 3.34l12 6.928Z'
+        />
+      </g>
+      <defs>
+        <clipPath id='a'>
+          <path
+            fill='#fff'
+            d='M0 0h24v24H0z'
+          />
+        </clipPath>
+      </defs>
+    </svg>
+  );
+}

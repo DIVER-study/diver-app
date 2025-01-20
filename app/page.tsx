@@ -1,18 +1,29 @@
 import { SideBar } from '@/components/SideBar';
-import { createClient } from '@/utils/supabase/server';
 
-export default async function Home() {
-  const { auth } = await createClient();
-
-  const { data } = await auth.getUser();
-
+export default function RealmsPage() {
+  const subjects = [
+    { id: 1, name: 'TSC', disabled: false },
+    { id: 2, name: 'Gestalt', disabled: true },
+    { id: 3, name: 'Behaviorismo', disabled: true },
+  ];
   return (
     <div className='flex h-screen'>
-      <SideBar activeTab='home' />
-      <main className='flex-1 h-full content-center'>
-        <h1 className='mx-auto text-xl font-poppins font-medium text-orange-700/80 text-center'>
-          Olá {data.user && (data.user.user_metadata.display_name || data.user.user_metadata.email)}
-        </h1>
+      <SideBar activeTab='estudos' />
+      <main className='flex-1 flex justify-center items-center p-8'>
+        <div className='space-y-4'>
+          <h1 className='text-3xl font-bold mb-8 text-center'>Teorias</h1>
+          <div className='flex flex-col gap-4'>
+            {subjects.map(({ id, name, disabled }) => (
+              <button
+                key={id}
+                disabled={disabled}
+                className='py-4 text-xl rounded-lg transition disabled:bg-gray-400 disabled:text-gray-700 disabled:cursor-not-allowed bg-blue-500 text-white hover:bg-blue-700 w-80'
+              >
+                {name}
+              </button>
+            ))}
+          </div>
+        </div>
       </main>
     </div>
   );

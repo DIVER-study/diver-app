@@ -26,13 +26,13 @@ export function SideBar({ activeTab = 'home' }: { activeTab?: string }) {
   const tabRoutes: { [key: string]: string } = {
     perfil: '/settings',
     biblioteca: '/library',
-    home: '/',
-    estudos: '/realms',
+    estudos: '/',
     ranking: '/ranking',
   };
 
   return (
     <>
+      {/* Popup de signout */}
       <div
         popover='auto'
         id='signout-popup'
@@ -53,6 +53,7 @@ export function SideBar({ activeTab = 'home' }: { activeTab?: string }) {
           Não
         </button>
       </div>
+      {/* Side Bar */}
       <aside className='sticky top-0 left-0 flex flex-col w-64 h-screen p-4 gap-8 group text-black [&_+_*]:rounded-l-[2rem] [&_+_*]:border-2 [&_+_*]:border-black'>
         <div className='bg-black p-4 rounded-[1.5rem]'>
           <CogTecLogo

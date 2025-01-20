@@ -13,11 +13,11 @@ export function LibrarySection({ sectionName }: SectionProps) {
         {new Array(4).fill('').map((_, idx) => (
           <div
             key={idx}
-            className='grid grid-flow-col auto-cols-[1fr] gap-2 relative snap-start'
+            className='grid grid-flow-col auto-cols-[1fr] gap-2'
           >
             {new Array(4).fill('').map((_, index) => (
               <div
-                className='w-32 aspect-square bg-black rounded-lg'
+                className='w-32 aspect-square bg-black rounded-lg snap-start'
                 key={index}
               ></div>
             ))}

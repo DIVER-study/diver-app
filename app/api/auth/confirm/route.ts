@@ -50,7 +50,7 @@ export async function GET(request: NextRequest) {
       redirect(next);
     } else {
       console.log(error.message);
-      return Response.json({ error: { message: error.message } }, { status: Number(error.code) });
+      return Response.json({ error });
     }
   }
 

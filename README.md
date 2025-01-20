@@ -60,7 +60,7 @@ Clone esse repositório localmente:
 git clone https://github.com/DIVER-study/diver-app.git
 ```
 
-> OBS: A branch mais atualizada do repositório é a [main](https://github.com/DIVER-study/diver-app/tree/main).
+> OBS: A branch mais atualizada do repositório é a [dev](https://github.com/DIVER-study/diver-app/tree/dev).
 > O desenvolvimento dos requerimentos são feitos em branchs separadas
 
 <details>
@@ -70,7 +70,7 @@ Você pode clonar uma branch específica com esse comando:
 
 ```bash
 # git clone https://github.com/DIVER-study/diver-app.git -b <nome-da-branch>
-git clone https://github.com/DIVER-study/diver-app.git -b main
+git clone https://github.com/DIVER-study/diver-app.git -b dev
 ```
 
 </details>

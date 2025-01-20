@@ -17,3 +17,65 @@ export function CogTecLogo(props: SVGProps<SVGSVGElement>) {
     </svg>
   );
 }
+
+export function ExitIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      xmlns='http://www.w3.org/2000/svg'
+      fill='currentColor'
+      viewBox='0 0 36 31'
+      {...props}
+    >
+      <path d='M13.232 0v4.41h17.642v22.053H13.232v4.41h22.052V0H13.232Zm-4.41 8.821L0 15.437l8.821 6.616v-4.41h17.642v-4.411H8.821v-4.41Z' />
+    </svg>
+  );
+}
+
+export function ArrowIndicator(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      xmlns='http://www.w3.org/2000/svg'
+      fill='none'
+      viewBox='0 0 24 24'
+      {...props}
+    >
+      <g clipPath='url(#a)'>
+        <path
+          fill='#000'
+          d='M22 10.268c1.333.77 1.333 2.694 0 3.464L10 20.66c-1.333.77-3-.192-3-1.732V5.072c0-1.54 1.667-2.502 3-1.732l12 6.928Z'
+        />
+        <path
+          fill='#fff'
+          d='M19 10.268c1.333.77 1.333 2.694 0 3.464L7 20.66c-1.333.77-3-.192-3-1.732V5.072C4 3.532 5.667 2.57 7 3.34l12 6.928Z'
+        />
+      </g>
+      <defs>
+        <clipPath id='a'>
+          <path
+            fill='#fff'
+            d='M0 0h24v24H0z'
+          />
+        </clipPath>
+      </defs>
+    </svg>
+  );
+}
+
+export function SearchIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      viewBox='0 0 24 24'
+      xmlns='http://www.w3.org/2000/svg'
+      {...props}
+    >
+      <path
+        d='M15.7955 15.8111L21 21M18 10.5C18 14.6421 14.6421 18 10.5 18C6.35786 18 3 14.6421 3 10.5C3 6.35786 6.35786 3 10.5 3C14.6421 3 18 6.35786 18 10.5Z'
+        stroke='currentColor'
+        strokeWidth='2'
+        strokeLinecap='round'
+        strokeLinejoin='round'
+        fill='none'
+      ></path>
+    </svg>
+  );
+}

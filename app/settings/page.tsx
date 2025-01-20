@@ -187,7 +187,7 @@ function UserSettings() {
         </form>
       </div>
       <SideBar activeTab='perfil' />
-      <main className='p-4 space-x-4'>
+      <main className='p-4 space-x-4 flex-1'>
         <button
           popoverTarget='name-form'
           popoverTargetAction='show'

@@ -4,7 +4,7 @@ import { createClient } from '@/utils/supabase/client';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { toast } from 'sonner';
-import { CogTecLogo } from './Svgs';
+import { ArrowIndicator, CogTecLogo, ExitIcon } from './Svgs';
 
 export function SideBar({ activeTab = 'home' }: { activeTab?: string }) {
   const signOut = async () => {
@@ -24,15 +24,15 @@ export function SideBar({ activeTab = 'home' }: { activeTab?: string }) {
   };
 
   const tabRoutes: { [key: string]: string } = {
-    perfil: 'settings',
-    biblioteca: 'library',
-    home: '/',
-    reinos: 'realms',
-    ranking: 'ranking',
+    perfil: '/settings',
+    biblioteca: '/library',
+    estudos: '/',
+    ranking: '/ranking',
   };
 
   return (
     <>
+      {/* Popup de signout */}
       <div
         popover='auto'
         id='signout-popup'
@@ -53,31 +53,36 @@ export function SideBar({ activeTab = 'home' }: { activeTab?: string }) {
           Não
         </button>
       </div>
-      <aside className='navbar sticky top-0 left-0 flex flex-col w-64 h-screen p-4 gap-8 group bg-blue-600 text-white'>
-        <div>
-          {/* <h1 className='text-3xl font-bold mb-4' hidden>Cog Tec</h1> */}
+      {/* Side Bar */}
+      <aside className='sticky top-0 left-0 flex flex-col w-64 h-screen p-4 gap-8 group text-black [&_+_*]:rounded-l-[2rem] [&_+_*]:border-2 [&_+_*]:border-black'>
+        <div className='bg-black p-4 rounded-[1.5rem]'>
           <CogTecLogo
             height={40}
             className='fill-white'
           />
         </div>
         <nav className='flex-1 flex flex-col gap-4'>
-          {['home', 'reinos', 'biblioteca', 'ranking', 'perfil'].map((tab) => (
+          {['estudos', 'biblioteca', 'ranking', 'perfil'].map((tab) => (
             <Link
-              href={'/' + tabRoutes[tab]}
-              className='w-full text-left p-2 rounded-lg hover:bg-blue-500 data-[active=true]:bg-blue-700'
+              href={tabRoutes[tab]}
+              className='relative w-full text-left p-2 rounded-xl border-2 border-black hover:bg-neutral-800 hover:text-white data-[active=true]:bg-black data-[active=true]:text-white uppercase'
               data-active={activeTab === tab}
               key={tab}
             >
-              {tab.charAt(0).toUpperCase() + tab.slice(1)}
+              {tab}
+              {activeTab === tab && (
+                <ArrowIndicator className='absolute right-[-20%] top-1/2 size-10 -translate-y-1/2' />
+              )}
+              {/* <div className='rounded-full bg-black absolute right-[-8%] top-1/2 size-2 -translate-y-1/2' /> */}
             </Link>
           ))}
         </nav>
         <button
-          className='bg-red-500 hover:bg-red-400 p-2 text-white rounded-lg'
+          className='hover:bg-neutral-800 hover:text-white p-2 text-black rounded-lg uppercase flex gap-2 items-center'
           popoverTarget='signout-popup'
           popoverTargetAction='show'
         >
+          <ExitIcon className='pointer-events-none shrink-0 size-4' />
           Sair
         </button>
       </aside>

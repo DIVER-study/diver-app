@@ -13,7 +13,7 @@ export default function ClientRankingPage() {
 
   useEffect(() => {
     const prepareData = async () => {
-      const { data: users } = await supabase.from('profiles').select('*');
+      const { data: users } = await supabase.from('profiles').select('*').eq('accepted_ranking', true);
       setUsersProfiles(users);
     };
     prepareData();

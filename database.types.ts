@@ -11,6 +11,7 @@ export type Database = {
     Tables: {
       profiles: {
         Row: {
+          accepted_ranking: boolean
           avatar_url: string
           display_name: string
           email: string
@@ -18,6 +19,7 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          accepted_ranking?: boolean
           avatar_url?: string
           display_name?: string
           email: string
@@ -25,6 +27,7 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          accepted_ranking?: boolean
           avatar_url?: string
           display_name?: string
           email?: string

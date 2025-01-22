@@ -1,4 +1,5 @@
 import { SideBar } from '@/components/SideBar';
+import { UserStore } from '@/components/UserStore';
 
 export default function RealmsPage() {
   const subjects = [
@@ -8,6 +9,7 @@ export default function RealmsPage() {
   ];
   return (
     <div className='flex h-screen'>
+      <UserStore />
       <SideBar activeTab='estudos' />
       <main className='flex-1 flex justify-center items-center p-8'>
         <div className='space-y-4'>

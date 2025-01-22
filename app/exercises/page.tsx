@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { ConfirmAnswerIcon, ExitButtonIcon } from '@/components/Svgs';
 import { AlertConfirm, AlertRightAnswer, AlertWrongAnswer } from '@/components/Alerts';
 
-const ExercisePage = () => {
+export default function ExercisePage() {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [progress, setProgress] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
@@ -178,6 +178,4 @@ const ExercisePage = () => {
       </div>
     </div>
   );
-};
-
-export default ExercisePage;
+}

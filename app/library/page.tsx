@@ -1,5 +1,4 @@
 import { SideBar } from '@/components/SideBar';
-import { LibrarySection } from '@/components/LibraryComponents';
 import { SearchBar } from '@/components/SearchBar';
 
 /*
@@ -16,22 +15,6 @@ export default function LibraryPage() {
           <div className='flex-1' />
           <SearchBar />
         </div>
-        <h1 className='font-bold uppercase mx-auto max-w-screen-md text-3xl'>trilha de aprendizagem</h1>
-        <LibrarySection
-          sectionName='Behaviorismo'
-          finished={true}
-          started={true}
-        />
-        <LibrarySection
-          sectionName='Gestalt'
-          finished={true}
-          started={true}
-        />
-        <LibrarySection
-          sectionName='Teoria Sociocultural'
-          finished={false}
-          started={true}
-        />
       </main>
     </div>
   );

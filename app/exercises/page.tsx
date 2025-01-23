@@ -4,6 +4,8 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import { ConfirmAnswerIcon, ExitButtonIcon } from '@/components/Svgs';
 import { AlertConfirm, AlertRightAnswer, AlertWrongAnswer } from '@/components/Alerts';
+import { redirect } from 'next/navigation';
+import { createClient } from '@/utils/supabase/client';
 
 export default function ExercisePage() {
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -72,11 +74,27 @@ export default function ExercisePage() {
   const handleGoToNextQuestion = () => {
     setShowAlertCertaResposta(false);
     setShowAlertRespostaErrada(false);
-    setCurrentQuestion((currentQuestion + 1) % questions.length);
+    if (currentQuestion + 1 < questions.length) {
+      setCurrentQuestion((prev) => prev + 1);
+    } else redirect('/');
   };
 
   const handleCancelExit = () => {
     setShowAlertExit(false);
+  };
+
+  const updatePlayerProgress = async () => {
+    const supabase = createClient();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    if (user) {
+      const { data: userProgress } = await supabase.from('user_study_progress').select('*').eq('id', user.id);
+      if (userProgress) {
+        console.log(userProgress.at(0)!.behaviorism + 1);
+        await supabase.from('user_study_progress').update({ behaviorism: userProgress.at(0)!.behaviorism + 1 });
+      }
+    }
   };
 
   return (

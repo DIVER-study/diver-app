@@ -1,0 +1,72 @@
+[
+  {
+    "type": "gestalt",
+    "theme_id": "58946c2a-28b0-4ec4-90d8-d266789313df",
+    "exercise_index": 0,
+    "question": "Qual é o princípio da Gestalt que afirma que elementos próximos tendem a ser percebidos como um grupo?",
+    "answer": 0,
+    "options": [
+      "Princípio da proximidade",
+      "Princípio da semelhança",
+      "Princípio do fechamento",
+      "Princípio da continuidade"
+    ],
+    "explanation": "O princípio da proximidade afirma que elementos próximos no espaço são percebidos como pertencendo ao mesmo grupo."
+  },
+  {
+    "type": "gestalt",
+    "theme_id": "e2a07117-9fb3-41de-9443-8ba3f23afa66",
+    "exercise_index": 1,
+    "question": "O que o princípio da figura-fundo da Gestalt descreve?",
+    "answer": 1,
+    "options": [
+      "A tendência de agrupar elementos similares",
+      "A habilidade de distinguir uma figura do fundo ao seu redor",
+      "A percepção de continuidade em linhas ou formas",
+      "A tendência de preencher lacunas em formas incompletas"
+    ],
+    "explanation": "O princípio da figura-fundo descreve como distinguimos uma figura do fundo ao seu redor, organizando visualmente o ambiente."
+  },
+  {
+    "type": "gestalt",
+    "theme_id": "39cbe7f4-00bd-46ed-b2bf-aa010009c338",
+    "exercise_index": 2,
+    "question": "Qual princípio explica por que percebemos formas completas mesmo com partes faltando?",
+    "answer": 2,
+    "options": [
+      "Princípio da proximidade",
+      "Princípio da continuidade",
+      "Princípio do fechamento",
+      "Princípio da pregnância"
+    ],
+    "explanation": "O princípio do fechamento explica que tendemos a preencher lacunas para perceber formas como completas."
+  },
+  {
+    "type": "gestalt",
+    "theme_id": "16aaa0c8-b305-4c5d-a142-8b78d989fc49",
+    "exercise_index": 3,
+    "question": "Qual princípio da Gestalt está relacionado a perceber padrões mais simples e organizados?",
+    "answer": 3,
+    "options": [
+      "Princípio da figura-fundo",
+      "Princípio do fechamento",
+      "Princípio da continuidade",
+      "Princípio da pregnância"
+    ],
+    "explanation": "O princípio da pregnância diz que percebemos padrões da forma mais simples, estável e organizada possível."
+  },
+  {
+    "type": "gestalt",
+    "theme_id": "86eaddca-f1ed-4ab0-b2fb-fb0a377e1ea9",
+    "exercise_index": 4,
+    "question": "O que descreve o princípio da semelhança na Gestalt?",
+    "answer": 1,
+    "options": [
+      "Elementos próximos formam um grupo",
+      "Elementos similares são percebidos como parte de um conjunto",
+      "Linhas ou formas interrompidas são vistas como contínuas",
+      "Figuras com contraste claro destacam-se do fundo"
+    ],
+    "explanation": "O princípio da semelhança descreve que elementos similares em aparência são percebidos como parte de um grupo."
+  }
+]

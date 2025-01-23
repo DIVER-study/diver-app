@@ -5,7 +5,8 @@ import Image from 'next/image';
 import { ConfirmAnswerIcon, ExitButtonIcon } from '@/components/Svgs';
 import { AlertConfirm, AlertRightAnswer, AlertWrongAnswer } from '@/components/Alerts';
 import { redirect } from 'next/navigation';
-import { createClient } from '@/utils/supabase/client';
+import { useUserStore } from '@/stores/userStore';
+import { UserStore } from '@/components/UserStore';
 
 export default function ExercisePage() {
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -14,6 +15,7 @@ export default function ExercisePage() {
   const [showAlertExit, setShowAlertExit] = useState(false);
   const [showAlertCertaResposta, setShowAlertCertaResposta] = useState(false);
   const [showAlertRespostaErrada, setShowAlertRespostaErrada] = useState(false);
+  const { user, updateUserProgress } = useUserStore();
 
   const questions = [
     {
@@ -76,25 +78,15 @@ export default function ExercisePage() {
     setShowAlertRespostaErrada(false);
     if (currentQuestion + 1 < questions.length) {
       setCurrentQuestion((prev) => prev + 1);
-    } else redirect('/');
+    } else {
+      const currentUserProgress = user.progress.behaviorism
+      updateUserProgress({behaviorism: currentUserProgress + 1})
+      redirect('/'); 
+    }
   };
 
   const handleCancelExit = () => {
     setShowAlertExit(false);
-  };
-
-  const updatePlayerProgress = async () => {
-    const supabase = createClient();
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-    if (user) {
-      const { data: userProgress } = await supabase.from('user_study_progress').select('*').eq('id', user.id);
-      if (userProgress) {
-        console.log(userProgress.at(0)!.behaviorism + 1);
-        await supabase.from('user_study_progress').update({ behaviorism: userProgress.at(0)!.behaviorism + 1 });
-      }
-    }
   };
 
   return (
@@ -102,6 +94,7 @@ export default function ExercisePage() {
       {(showAlertCertaResposta || showAlertRespostaErrada || showAlertExit) && (
         <div className='absolute inset-0 bg-white opacity-60 backdrop-blur-sm z-40'></div>
       )}
+      <UserStore />
       <div className='flex items-center justify-center w-full pl-0 gap-2 mr-[15%]'>
         {/* Botão de saída */}
         <button
@@ -160,6 +153,7 @@ export default function ExercisePage() {
               fill
               sizes='100%'
               className='w-full h-full object-cover'
+              priority
             />
           </div>
 

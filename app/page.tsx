@@ -1,31 +1,20 @@
+import { StudySections } from '@/components/StudyComponents';
+import { SearchBar } from '@/components/SearchBar';
 import { SideBar } from '@/components/SideBar';
 import { UserStore } from '@/components/UserStore';
 
 export default function RealmsPage() {
-  const subjects = [
-    { id: 1, name: 'TSC', disabled: false },
-    { id: 2, name: 'Gestalt', disabled: true },
-    { id: 3, name: 'Behaviorismo', disabled: true },
-  ];
   return (
     <div className='flex h-screen'>
       <UserStore />
       <SideBar activeTab='estudos' />
-      <main className='flex-1 flex justify-center items-center p-8'>
-        <div className='space-y-4'>
-          <h1 className='text-3xl font-bold mb-8 text-center'>Teorias</h1>
-          <div className='flex flex-col gap-4'>
-            {subjects.map(({ id, name, disabled }) => (
-              <button
-                key={id}
-                disabled={disabled}
-                className='py-4 text-xl rounded-lg transition disabled:bg-gray-400 disabled:text-gray-700 disabled:cursor-not-allowed bg-blue-500 text-white hover:bg-blue-700 w-80'
-              >
-                {name}
-              </button>
-            ))}
-          </div>
+      <main className='flex-1 h-full space-y-8 overflow-y-scroll py-8'>
+        <div className='flex items-center mx-auto max-w-screen-md'>
+          <div className='flex-1' />
+          <SearchBar />
         </div>
+        <h1 className='font-bold uppercase mx-auto max-w-screen-md text-3xl'>trilha de aprendizagem</h1>
+        <StudySections />
       </main>
     </div>
   );

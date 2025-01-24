@@ -36,6 +36,38 @@ export type Database = {
         }
         Relationships: []
       }
+      user_study_progress: {
+        Row: {
+          behaviorism: number
+          gestalt: number
+          id: string
+          tsc: number
+          updated_at: string
+        }
+        Insert: {
+          behaviorism?: number
+          gestalt?: number
+          id: string
+          tsc?: number
+          updated_at?: string
+        }
+        Update: {
+          behaviorism?: number
+          gestalt?: number
+          id?: string
+          tsc?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_study_progress_id_fkey"
+            columns: ["id"]
+            isOneToOne: true
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never

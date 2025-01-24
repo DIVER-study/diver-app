@@ -2,7 +2,7 @@
 
 import { create } from 'zustand';
 import { createClient } from '@/utils/supabase/client';
-import { User } from '@supabase/supabase-js';
+import { PostgrestError, User } from '@supabase/supabase-js';
 
 export type UserProfile = {
   accepted_ranking: boolean;
@@ -13,26 +13,50 @@ export type UserProfile = {
   updated_at: string;
 };
 
+export type Progress = {
+  behaviorism: number;
+  gestalt: number;
+  tsc: number;
+};
+
 type UserState = {
   user: {
     auth: User | undefined;
     profile: UserProfile | undefined;
-  } | null;
-  setUser: (newUser: { auth: User; profile: UserProfile }) => void;
+    progress: Progress;
+  };
+  setUser: (newUser: { auth: User; profile: UserProfile; progress: Progress }) => void;
   setUserFromDB: () => Promise<void>;
+  updateUserProgress: (newData: Partial<Progress>) => Promise<{ error: PostgrestError | null }>;
 };
 
-export const useUserStore = create<UserState>((set) => ({
-  user: null,
+const emptyProgress = {
+  behaviorism: 0,
+  gestalt: 0,
+  id: '',
+  tsc: 0,
+  updated_at: '',
+};
+
+export const useUserStore = create<UserState>((set, get) => ({
+  user: {
+    auth: undefined,
+    profile: undefined,
+    progress: emptyProgress,
+  },
   setUser: (newUser) => set({ user: newUser }),
   setUserFromDB: async () => {
     const supabase = createClient();
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-    if (user) {
-      const { data: users } = await supabase.from('profiles').select('*').eq('id', user?.id);
-      set({ user: { auth: user, profile: users?.at(0) } });
-    }
+    const { data: user } = await supabase.auth.getUser();
+    const { data: users } = await supabase.from('profiles').select('*').eq('id', user.user!.id);
+    const { data: usersProgress } = await supabase.from('user_study_progress').select('*').eq('id', user.user!.id);
+    set({ user: { auth: user.user!, profile: users?.at(0), progress: usersProgress?.at(0) || emptyProgress } });
   },
+  updateUserProgress: async (newData) => {
+    const { user } = get()
+    const supabase = createClient();
+    const {error} = await supabase.from('user_study_progress').update(newData).eq('id', user.auth!.id);
+    if (error) return { error };
+    else return { error: null};
+  }
 }));

@@ -17,7 +17,10 @@ export function StudySection({ sectionName, sectionType, progress }: SectionProp
   return (
     <div className='space-y-1 mx-auto max-w-screen-md'>
       <div className='flex flex-row items-center p-1'>
-        <h2 className='flex-1 uppercase text-2xl'>{sectionName}</h2>
+        <div className='flex-1 flex items-center gap-2'>
+          <h2 className='uppercase text-2xl'>{sectionName}</h2>
+          <p className='text-neutral-600 text-sm'>{progress[sectionType]}/5</p>
+        </div>
         <div className='border-2 border-black p-1 rounded-md uppercase text-md'>
           {finished ? 'concluido' : started ? 'em andamento' : 'a fazer'}
         </div>

@@ -1,10 +1,6 @@
 import { SideBar } from '@/components/SideBar';
 import { SearchBar } from '@/components/SearchBar';
-
-/*
- * TODO: pegar do banco de dados as informações como:
- * links, textos, imagens, etc ...
- * */
+import { LibrarySections } from '@/components/LibraryComponents';
 
 export default function LibraryPage() {
   return (
@@ -15,6 +11,8 @@ export default function LibraryPage() {
           <div className='flex-1' />
           <SearchBar />
         </div>
+        <h1 className='font-bold uppercase mx-auto max-w-screen-md text-3xl'>biblioteca de estudos</h1>
+        <LibrarySections />
       </main>
     </div>
   );

@@ -103,6 +103,22 @@ export function LibraryIcon(props: SVGProps<SVGSVGElement>) {
   );
 }
 
+export function LibraryIconWithoutCircle(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      viewBox='0 0 60 60'
+      fill='none'
+      xmlns='http://www.w3.org/2000/svg'
+      {...props}
+    >
+      <path
+        d='M19.875 14C19.6037 14 19.3712 14.0388 19.1388 14.1163C17.6275 14.4262 16.4262 15.6275 16.1163 17.1388C16 17.3712 16 17.6037 16 17.875V39.1875C16 42.4037 18.5963 45 21.8125 45H43.125V41.125H21.8125C20.7275 41.125 19.875 40.2725 19.875 39.1875C19.875 38.1025 20.7275 37.25 21.8125 37.25H43.125V15.9375C43.125 14.8525 42.2725 14 41.1875 14H39.25V25.625L35.375 21.75L31.5 25.625V14H19.875Z'
+        fill='black'
+      />
+    </svg>
+  );
+}
+
 export function SadFace(props: SVGProps<SVGSVGElement>) {
   return (
     <svg

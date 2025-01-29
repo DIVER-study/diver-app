@@ -1,3 +1,10 @@
+-- enum types
+DO $$ BEGIN
+    CREATE TYPE realms AS (behaviorism, gestalt, tsc);
+EXCEPTION
+    WHEN duplicate_object THEN null;
+END $$;
+
 -- User Management
 -- Create a table for public profiles
 create table if not exists profiles (
@@ -86,18 +93,19 @@ create or replace trigger on_profile_created
 
 -- Exrcise related tables
 -- tema
-create table if not exists tema (
+create table if not exists subjects (
   id bigint primary key generated always as identity,
   updated_at timestamp with time zone not null default now(),
-  name text not null default ''
+  name text not null default '',
+  realm realms not null default behaviorism
 );
 -- setup RLS
-alter table if exists tema
+alter table if exists subjects
   enable row level security;
 
-drop policy if exists "Users can select tema" on public.tema;
-create policy "Users can select tema" on tema
-  for select using ((select auth.role()) = 'authenticated');
+drop policy if exists "Users can select subjects" on public.subjects;
+create policy "Users can select subjects" on subjects
+  for select using (true);
 
 -- modules
 create table if not exists modules (
@@ -106,7 +114,7 @@ create table if not exists modules (
   name text not null default '',
   description text not null default '',
   level text not null default 'easy',
-  tema_id bigint references public.tema.id not null
+  subject_id bigint references public.subjects.id not null
 );
 -- setup RLS
 alter table if exists modules
@@ -114,7 +122,7 @@ alter table if exists modules
 
 drop policy if exists "Users can select modules" on public.modules;
 create policy "Users can select modules" on modules
-  for select using ((select auth.role()) = 'authenticated'));
+  for select using (true);
 
 
 -- exercises
@@ -123,8 +131,8 @@ create table if not exists exercises (
   created_at timestamp with time zone not null default now(),
   module_id bigint references public.modules.id on delete cascade not null,
   question text not null default ''::text,
-  options json,
-  answer text not null default 'a'::text,
+  options text[] not null default '{""}'::text[],
+  answer bigint not null default 0,
   explanation text not null default ''::text
 );
 -- setup RLS
@@ -133,7 +141,7 @@ alter table if exists exercises
 
 drop policy if exists "Users can select exercises" on public.exercises;
 create policy "Users can select exercises" on exercises
-  for select using ((select auth.role()) = 'authenticated');
+  for select using (true);
 
 -- Set up Storage!
 insert into storage.buckets (id, name)

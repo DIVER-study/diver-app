@@ -191,4 +191,4 @@ Você pode editar as páginas na pasta `app/`. As páginas atulizam conforme as 
 
 ## Requisitos Funcionais e Não-Funcionais
 
-Acesse a tabela nesse link: [Tabela de Requisitos](https://royal-deal-c64.notion.site/Tabela-de-requisitos-151da11da8b18085b76bcd3c85f80c29)
+Acesse a tabela nesse link: [Tabela de Requisitos](https://docs.google.com/spreadsheets/d/1WzkAcBs6IBwXHklCpwbMeGyta-0hUh-rsLZbWoxZaFc/edit?usp=sharing)

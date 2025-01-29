@@ -9,6 +9,79 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      exercises: {
+        Row: {
+          answer: number
+          created_at: string
+          explanation: string
+          id: number
+          module_id: number
+          options: string[]
+          question: string
+        }
+        Insert: {
+          answer?: number
+          created_at?: string
+          explanation?: string
+          id?: number
+          module_id: number
+          options?: string[]
+          question?: string
+        }
+        Update: {
+          answer?: number
+          created_at?: string
+          explanation?: string
+          id?: number
+          module_id?: number
+          options?: string[]
+          question?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "exercises_module_id_fkey"
+            columns: ["module_id"]
+            isOneToOne: false
+            referencedRelation: "modules"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      modules: {
+        Row: {
+          created_at: string
+          description: string
+          id: number
+          level: string
+          name: string
+          subject_id: number
+        }
+        Insert: {
+          created_at?: string
+          description?: string
+          id?: number
+          level?: string
+          name?: string
+          subject_id: number
+        }
+        Update: {
+          created_at?: string
+          description?: string
+          id?: number
+          level?: string
+          name?: string
+          subject_id?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "modules_subject_id_fkey"
+            columns: ["subject_id"]
+            isOneToOne: false
+            referencedRelation: "subjects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           accepted_ranking: boolean
@@ -33,6 +106,27 @@ export type Database = {
           email?: string
           id?: string
           updated_at?: string
+        }
+        Relationships: []
+      }
+      subjects: {
+        Row: {
+          created_at: string
+          id: number
+          name: string | null
+          realm: Database["public"]["Enums"]["realms"]
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          name?: string | null
+          realm?: Database["public"]["Enums"]["realms"]
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          name?: string | null
+          realm?: Database["public"]["Enums"]["realms"]
         }
         Relationships: []
       }
@@ -76,7 +170,7 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      realms: "behaviorism" | "gestalt" | "tsc"
     }
     CompositeTypes: {
       [_ in never]: never

@@ -1,18 +1,43 @@
 'use client';
 
+import { Database } from '@/database.types';
 import { Progress, useUserStore } from '@/stores/userStore';
+import { createClient } from '@/utils/supabase/client';
 // import { createClient } from '@/utils/supabase/client';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import { toast } from 'sonner';
 
 type SectionProps = {
   sectionName: string;
-  sectionType: 'behaviorism' | 'gestalt' | 'tsc';
+  sectionType: Database['public']['Enums']['realms'];
   progress: Progress;
+};
+
+export type SubjectType = {
+  created_at: string;
+  id: number;
+  name: string | null;
+  realm: Database['public']['Enums']['realms'];
 };
 
 export function StudySection({ sectionName, sectionType, progress }: SectionProps) {
   const finished = progress[sectionType] >= 5;
   const started = progress[sectionType] > 0;
+  const [subjects, setSubjects] = useState<SubjectType[]>([]);
+
+  useEffect(() => {
+    const gatherSubjects = async () => {
+      const supabase = createClient();
+      const { data, error } = await supabase.from('subjects').select('*').eq('realm', sectionType);
+      if (data) {
+        setSubjects(data);
+      } else if (error) {
+        toast.error('Houve um erro inesperado.');
+      }
+    };
+    gatherSubjects();
+  });
 
   return (
     <div className='space-y-1 mx-auto max-w-screen-md'>
@@ -26,10 +51,12 @@ export function StudySection({ sectionName, sectionType, progress }: SectionProp
         </div>
       </div>
       <div className='grid grid-flow-col auto-cols-[1fr] gap-8 overflow-x-scroll scroll-smooth snap-x rounded-xl border-2 border-black p-4'>
-        {new Array(5).fill('').map((_, idx) => (
+        {subjects.map(({ id, name }, idx) => (
           <ExerciseItem
             key={idx}
-            title='definição'
+            title={name || 'definição'}
+            temaId={id}
+            sectionType={sectionType}
           />
         ))}
       </div>
@@ -37,10 +64,12 @@ export function StudySection({ sectionName, sectionType, progress }: SectionProp
   );
 }
 
-function ExerciseItem({ title }: { title: string }) {
+type ExerciseItemProps = { title: string; temaId: string | number; sectionType: Database['public']['Enums']['realms'] };
+
+function ExerciseItem({ title, temaId, sectionType }: ExerciseItemProps) {
   return (
     <Link
-      href={`/exercises`}
+      href={`/${sectionType}/exerciseTrail?temaId=${temaId}`}
       className='w-32 aspect-[7/8] snap-center space-y-2'
     >
       <div className='rounded-lg bg-black size-full' />

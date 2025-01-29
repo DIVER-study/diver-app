@@ -56,6 +56,7 @@ export function StudySection({ sectionName, sectionType, progress }: SectionProp
             key={idx}
             title={name || 'definição'}
             temaId={id}
+            sectionType={sectionType}
           />
         ))}
       </div>
@@ -63,10 +64,12 @@ export function StudySection({ sectionName, sectionType, progress }: SectionProp
   );
 }
 
-function ExerciseItem({ title, temaId }: { title: string; temaId: string | number }) {
+type ExerciseItemProps = { title: string; temaId: string | number; sectionType: Database['public']['Enums']['realms'] };
+
+function ExerciseItem({ title, temaId, sectionType }: ExerciseItemProps) {
   return (
     <Link
-      href={`/exerciseTrail?temaId=${temaId}`}
+      href={`/${sectionType}/exerciseTrail?temaId=${temaId}`}
       className='w-32 aspect-[7/8] snap-center space-y-2'
     >
       <div className='rounded-lg bg-black size-full' />

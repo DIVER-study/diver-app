@@ -11,31 +11,31 @@ export type Database = {
     Tables: {
       exercises: {
         Row: {
-          answer: string | null
+          answer: number
           created_at: string
-          explanation: string | null
+          explanation: string
           id: number
-          module_id: number | null
-          options: Json | null
-          question: string | null
+          module_id: number
+          options: string[]
+          question: string
         }
         Insert: {
-          answer?: string | null
+          answer?: number
           created_at?: string
-          explanation?: string | null
+          explanation?: string
           id?: number
-          module_id?: number | null
-          options?: Json | null
-          question?: string | null
+          module_id: number
+          options?: string[]
+          question?: string
         }
         Update: {
-          answer?: string | null
+          answer?: number
           created_at?: string
-          explanation?: string | null
+          explanation?: string
           id?: number
-          module_id?: number | null
-          options?: Json | null
-          question?: string | null
+          module_id?: number
+          options?: string[]
+          question?: string
         }
         Relationships: [
           {

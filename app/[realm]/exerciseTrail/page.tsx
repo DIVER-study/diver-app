@@ -5,6 +5,7 @@ import { createClient } from '@/utils/supabase/client';
 import Link from 'next/link';
 import { SideBar } from '@/components/SideBar';
 import { LibraryIconWithoutCircle } from '@/components/Svgs';
+import { Database } from '@/database.types';
 
 // Types
 type ModuleType = {
@@ -16,11 +17,13 @@ type ModuleType = {
   subject_id: number;
 };
 
-export default function ExerciseTrailPage() {
+export default function ExerciseTrailPage({ params }: { params: Promise<{ realm: string }> }) {
   const searchParams = useSearchParams();
+  const subjectId = searchParams.get('temaId');
 
   const [modules, setModules] = useState<ModuleType[]>([]);
   const [subject, setSubject] = useState<string>('');
+  const [realm, setRealm] = useState<Database['public']['Enums']['realms']>('behaviorism');
   const [pending, setPending] = useState<boolean>(true);
 
   useEffect(() => {
@@ -45,6 +48,8 @@ export default function ExerciseTrailPage() {
         const { data, error } = await supabase.from('subjects').select('*').eq('id', id);
         if (error) throw error;
         setSubject(data[0].name!);
+        const { realm: realmName } = await params;
+        if (realmName) setRealm(realmName as Database['public']['Enums']['realms']);
       } catch (error: unknown) {
         if (error instanceof Error) {
           console.error('Erro ao buscar módulos:', error.message);
@@ -55,7 +60,6 @@ export default function ExerciseTrailPage() {
     };
 
     const initialize = () => {
-      const subjectId = searchParams.get('temaId');
       if (subjectId) {
         const subjectIdNumber = Number(subjectId);
         if (!isNaN(subjectIdNumber)) {
@@ -72,7 +76,7 @@ export default function ExerciseTrailPage() {
     };
 
     initialize();
-  }, [modules, searchParams, subject]);
+  }, [modules, params, searchParams, subject, subjectId]);
 
   return (
     <div className='flex h-screen'>
@@ -112,7 +116,7 @@ export default function ExerciseTrailPage() {
                   >
                     {/* <h3>{module.name}</h3> */}
                     <Link
-                      href={`/exercises?moduleId=${module.id}`}
+                      href={`/${realm}/exercises?moduleId=${module.id}&temaId=${subjectId}`}
                       className='relative text-left p-2 rounded-xl border-2 border-black hover:bg-neutral-800 hover:text-white data-[active=true]:bg-black data-[active=true]:text-white uppercase w-fit'
                     >
                       {module.description}

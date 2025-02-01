@@ -13,11 +13,15 @@
   :root {
     --background: #ffffff;
     --foreground: #171717;
+    --color-logoorage: #e66e05;
+    --color-beige: #fcf0c2;
   }
 
   .dark {
     --background: #0a0a0a;
     --foreground: #ededed;
+    --color-logoorage: #e66e05;
+    --color-beige: #fcf0c2;
   }
 
   * {

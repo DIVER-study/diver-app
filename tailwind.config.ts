@@ -16,6 +16,8 @@ export default {
       colors: {
         background: 'var(--background)',
         foreground: 'var(--foreground)',
+        logoorange: 'var(--color-logoorage)',
+        bgbeige: 'var(--color-beige)',
       },
     },
   },

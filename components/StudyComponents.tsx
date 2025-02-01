@@ -21,10 +21,10 @@ export type SubjectType = {
 };
 
 export function StudySection({ sectionName, sectionType, progress }: SectionProps) {
-  const finished = progress >= 5;
-  const started = progress > 0;
   const [subjects, setSubjects] = useState<SubjectType[]>([{ id: -1, name: '' }]);
   const [pending, setPending] = useState<boolean>(true);
+  const started = progress > 0;
+  const finished = progress >= subjects.length;
 
   useEffect(() => {
     const supabase = createClient();
@@ -45,7 +45,9 @@ export function StudySection({ sectionName, sectionType, progress }: SectionProp
       <div className='flex flex-row items-center p-1'>
         <div className='flex-1 flex items-center gap-2'>
           <h2 className='uppercase text-2xl'>{sectionName}</h2>
-          <p className='text-neutral-600 text-sm'>{progress}/5</p>
+          <p className='text-neutral-600 text-sm'>
+            {progress}/{subjects.length}
+          </p>
         </div>
         <div className='border-2 border-black p-1 rounded-md uppercase text-md'>
           {pending ? 'carregando...' : finished ? 'concluido' : started ? 'em andamento' : 'a fazer'}

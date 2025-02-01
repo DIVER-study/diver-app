@@ -1,6 +1,6 @@
 # Cog Tec
 
-![logo da cog tec com uma cabeça com formato de ponto de interrogação e a palavra cog tec](/.github/assets/cog-tec-logo.jpg)
+![logo da cog tec com uma cabeça com formato de ponto de interrogação e a palavra cog tec](/.github/assets/logo.png)
 
 <!--toc:start-->
 
@@ -17,6 +17,7 @@
       - [Atualizando templates de email](#atualizando-templates-de-email)
       - [Configurando tabelas](#configurando-tabelas)
     - [Instalando pacotes](#instalando-pacotes)
+      - [Intalando Yarn](#intalando-yarn)
     - [Desenvolvendo](#desenvolvendo)
   - [Requisitos Funcionais e Não-Funcionais](#requisitos-funcionais-e-não-funcionais)
   <!--toc:end-->
@@ -149,7 +150,9 @@ yarn install
 ```
 
 <details>
-<summary><h4>Como instalar o Yarn</h4></summary>
+<summary>Como instalar o Yarn</summary>
+
+#### Intalando Yarn
 
 Instale o yarn com o npm ou com sua distribuição linux
 

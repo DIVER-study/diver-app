@@ -1,14 +1,13 @@
 'use client';
 
 import { FilledStar, ProfileIcon, RankingStar } from '@/components/Svgs';
-import { UserState, useUserStore } from '@/stores/userStore';
+import { UserState } from '@/stores/userStore';
 import Image from 'next/image';
 
-export function ProfileClientPage() {
-  const { user } = useUserStore();
+export function ProfileClientPage({ profile }: { profile: UserState['user']['profile'] }) {
   return (
     <div className='bg-white/80 rounded-3xl px-6 pb-8 pt-2 space-y-8 shadow-md max-w-screen-lg mx-auto h-min'>
-      <UserProfile profile={user.profile} />
+      <UserProfile profile={profile} />
       <UserStatistics />
       <UserAchivments />
     </div>
@@ -32,6 +31,7 @@ function UserProfile({ profile }: { profile: UserState['user']['profile'] }) {
                 const target = e.target as HTMLImageElement;
                 target.hidden = true;
               }}
+              className='object-cover'
             />
           )}
         </div>
@@ -73,7 +73,7 @@ function UserAchivments() {
         {new Array(4).fill('').map((_, idx) => (
           <div
             key={idx}
-            className='rounded-xl min-size-40 size-full aspect-square shadow-[0_4px_4px_2px_rgba(173,173,173,0.25)]'
+            className='rounded-xl min-size-40 size-full aspect-square shadow-[0_4px_4px_2px_rgba(173,173,173,0.25)] bg-white'
           ></div>
         ))}
       </div>

@@ -1,5 +1,5 @@
 import { SideBar } from '@/components/SideBar';
-import ClientRankingPage from './clientPage';
+import ClientRankingPage from './client';
 import { UserStore } from '@/components/UserStore';
 
 export default function RankingPage() {

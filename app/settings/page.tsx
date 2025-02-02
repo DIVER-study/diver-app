@@ -1,6 +1,7 @@
 'use client';
 
 import { SideBar } from '@/components/SideBar';
+import { UserStore } from '@/components/UserStore';
 import { useUserStore } from '@/stores/userStore';
 import { removeImage, uploadImage } from '@/utils/supabase/storage/client';
 import React, { useRef, useState, useTransition } from 'react';
@@ -40,6 +41,7 @@ function UserSettings() {
 
       if (!oldImageUrl) {
         toast.error('Erro ao encontrar usuário');
+        toast.dismiss('loading-toast');
         return;
       }
 
@@ -54,6 +56,7 @@ function UserSettings() {
 
       if (removeError) {
         toast.error('Erro ao remover imagem antiga.');
+        toast.dismiss('loading-toast');
         return;
       }
 
@@ -89,12 +92,18 @@ function UserSettings() {
   };
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const maxSize = 210000;
     const file = event.target.files?.[0] || null;
-    setUploadedImage(file);
+    if (file && file.size < maxSize) {
+      setUploadedImage(file);
+    } else if (file && file.size >= maxSize) {
+      toast.error('Arquivo muito grande! Envie uma imagem com menos de 200KB');
+    }
   };
 
   return (
     <div className='flex h-screen'>
+      <UserStore />
       {/* Popover para alteração de nome */}
       <div
         popover='manual'

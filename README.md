@@ -64,6 +64,7 @@ git clone https://github.com/DIVER-study/diver-app.git
 ```
 
 > OBS: A branch mais atualizada do repositório é a [dev](https://github.com/DIVER-study/diver-app/tree/dev).
+> Porém a [main](https://github.com/DIVER-study/diver-app/tree/main) terá sempre a versão mais estável do projeto.
 > O desenvolvimento dos requerimentos são feitos em branchs separadas
 
 <details>

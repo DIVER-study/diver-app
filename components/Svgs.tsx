@@ -1,6 +1,8 @@
 import { SVGProps } from 'react';
 
-export function CogTecLogo(props: SVGProps<SVGSVGElement>) {
+type Props = SVGProps<SVGSVGElement>;
+
+export function CogTecLogo(props: Props) {
   // if (false) return (
   //   <svg
   //     xmlns='http://www.w3.org/2000/svg'
@@ -38,7 +40,7 @@ export function CogTecLogo(props: SVGProps<SVGSVGElement>) {
   );
 }
 
-export function ExitIcon(props: SVGProps<SVGSVGElement>) {
+export function ExitIcon(props: Props) {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
@@ -51,7 +53,7 @@ export function ExitIcon(props: SVGProps<SVGSVGElement>) {
   );
 }
 
-export function ArrowIndicator(props: SVGProps<SVGSVGElement>) {
+export function ArrowIndicator(props: Props) {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
@@ -81,7 +83,7 @@ export function ArrowIndicator(props: SVGProps<SVGSVGElement>) {
   );
 }
 
-export function SearchIcon(props: SVGProps<SVGSVGElement>) {
+export function SearchIcon(props: Props) {
   return (
     <svg
       viewBox='0 0 24 24'
@@ -100,7 +102,7 @@ export function SearchIcon(props: SVGProps<SVGSVGElement>) {
   );
 }
 
-export function LibraryIcon(props: SVGProps<SVGSVGElement>) {
+export function LibraryIcon(props: Props) {
   return (
     <svg
       viewBox='0 0 60 60'
@@ -123,7 +125,7 @@ export function LibraryIcon(props: SVGProps<SVGSVGElement>) {
   );
 }
 
-export function LibraryIconWithoutCircle(props: SVGProps<SVGSVGElement>) {
+export function LibraryIconWithoutCircle(props: Props) {
   return (
     <svg
       viewBox='0 0 60 60'
@@ -139,7 +141,7 @@ export function LibraryIconWithoutCircle(props: SVGProps<SVGSVGElement>) {
   );
 }
 
-export function SadFace(props: SVGProps<SVGSVGElement>) {
+export function SadFace(props: Props) {
   return (
     <svg
       viewBox='0 0 355 187'
@@ -159,7 +161,7 @@ export function SadFace(props: SVGProps<SVGSVGElement>) {
   );
 }
 
-export function ExitButtonIcon(props: SVGProps<SVGSVGElement>) {
+export function ExitButtonIcon(props: Props) {
   return (
     <svg
       viewBox='0 0 58 58'
@@ -182,7 +184,7 @@ export function ExitButtonIcon(props: SVGProps<SVGSVGElement>) {
   );
 }
 
-export function ConfirmAnswerIcon(props: SVGProps<SVGSVGElement>) {
+export function ConfirmAnswerIcon(props: Props) {
   return (
     <svg
       viewBox='0 0 56 52'
@@ -198,7 +200,7 @@ export function ConfirmAnswerIcon(props: SVGProps<SVGSVGElement>) {
   );
 }
 
-export function StudyIcon(props: SVGProps<SVGSVGElement>) {
+export function StudyIcon(props: Props) {
   return (
     <svg
       viewBox='0 0 20 20'
@@ -214,7 +216,7 @@ export function StudyIcon(props: SVGProps<SVGSVGElement>) {
   );
 }
 
-export function LibrarySideIcon(props: SVGProps<SVGSVGElement>) {
+export function LibrarySideIcon(props: Props) {
   return (
     <svg
       viewBox='0 0 20 20'
@@ -232,7 +234,7 @@ export function LibrarySideIcon(props: SVGProps<SVGSVGElement>) {
   );
 }
 
-export function RankingIcon(props: SVGProps<SVGSVGElement>) {
+export function RankingIcon(props: Props) {
   return (
     <svg
       viewBox='0 0 20 20'
@@ -247,7 +249,7 @@ export function RankingIcon(props: SVGProps<SVGSVGElement>) {
   );
 }
 
-export function ProfileIcon(props: SVGProps<SVGSVGElement>) {
+export function ProfileIcon(props: Props) {
   return (
     <svg
       viewBox='0 0 20 20'
@@ -258,6 +260,45 @@ export function ProfileIcon(props: SVGProps<SVGSVGElement>) {
       <path
         d='M17 18C15 9.5 5 9.5 3 18M10 10C15.5 10 15.5 2 10 2C4.5 2 4.5 10 10 10Z'
         stroke='currentColor'
+      />
+    </svg>
+  );
+}
+
+export function FilledStar(props: Props) {
+  return (
+    <svg
+      viewBox='0 0 78 78'
+      fill='none'
+      xmlns='http://www.w3.org/2000/svg'
+      {...props}
+    >
+      <path
+        d='M38.9997 9.75L46.6372 28.47L66.8197 29.965L51.3497 43.03L56.1922 62.66L38.9997 52L21.8072 62.66L26.6497 43.03L11.1797 29.965L31.3622 28.47L38.9997 9.75Z'
+        fill='black'
+      />
+      <path
+        d='M38.9997 9.75L31.3622 28.47L11.1797 29.965L26.6497 43.03L21.8072 62.66L38.9997 52M38.9997 9.75L46.6372 28.47L66.8197 29.965L51.3497 43.03L56.1922 62.66L38.9997 52'
+        stroke='black'
+        strokeWidth={2}
+        strokeLinecap='round'
+        strokeLinejoin='round'
+      />
+    </svg>
+  );
+}
+
+export function RankingStar(props: Props) {
+  return (
+    <svg
+      {...props}
+      viewBox='0 0 78 78'
+      fill='none'
+      xmlns='http://www.w3.org/2000/svg'
+    >
+      <path
+        d='M65.8125 29.2501C65.8152 24.7315 64.6759 20.2856 62.5005 16.3253C60.325 12.3649 57.184 9.01858 53.3692 6.59705C49.5543 4.17553 45.1893 2.75737 40.6797 2.4743C36.1701 2.19123 31.662 3.05244 27.5743 4.97792C23.4866 6.90341 19.9518 9.83072 17.2982 13.488C14.6446 17.1452 12.9583 21.4137 12.396 25.8971C11.8336 30.3805 12.4134 34.9333 14.0815 39.1326C15.7497 43.3319 18.452 47.0416 21.9375 49.917V73.1251C21.9372 73.5408 22.0432 73.9496 22.2455 74.3128C22.4478 74.676 22.7395 74.9814 23.0931 75.2C23.4467 75.4186 23.8503 75.5432 24.2656 75.5618C24.6809 75.5805 25.094 75.4926 25.4658 75.3066L39 68.5547L52.5373 75.3219C52.8768 75.4839 53.2488 75.5663 53.625 75.5626C54.2715 75.5626 54.8915 75.3057 55.3486 74.8486C55.8057 74.3915 56.0625 73.7715 56.0625 73.1251V49.917C59.1122 47.4053 61.5681 44.2495 63.2538 40.6763C64.9395 37.1031 65.8133 33.201 65.8125 29.2501ZM17.0625 29.2501C17.0625 24.9112 18.3491 20.6698 20.7596 17.0622C23.1702 13.4546 26.5963 10.6428 30.6049 8.98245C34.6134 7.32205 39.0243 6.88761 43.2798 7.73408C47.5353 8.58054 51.4441 10.6699 54.5122 13.7379C57.5802 16.8059 59.6695 20.7148 60.516 24.9703C61.3624 29.2257 60.928 33.6366 59.2676 37.6452C57.6072 41.6537 54.7954 45.0799 51.1878 47.4904C47.5802 49.9009 43.3388 51.1876 39 51.1876C33.1838 51.1811 27.6077 48.8678 23.495 44.7551C19.3823 40.6424 17.069 35.0663 17.0625 29.2501ZM21.9375 29.2501C21.9375 25.8754 22.9382 22.5765 24.8131 19.7706C26.6879 16.9647 29.3527 14.7778 32.4705 13.4864C35.5882 12.1949 39.0189 11.857 42.3287 12.5154C45.6385 13.1738 48.6788 14.7988 51.065 17.185C53.4512 19.5713 55.0763 22.6115 55.7347 25.9213C56.393 29.2311 56.0551 32.6618 54.7637 35.7796C53.4723 38.8974 51.2853 41.5622 48.4794 43.437C45.6735 45.3119 42.3746 46.3126 39 46.3126C34.4762 46.3077 30.1391 44.5085 26.9403 41.3097C23.7415 38.1109 21.9423 33.7738 21.9375 29.2501Z'
+        fill='black'
       />
     </svg>
   );

@@ -6,7 +6,7 @@ import { redirect } from 'next/navigation';
 import { toast } from 'sonner';
 import { CogTecLogo, ExitIcon, LibrarySideIcon, ProfileIcon, RankingIcon, StudyIcon } from './Svgs';
 
-export function SideBar({ activeTab = 'home' }: { activeTab?: string }) {
+export function SideBar({ activeTab }: { activeTab?: 'estudos' | 'biblioteca' | 'ranking' | 'perfil' }) {
   const signOut = async () => {
     const popup = document.getElementById('signout-popup');
     popup?.hidePopover();
@@ -26,7 +26,7 @@ export function SideBar({ activeTab = 'home' }: { activeTab?: string }) {
   const tabRoutes: {
     [key: string]: { href: string; icon: (props: React.SVGProps<SVGSVGElement>) => React.JSX.Element };
   } = {
-    perfil: { href: '/settings', icon: ProfileIcon },
+    perfil: { href: '/profile', icon: ProfileIcon },
     biblioteca: { href: '/library', icon: LibrarySideIcon },
     estudos: { href: '/', icon: StudyIcon },
     ranking: { href: '/ranking', icon: RankingIcon },

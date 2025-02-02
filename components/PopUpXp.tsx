@@ -1,6 +1,7 @@
+import { redirect } from "next/navigation";
 import React, { useState, useEffect } from "react";
 
-const PopUpXp: React.FC = () => {
+export const PopUpXp = ({currentRealm,subjectId}:{currentRealm:string, subjectId: number}) => {
   const [animate, setAnimate] = useState(false);
 
   useEffect(() => {
@@ -9,7 +10,7 @@ const PopUpXp: React.FC = () => {
   }, []);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-white text-black p-6 relative">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-white text-black p-6 absolute top-0 left-0 w-full">
       <h1 className={`text-3xl font-bold mb-6 transition-transform transform ${animate ? 'scale-125' : 'scale-100'}`}>PARABÉNS</h1>
       
       <div className="flex gap-4 mb-6">
@@ -41,11 +42,11 @@ const PopUpXp: React.FC = () => {
         </div>
       </div>
       
-      <button className="absolute bottom-6 right-6 border-2 border-black px-6 py-3 flex items-center bg-white transition-transform transform hover:scale-110">
+      <button className="absolute bottom-6 right-6 border-2 border-black px-6 py-3 flex items-center bg-white transition-transform transform hover:scale-110" onClick={()=> {redirect(`/${currentRealm}/exerciseTrail?temaId=${subjectId}`)}}>
         <span className="text-black text-xl">✔</span>
       </button>
     </div>
   );
 };
 
-export default PopUpXp;
+

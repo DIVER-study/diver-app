@@ -2,7 +2,7 @@
 
 import { create } from 'zustand';
 import { createClient } from '@/utils/supabase/client';
-import { PostgrestError, User } from '@supabase/supabase-js';
+import { PostgrestError, User, UserAttributes, UserResponse } from '@supabase/supabase-js';
 
 export type UserProfile = {
   accepted_ranking: boolean;
@@ -10,7 +10,7 @@ export type UserProfile = {
   display_name: string;
   email: string;
   id: string;
-  updated_at: string;
+  // updated_at: string;
 };
 
 export type Progress = {
@@ -22,20 +22,20 @@ export type Progress = {
 type UserState = {
   user: {
     auth: User | undefined;
-    profile: UserProfile | undefined;
+    profile: UserProfile | undefined | null;
     progress: Progress;
   };
-  setUser: (newUser: { auth: User; profile: UserProfile; progress: Progress }) => void;
+  setUser: (user: UserState['user']) => void;
   setUserFromDB: () => Promise<void>;
-  updateUserProgress: (newData: Partial<Progress>) => Promise<{ error: PostgrestError | null }>;
+  updateUserProgress: (newData: Partial<Progress>) => Promise<{ error: PostgrestError | null } | { error: Error }>;
+  updateRankingChoice: (choice: boolean) => Promise<{ error: PostgrestError | null } | { error: Error }>;
+  updateUserSupa: (data: UserAttributes) => Promise<UserResponse>;
 };
 
 const emptyProgress = {
   behaviorism: 0,
   gestalt: 0,
-  id: '',
   tsc: 0,
-  updated_at: '',
 };
 
 export const useUserStore = create<UserState>((set, get) => ({
@@ -44,19 +44,46 @@ export const useUserStore = create<UserState>((set, get) => ({
     profile: undefined,
     progress: emptyProgress,
   },
-  setUser: (newUser) => set({ user: newUser }),
+  setUser: (user) => set({ user }),
   setUserFromDB: async () => {
     const supabase = createClient();
-    const { data: user } = await supabase.auth.getUser();
-    const { data: users } = await supabase.from('profiles').select('*').eq('id', user.user!.id);
-    const { data: usersProgress } = await supabase.from('user_study_progress').select('*').eq('id', user.user!.id);
-    set({ user: { auth: user.user!, profile: users?.at(0), progress: usersProgress?.at(0) || emptyProgress } });
+    const { data } = await supabase.auth.getUser();
+    if (data.user) {
+      const { data: profile } = await supabase.from('profiles').select('*').eq('id', data.user.id).limit(1).single();
+      const { data: progress } = await supabase
+        .from('user_study_progress')
+        .select('behaviorism, gestalt, tsc')
+        .eq('id', data.user.id)
+        .limit(1)
+        .single();
+
+      set({ user: { auth: data.user, profile, progress: progress || emptyProgress } });
+    }
   },
   updateUserProgress: async (newData) => {
-    const { user } = get()
+    const { user } = get();
     const supabase = createClient();
-    const {error} = await supabase.from('user_study_progress').update(newData).eq('id', user.auth!.id);
-    if (error) return { error };
-    else return { error: null};
-  }
+    if (user.auth?.id) {
+      const { error } = await supabase.from('user_study_progress').update(newData).eq('id', user.auth.id);
+      return { error };
+    }
+    return { error: new Error('Houve um erro encontrando o usuário.') };
+  },
+  updateRankingChoice: async (choice) => {
+    const { user, setUserFromDB } = get();
+    const supabase = createClient();
+    if (user.auth?.id) {
+      const { error } = await supabase.from('profiles').update({ accepted_ranking: choice }).eq('id', user.auth.id);
+      await setUserFromDB();
+      return { error };
+    }
+    return { error: new Error('Houve um erro encontrando o usuário.') };
+  },
+  updateUserSupa: async (data) => {
+    const { setUserFromDB } = get();
+    const supabase = createClient();
+    const response = await supabase.auth.updateUser(data);
+    await setUserFromDB();
+    return response;
+  },
 }));

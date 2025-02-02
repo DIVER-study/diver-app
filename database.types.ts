@@ -9,8 +9,82 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      exercises: {
+        Row: {
+          answer: number
+          created_at: string
+          explanation: string
+          id: number
+          module_id: number
+          options: string[]
+          question: string
+        }
+        Insert: {
+          answer?: number
+          created_at?: string
+          explanation?: string
+          id?: number
+          module_id: number
+          options?: string[]
+          question?: string
+        }
+        Update: {
+          answer?: number
+          created_at?: string
+          explanation?: string
+          id?: number
+          module_id?: number
+          options?: string[]
+          question?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "exercises_module_id_fkey"
+            columns: ["module_id"]
+            isOneToOne: false
+            referencedRelation: "modules"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      modules: {
+        Row: {
+          created_at: string
+          description: string
+          id: number
+          level: string
+          name: string
+          subject_id: number
+        }
+        Insert: {
+          created_at?: string
+          description?: string
+          id?: number
+          level?: string
+          name?: string
+          subject_id: number
+        }
+        Update: {
+          created_at?: string
+          description?: string
+          id?: number
+          level?: string
+          name?: string
+          subject_id?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "modules_subject_id_fkey"
+            columns: ["subject_id"]
+            isOneToOne: false
+            referencedRelation: "subjects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
+          accepted_ranking: boolean
           avatar_url: string
           display_name: string
           email: string
@@ -18,6 +92,7 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          accepted_ranking?: boolean
           avatar_url?: string
           display_name?: string
           email: string
@@ -25,6 +100,7 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          accepted_ranking?: boolean
           avatar_url?: string
           display_name?: string
           email?: string
@@ -32,6 +108,59 @@ export type Database = {
           updated_at?: string
         }
         Relationships: []
+      }
+      subjects: {
+        Row: {
+          created_at: string
+          id: number
+          name: string | null
+          realm: Database["public"]["Enums"]["realms"]
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          name?: string | null
+          realm?: Database["public"]["Enums"]["realms"]
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          name?: string | null
+          realm?: Database["public"]["Enums"]["realms"]
+        }
+        Relationships: []
+      }
+      user_study_progress: {
+        Row: {
+          behaviorism: number
+          gestalt: number
+          id: string
+          tsc: number
+          updated_at: string
+        }
+        Insert: {
+          behaviorism?: number
+          gestalt?: number
+          id: string
+          tsc?: number
+          updated_at?: string
+        }
+        Update: {
+          behaviorism?: number
+          gestalt?: number
+          id?: string
+          tsc?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_study_progress_id_fkey"
+            columns: ["id"]
+            isOneToOne: true
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {
@@ -41,7 +170,7 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      realms: "behaviorism" | "gestalt" | "tsc"
     }
     CompositeTypes: {
       [_ in never]: never

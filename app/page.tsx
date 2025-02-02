@@ -1,18 +1,20 @@
+import { StudySections } from '@/components/StudyComponents';
+import { SearchBar } from '@/components/SearchBar';
 import { SideBar } from '@/components/SideBar';
-import { createClient } from '@/utils/supabase/server';
+import { UserStore } from '@/components/UserStore';
 
-export default async function Home() {
-  const { auth } = await createClient();
-
-  const { data } = await auth.getUser();
-
+export default function RealmsPage() {
   return (
     <div className='flex h-screen'>
-      <SideBar activeTab='home' />
-      <main className='flex-1 h-full content-center'>
-        <h1 className='mx-auto text-xl font-poppins font-medium text-orange-700/80 text-center'>
-          Olá {data.user && (data.user.user_metadata.display_name || data.user.user_metadata.email)}
-        </h1>
+      <UserStore />
+      <SideBar activeTab='estudos' />
+      <main className='flex-1 h-full space-y-8 overflow-y-scroll py-8'>
+        <div className='flex items-center mx-auto max-w-screen-md'>
+          <div className='flex-1' />
+          <SearchBar />
+        </div>
+        <h1 className='font-bold uppercase mx-auto max-w-screen-md text-3xl'>trilha de aprendizagem</h1>
+        <StudySections />
       </main>
     </div>
   );

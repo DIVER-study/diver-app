@@ -4,7 +4,7 @@ import { createClient } from '@/utils/supabase/client';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { toast } from 'sonner';
-import { CogTecLogo } from './Svgs';
+import { CogTecLogo, ExitIcon, LibrarySideIcon, ProfileIcon, RankingIcon, StudyIcon } from './Svgs';
 
 export function SideBar({ activeTab = 'home' }: { activeTab?: string }) {
   const signOut = async () => {
@@ -23,16 +23,18 @@ export function SideBar({ activeTab = 'home' }: { activeTab?: string }) {
     }
   };
 
-  const tabRoutes: { [key: string]: string } = {
-    perfil: 'settings',
-    biblioteca: 'library',
-    home: '/',
-    reinos: 'realms',
-    ranking: 'ranking',
+  const tabRoutes: {
+    [key: string]: { href: string; icon: (props: React.SVGProps<SVGSVGElement>) => React.JSX.Element };
+  } = {
+    perfil: { href: '/settings', icon: ProfileIcon },
+    biblioteca: { href: '/library', icon: LibrarySideIcon },
+    estudos: { href: '/', icon: StudyIcon },
+    ranking: { href: '/ranking', icon: RankingIcon },
   };
 
   return (
     <>
+      {/* Popup de signout */}
       <div
         popover='auto'
         id='signout-popup'
@@ -53,31 +55,37 @@ export function SideBar({ activeTab = 'home' }: { activeTab?: string }) {
           Não
         </button>
       </div>
-      <aside className='navbar sticky top-0 left-0 flex flex-col w-64 h-screen p-4 gap-8 group bg-blue-600 text-white'>
-        <div>
-          {/* <h1 className='text-3xl font-bold mb-4' hidden>Cog Tec</h1> */}
+      {/* Side Bar */}
+      <aside className='sticky top-0 left-0 flex flex-col py-4 w-48 h-screen gap-8 text-black bg-bgbeige rounded-r-[2rem] drop-shadow-md'>
+        <div className='flex justify-start gap-4 items-center p-4'>
           <CogTecLogo
             height={40}
-            className='fill-white'
+            className='fill-logoorange'
           />
+          <span className='italic font-new-zen font-bold text-3xl text-logoorange'>CogTec</span>
         </div>
-        <nav className='flex-1 flex flex-col gap-4'>
-          {['home', 'reinos', 'biblioteca', 'ranking', 'perfil'].map((tab) => (
-            <Link
-              href={'/' + tabRoutes[tab]}
-              className='w-full text-left p-2 rounded-lg hover:bg-blue-500 data-[active=true]:bg-blue-700'
-              data-active={activeTab === tab}
-              key={tab}
-            >
-              {tab.charAt(0).toUpperCase() + tab.slice(1)}
-            </Link>
-          ))}
+        <nav className='flex-1 flex flex-col gap-4 justify-center items-center font-semibold capitalize'>
+          {['estudos', 'biblioteca', 'ranking', 'perfil'].map((tab) => {
+            const { href, icon: Icon } = tabRoutes[tab];
+            return (
+              <Link
+                href={href}
+                className='text-[#1D1D1B] text-2xl w-full p-2 rounded-r-xl hover:bg-orange-500/90 hover:text-white data-[active=true]:bg-logoorange data-[active=true]:text-white flex items-center gap-2'
+                data-active={activeTab === tab}
+                key={tab}
+              >
+                <Icon className='size-6' />
+                {tab}
+              </Link>
+            );
+          })}
         </nav>
         <button
-          className='bg-red-500 hover:bg-red-400 p-2 text-white rounded-lg'
+          className='hover:bg-orange-500/90 hover:text-white text-sm p-2 text-[#FF3535] rounded-r-lg capitalize font-light flex gap-2 items-center'
           popoverTarget='signout-popup'
           popoverTargetAction='show'
         >
+          <ExitIcon className='pointer-events-none shrink-0 size-[16px]' />
           Sair
         </button>
       </aside>

@@ -11,7 +11,7 @@ export default {
       fontFamily: {
         poppins: ['Poppins', 'Arial', 'sans-serif'],
         'jetbrains-mono': ['JetBrains Mono', 'monospace'],
-        'new-zen': ['New Zen', 'sans-serif'],
+        'new-zen': ['new-zen', 'sans-serif'],
       },
       colors: {
         background: 'var(--background)',

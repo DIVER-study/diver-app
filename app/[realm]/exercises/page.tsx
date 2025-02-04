@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { ConfirmAnswerIcon, ExitButtonIcon } from '@/components/Svgs';
 import { AlertConfirm, AlertRightAnswer, AlertWrongAnswer } from '@/components/Alerts';
+import {PopUpXp} from '@/components/PopUpXp'
 import { redirect, useSearchParams } from 'next/navigation';
 import { useUserStore } from '@/stores/userStore';
 import { UserStore } from '@/components/UserStore';
@@ -31,6 +32,7 @@ export default function ExercisePage({ params }: { params: Promise<{ realm: stri
   const { user, updateUserProgress } = useUserStore();
   const [questions, setQuestions] = useState<ExerciseType[]>([]);
   const [pending, setPending] = useState<boolean>(true);
+  const [showPopUpXp, setShowPopUpXp] = useState(false);
 
   const handleAnswer = (option: number) => {
     setSelectedAnswer(option);
@@ -55,13 +57,12 @@ export default function ExercisePage({ params }: { params: Promise<{ realm: stri
     if (currentQuestion + 1 < questions.length) {
       setCurrentQuestion((prev) => prev + 1);
     } else {
-      try {
+      // Trigger Fim das Perguntas
         setPending(true);
         const currentUserProgress = user.progress[currentRealm];
         await updateUserProgress({ [currentRealm]: currentUserProgress + 1 });
-      } finally {
-        redirect(`/${currentRealm}/exerciseTrail?temaId=${subjectId}`);
-      }
+        setPending(false);
+        setShowPopUpXp(true);
     }
   };
 
@@ -192,6 +193,11 @@ export default function ExercisePage({ params }: { params: Promise<{ realm: stri
                   message='RESPOSTA ERRADA :('
                   explanation={questions[currentQuestion].explanation}
                   action={handleGoToNextQuestion}
+                />
+              )}
+              {showPopUpXp && (
+                <PopUpXp currentRealm={currentRealm} subjectId={subjectId}
+                
                 />
               )}
             </div>

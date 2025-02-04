@@ -19,7 +19,7 @@ export type Progress = {
   tsc: number;
 };
 
-type UserState = {
+export type UserState = {
   user: {
     auth: User | undefined;
     profile: UserProfile | undefined | null;

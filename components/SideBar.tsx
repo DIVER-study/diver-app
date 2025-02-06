@@ -5,11 +5,17 @@ import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { toast } from 'sonner';
 import { CogTecLogo, ExitIcon, LibrarySideIcon, ProfileIcon, RankingIcon, StudyIcon } from './Svgs';
+import { useRef } from 'react';
+import { useUserStore } from '@/stores/userStore';
 
 export function SideBar({ activeTab }: { activeTab?: 'estudos' | 'biblioteca' | 'ranking' | 'perfil' }) {
+  const signOutPopup = useRef<HTMLDivElement>(null);
+  const { profile } = useUserStore((state) => state.user);
+
   const signOut = async () => {
-    const popup = document.getElementById('signout-popup');
-    popup?.hidePopover();
+    // const popup = document.getElementById('signout-popup');
+    // popup?.hidePopover();
+    signOutPopup.current?.hidePopover();
 
     const supabase = createClient();
 
@@ -26,7 +32,7 @@ export function SideBar({ activeTab }: { activeTab?: 'estudos' | 'biblioteca' | 
   const tabRoutes: {
     [key: string]: { href: string; icon: (props: React.SVGProps<SVGSVGElement>) => React.JSX.Element };
   } = {
-    perfil: { href: '/profile', icon: ProfileIcon },
+    perfil: { href: `/profile/${profile?.display_name || ''}`, icon: ProfileIcon },
     biblioteca: { href: '/library', icon: LibrarySideIcon },
     estudos: { href: '/', icon: StudyIcon },
     ranking: { href: '/ranking', icon: RankingIcon },
@@ -38,6 +44,7 @@ export function SideBar({ activeTab }: { activeTab?: 'estudos' | 'biblioteca' | 
       <div
         popover='auto'
         id='signout-popup'
+        ref={signOutPopup}
         className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 p-4 hidden grid-cols-2 gap-4 [&:popover-open]:grid ring-1 ring-neutral-500 rounded-lg'
       >
         <div className='col-span-2'>Você tem Certeza?? :(</div>

@@ -4,8 +4,8 @@ import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { ConfirmAnswerIcon, ExitButtonIcon } from '@/components/Svgs';
 import { AlertConfirm, AlertRightAnswer, AlertWrongAnswer } from '@/components/Alerts';
-import {PopUpXp} from '@/components/PopUpXp'
-import { redirect, useSearchParams } from 'next/navigation';
+import { PopUpXp } from '@/components/PopUpXp';
+import { useSearchParams } from 'next/navigation';
 import { useUserStore } from '@/stores/userStore';
 import { UserStore } from '@/components/UserStore';
 import { Database } from '@/database.types';
@@ -58,11 +58,11 @@ export default function ExercisePage({ params }: { params: Promise<{ realm: stri
       setCurrentQuestion((prev) => prev + 1);
     } else {
       // Trigger Fim das Perguntas
-        setPending(true);
-        const currentUserProgress = user.progress[currentRealm];
-        await updateUserProgress({ [currentRealm]: currentUserProgress + 1 });
-        setPending(false);
-        setShowPopUpXp(true);
+      setPending(true);
+      const currentUserProgress = user.progress[currentRealm];
+      await updateUserProgress({ [currentRealm]: currentUserProgress + 1 });
+      setPending(false);
+      setShowPopUpXp(true);
     }
   };
 
@@ -196,8 +196,9 @@ export default function ExercisePage({ params }: { params: Promise<{ realm: stri
                 />
               )}
               {showPopUpXp && (
-                <PopUpXp currentRealm={currentRealm} subjectId={subjectId}
-                
+                <PopUpXp
+                  currentRealm={currentRealm}
+                  subjectId={subjectId}
                 />
               )}
             </div>

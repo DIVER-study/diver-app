@@ -10,7 +10,7 @@ type SectionProps = {
 export function LibrarySection({ sectionName }: SectionProps) {
 
   return (
-    <div className='space-y-1 mx-auto max-w-screen-md'>
+    <div className='space-y-1 mx-auto max-w-(--breakpoint-md)'>
       <div className='flex flex-row items-center p-1'>
         <div className='flex-1 flex items-center gap-2'>
           <h2 className='uppercase text-2xl'>{sectionName}</h2>
@@ -32,7 +32,7 @@ function ExerciseItem({ title }: { title: string }) {
   return (
     <Link
       href={`/material-study`}
-      className='w-32 aspect-[7/8] snap-center space-y-2'
+      className='w-32 aspect-7/8 snap-center space-y-2'
     >
       <div className='rounded-lg bg-black size-full' />
       <p className='text-sm uppercase text-center'>{title}</p>

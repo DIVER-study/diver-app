@@ -46,7 +46,7 @@ function LoginForm() {
         name='email'
         type='email'
         required
-        className='p-2 rounded-md bg-neutral-200 focus:outline-none focus:ring-2 focus:ring-blue-500'
+        className='p-2 rounded-md bg-neutral-200 focus:outline-hidden focus:ring-2 focus:ring-blue-500'
       />
 
       <label
@@ -60,11 +60,11 @@ function LoginForm() {
         name='password'
         type='password'
         required
-        className='p-2 rounded-md bg-neutral-200 focus:outline-none focus:ring-2 focus:ring-blue-500'
+        className='p-2 rounded-md bg-neutral-200 focus:outline-hidden focus:ring-2 focus:ring-blue-500'
       />
 
       <button
-        className='p-2 mt-4 text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500'
+        className='p-2 mt-4 text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-hidden focus:ring-2 focus:ring-blue-500'
         type='submit'
       >
         Log in

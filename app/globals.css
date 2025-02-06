@@ -40,3 +40,6 @@ layer(base);
 
   --drop-shadow-cogtec: 0 4 4 0 rgb(0 0 0 / 0.25);
 }
+
+@layer base {
+}

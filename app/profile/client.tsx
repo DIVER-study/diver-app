@@ -6,7 +6,7 @@ import Image from 'next/image';
 
 export function ProfileClientPage({ profile }: { profile: UserState['user']['profile'] }) {
   return (
-    <div className='bg-white/80 rounded-3xl px-6 pb-8 pt-2 space-y-8 shadow-md max-w-(--breakpoint-lg) mx-auto h-min'>
+    <div className='bg-white/80 rounded-3xl px-6 pb-8 pt-2 space-y-8 shadow-md max-w-screen-lg mx-auto h-min'>
       <UserProfile profile={profile} />
       <UserStatistics />
       <UserAchivments />
@@ -43,7 +43,7 @@ function UserProfile({ profile }: { profile: UserState['user']['profile'] }) {
 
 function UserStatistics() {
   return (
-    <div className='flex flex-col gap-4 max-w-(--breakpoint-md) mx-auto text-4xl font-semibold'>
+    <div className='flex flex-col gap-4 max-w-screen-md mx-auto text-4xl font-semibold'>
       Status
       <div className='flex flex-row gap-4'>
         <div className='p-4 bg-white shadow-[0_4px_4px_2px_rgba(173,173,173,0.25)] rounded-xl flex gap-2 items-center justify-between text-3xl flex-1'>
@@ -67,7 +67,7 @@ function UserStatistics() {
 
 function UserAchivments() {
   return (
-    <div className='flex flex-col gap-4 max-w-(--breakpoint-md) mx-auto text-4xl font-semibold mb-2'>
+    <div className='flex flex-col gap-4 max-w-screen-md mx-auto text-4xl font-semibold mb-2'>
       Conquistas
       <div className='grid grid-cols-2 gap-4'>
         {new Array(4).fill('').map((_, idx) => (

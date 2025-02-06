@@ -82,7 +82,7 @@ export default function SignupForm() {
         name='display_name'
         type='text'
         required
-        className='p-2 rounded-md bg-neutral-200 focus:outline-hidden focus:ring-2 focus:ring-blue-500'
+        className='p-2 rounded-md bg-neutral-200 focus:outline-none focus:ring-2 focus:ring-blue-500'
       />
 
       <label
@@ -96,7 +96,7 @@ export default function SignupForm() {
         name='email'
         type='email'
         required
-        className='p-2 rounded-md bg-neutral-200 focus:outline-hidden focus:ring-2 focus:ring-blue-500 invalid:ring-red-500 invalid:text-red-600 valid:valid:text-green-600 valid:ring-green-500'
+        className='p-2 rounded-md bg-neutral-200 focus:outline-none focus:ring-2 focus:ring-blue-500 invalid:ring-red-500 invalid:text-red-600 valid:valid:text-green-600 valid:ring-green-500'
       />
 
       <label
@@ -110,7 +110,7 @@ export default function SignupForm() {
         name='password'
         type='password'
         required
-        className='p-2 rounded-md bg-neutral-200 focus:outline-hidden focus:ring-2 focus:ring-blue-500 invalid:ring-red-500 invalid:text-red-600 valid:valid:text-green-600 valid:ring-green-500'
+        className='p-2 rounded-md bg-neutral-200 focus:outline-none focus:ring-2 focus:ring-blue-500 invalid:ring-red-500 invalid:text-red-600 valid:valid:text-green-600 valid:ring-green-500'
       />
 
       <label
@@ -124,11 +124,11 @@ export default function SignupForm() {
         name='confirm_password'
         type='password'
         required
-        className='p-2 rounded-md bg-neutral-200 focus:outline-hidden focus:ring-2 focus:ring-blue-500 invalid:ring-red-500 invalid:text-red-600 valid:valid:text-green-600 valid:ring-green-500'
+        className='p-2 rounded-md bg-neutral-200 focus:outline-none focus:ring-2 focus:ring-blue-500 invalid:ring-red-500 invalid:text-red-600 valid:valid:text-green-600 valid:ring-green-500'
       />
 
       <button
-        className='p-2 mt-4 text-white bg-green-600 rounded-md hover:bg-green-600/80 focus:outline-hidden focus:ring-2 focus:ring-green-500'
+        className='p-2 mt-4 text-white bg-green-600 rounded-md hover:bg-green-600/80 focus:outline-none focus:ring-2 focus:ring-green-500'
         type='submit'
       >
         Cadastre-se

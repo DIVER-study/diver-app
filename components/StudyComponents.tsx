@@ -41,7 +41,7 @@ export function StudySection({ sectionName, sectionType, progress }: SectionProp
   }, [sectionType]);
 
   return (
-    <div className='space-y-1 mx-auto max-w-(--breakpoint-md)'>
+    <div className='space-y-1 mx-auto max-w-screen-md'>
       <div className='flex flex-row items-center p-1'>
         <div className='flex-1 flex items-center gap-2'>
           <h2 className='uppercase text-2xl'>{sectionName}</h2>
@@ -78,7 +78,7 @@ type ExerciseItemProps = {
 function ExerciseItem({ title, temaId, sectionType, skeleton }: ExerciseItemProps) {
   if (skeleton)
     return (
-      <div className='w-32 aspect-7/8 snap-center space-y-2'>
+      <div className='w-32 aspect-[7/8] snap-center space-y-2'>
         <div className='rounded-lg bg-neutral-500 size-full animate-pulse' />
         <div className='bg-neutral-500 h-4 rounded-lg animate-pulse'></div>
       </div>
@@ -86,7 +86,7 @@ function ExerciseItem({ title, temaId, sectionType, skeleton }: ExerciseItemProp
   return (
     <Link
       href={`/${sectionType}/exerciseTrail?temaId=${temaId}`}
-      className='w-32 aspect-7/8 snap-center space-y-2'
+      className='w-32 aspect-[7/8] snap-center space-y-2'
     >
       <div className='rounded-lg bg-black size-full' />
       <p className='text-sm uppercase text-center'>{title}</p>

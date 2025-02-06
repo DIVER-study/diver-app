@@ -10,7 +10,7 @@ import { useUserStore } from '@/stores/userStore';
 
 export function SideBar({ activeTab }: { activeTab?: 'estudos' | 'biblioteca' | 'ranking' | 'perfil' }) {
   const signOutPopup = useRef<HTMLDivElement>(null);
-  const { display_name } = useUserStore((state) => state.user.profile!);
+  const { profile } = useUserStore((state) => state.user);
 
   const signOut = async () => {
     // const popup = document.getElementById('signout-popup');
@@ -32,7 +32,7 @@ export function SideBar({ activeTab }: { activeTab?: 'estudos' | 'biblioteca' | 
   const tabRoutes: {
     [key: string]: { href: string; icon: (props: React.SVGProps<SVGSVGElement>) => React.JSX.Element };
   } = {
-    perfil: { href: `/profile/${display_name}`, icon: ProfileIcon },
+    perfil: { href: `/profile/${profile?.display_name || ''}`, icon: ProfileIcon },
     biblioteca: { href: '/library', icon: LibrarySideIcon },
     estudos: { href: '/', icon: StudyIcon },
     ranking: { href: '/ranking', icon: RankingIcon },

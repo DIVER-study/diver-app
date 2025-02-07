@@ -94,14 +94,14 @@ export default function ExercisePage({ params }: { params: Promise<{ realm: stri
   return (
     <div className='flex flex-col items-center justify-center min-h-screen bg-white-100 p-10'>
       {(showAlertCertaResposta || showAlertRespostaErrada || showAlertExit) && (
-        <div className='absolute inset-0 bg-white opacity-60 backdrop-blur-sm z-40 content-center'></div>
+        <div className='absolute inset-0 bg-white opacity-60 backdrop-blur-xs z-40 content-center'></div>
       )}
 
       <div
         hidden={!pending}
         className='absolute inset-0 bg-white z-40 content-center'
       >
-        <div className='size-20 bg-gradient-to-r from-black to-neutral-500 animate-spin rounded-full mx-auto'></div>
+        <div className='size-20 bg-linear-to-r from-black to-neutral-500 animate-spin rounded-full mx-auto'></div>
       </div>
       <UserStore />
       <div className='flex items-center justify-center w-full pl-0 gap-2 mr-[15%]'>

@@ -14,7 +14,7 @@ export const PopUpXp = ({ currentRealm, subjectId }: { currentRealm: string; sub
     <div className='flex flex-col items-center justify-center min-h-screen bg-white text-black p-6 absolute top-0 left-0 w-full'>
       <h1
         data-animate={animate}
-        className='text-3xl font-bold mb-6 transition-transform transform data-[animate]:scale-125'
+        className='text-3xl font-bold mb-6 transition-transform transform data-animate:scale-125'
       >
         PARABÉNS
       </h1>

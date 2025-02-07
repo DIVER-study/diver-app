@@ -7,7 +7,7 @@ export function SearchBar() {
         type='search'
         className='border-2 border-black rounded-lg w-40 focus:w-80 transition-all px-2 focus:py-1'
       />
-      <SearchIcon className='flex-shrink size-6' />
+      <SearchIcon className='shrink size-6' />
     </div>
   );
 }

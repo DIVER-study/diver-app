@@ -1,34 +1,42 @@
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap')
+layer(base);
 
-@import url('https://use.typekit.net/srw5lkl.css');
+@import url('https://use.typekit.net/srw5lkl.css') layer(base);
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
 
-@layer base {
-  :root {
-    --background: #ffffff;
-    --foreground: #171717;
-    --color-logoorage: #e66e05;
-    --color-beige: #fcf0c2;
-  }
+@theme {
+  --font-poppins: Poppins, Arial, sans-serif;
+  --font-jetbrains-mono: JetBrains Mono, monospace;
+  --font-new-zen: new-zen, sans-serif;
 
-  .dark {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-    --color-logoorage: #e66e05;
-    --color-beige: #fcf0c2;
-  }
+  --color-logo-100: #fcf0c2;
+  --color-logo-200: #fd7401;
+  --color-logo-300: #884e1d;
 
-  * {
-    padding: 0;
-    margin: 0;
-  }
+  --color-beige-100: #fcf9ef;
+  --color-beige-200: #f8f3e0;
+  --color-beige-300: #f0ebd8;
 
-  body {
-    color: var(--foreground);
-    background: var(--background);
-    font-family: Poppins, Arial, Helvetica, sans-serif;
-  }
+  --color-behaviorism-100: #f8bfbf;
+  --color-behaviorism-200: #cc9d9d;
+
+  --color-gestalt-100: #b4d0f0;
+  --color-gestalt-200: #709bcc;
+
+  --color-tsc-100: #f3bb8a;
+  --color-tsc-200: #bf936d;
+
+  --color-ranking-gold: #ffd777;
+  --color-ranking-silver: #92959d;
+  --color-ranking-bronze: #d66f4e;
+
+  --color-finished-100: #81de86;
+  --color-finished-200: #4a804d;
+
+  --color-warning: #ff3535;
+
+  --shadow-cogtec: 0 4px 4px 0 rgb(0 0 0 / 0.25);
+
+  --drop-shadow-cogtec: 0 4px 4px 0 rgb(0 0 0 / 0.25);
 }

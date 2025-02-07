@@ -14,15 +14,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
-      <body className='antialiased bg-[#F8F3E0] font-new-zen'>
+      <body className='antialiased bg-beige-200 font-new-zen'>
         <Toaster
           richColors
           position='top-right'
-          toastOptions={
-            {
-              // unstyled: true,
-            }
-          }
         />
         {children}
       </body>

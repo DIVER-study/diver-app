@@ -12,11 +12,16 @@ export default function ClientRankingPage() {
 
   useEffect(() => {
     const prepareData = async () => {
-      const { data: users } = await supabase.from('profiles').select('*').eq('accepted_ranking', true);
+      const { data: users } = await supabase
+      .from('profiles')
+      .select('*')
+      .eq('accepted_ranking', true)
+      .order('progress', {ascending: false});
       setProfiles(users || []);
     };
     prepareData();
   });
+
 
   return (
     <main className='flex-1 overflow-y-scroll content-center'>

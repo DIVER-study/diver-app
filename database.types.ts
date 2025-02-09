@@ -13,19 +13,16 @@ export type Database = {
         Row: {
           user_id: string;    // UUID do usuário (Foreign Key para profiles)
           module_id: number;  // ID do módulo concluído
-          subject_id: number; // ID do tema associado
           completed_at: string; // Timestamp da conclusão
         };
         Insert: {
           user_id: string;
           module_id: number;
-          subject_id: number;
           completed_at?: string; // Pode ser opcional
         };
         Update: {
           user_id?: string;
           module_id?: number;
-          subject_id?: number;
           completed_at?: string;
         };
         Relationships: [
@@ -42,16 +39,10 @@ export type Database = {
             isOneToOne: false;
             referencedRelation: "modules";
             referencedColumns: ["id"];
-          },
-          {
-            foreignKeyName: "user_progress_subject_id_fkey";
-            columns: ["subject_id"];
-            isOneToOne: false;
-            referencedRelation: "subjects";
-            referencedColumns: ["id"];
           }
         ];
-      };
+    };
+    
 
       exercises: {
         Row: {

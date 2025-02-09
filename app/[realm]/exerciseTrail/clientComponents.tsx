@@ -45,7 +45,7 @@ export function ModuleList({ subjectId, realm }: { subjectId: number; realm: str
 
         if (modulesError) throw modulesError;
 
-        setModules(modulesData || []);
+        setModules((modulesData || []) as ModuleType[]);
 
         const { data: progressData, error: progressError } = await supabase
           .from('user_progress')

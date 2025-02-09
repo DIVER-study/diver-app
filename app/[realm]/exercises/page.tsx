@@ -53,68 +53,74 @@ export default function ExercisePage({ params }: { params: Promise<{ realm: stri
   };
 
   const handleGoToNextQuestion = async () => {
-  setShowAlertCertaResposta(false);
-  setShowAlertRespostaErrada(false);
-
-  if (currentQuestion + 1 < questions.length) {
-    setCurrentQuestion((prev) => prev + 1);
-  } else {
-    try {
-      const supabase = createClient(); // 🔹 Criando o Supabase corretamente
-
-      const { data: userData, error: userError } = await supabase.auth.getUser();
-
-      if (userError || !userData?.user) {
-        console.error('Erro ao obter usuário autenticado:', userError);
-        setPending(false);
-        return;
-      }
-
-      const userId = userData.user.id;
-
-      // 🔹 Verifica se o módulo já foi concluído pelo usuário
-      const { data: existingProgress, error: fetchError } = await supabase
-        .from('user_progress')
-        .select('module_id')
-        .eq('user_id', userId)
-        .eq('module_id', moduleId);
-
-      if (fetchError) {
-        console.error('Erro ao buscar progresso do usuário:', fetchError);
-        setPending(false);
-        return;
-      }
-
-      if (!existingProgress || existingProgress.length === 0) {
-        // 🔹 Inserindo progresso do usuário no banco
-        const { error: progressError } = await supabase.from('user_progress').insert([
-          {
-            user_id: userId,
-            module_id: moduleId,
-            subject_id: subjectId,
-            completed_at: new Date().toISOString(), // ✅ Correção no formato da data
-          },
-        ]);
-
-        if (progressError) {
-          console.error('Erro ao salvar progresso:', progressError);
+    setShowAlertCertaResposta(false);
+    setShowAlertRespostaErrada(false);
+  
+    if (currentQuestion + 1 < questions.length) {
+      setCurrentQuestion((prev) => prev + 1);
+    } else {
+      try {
+        const supabase = createClient(); // Criando o Supabase corretamente
+  
+        const { data: userData, error: userError } = await supabase.auth.getUser();
+  
+        if (userError || !userData?.user) {
+          console.error('Erro ao obter usuário autenticado:', userError);
           setPending(false);
           return;
         }
+  
+        const userId = userData.user.id;
+  
+        if (!userId || !moduleId || !subjectId) {
+          console.error('Erro: userId, moduleId ou subjectId estão indefinidos.');
+          return;
+        }
+  
+        //  Verifica se o módulo já foi concluído pelo usuário
+        const { data: existingProgress, error: fetchError } = await supabase
+          .from('user_progress')
+          .select('module_id')
+          .eq('user_id', userId)
+          .eq('module_id', moduleId);
+  
+        if (fetchError) {
+          console.error('Erro ao buscar progresso do usuário:', fetchError);
+          setPending(false);
+          return;
+        }
+  
+        if (!existingProgress || existingProgress.length === 0) {
+          // Inserindo progresso do usuário no banco
+          const { error: progressError } = await supabase.from('user_progress').insert([
+            {
+              user_id: userId,
+              module_id: moduleId,
+              completed_at: new Date().toISOString(), // Correção no formato da data
+            },
+          ]);
+  
+          if (progressError) {
+            console.error('Erro ao salvar progresso:', progressError.message);
+            console.error('Detalhes do erro:', progressError);
+            setPending(false);
+            return;
+          }
+        }
+      } catch (error) {
+        console.error('Erro inesperado ao salvar progresso:', error);
+        setPending(false);
       }
-    } catch (error) {
-      console.error('Erro ao salvar progresso:', error);
+  
+      // Trigger Fim das Perguntas
+      setPending(true);
+      const currentUserProgress = user.progress[currentRealm];
+      await updateUserProgress({ [currentRealm]: currentUserProgress + 1 });
       setPending(false);
+      setShowPopUpXp(true);
     }
-
-    // 🔹 Trigger Fim das Perguntas
-    setPending(true);
-    const currentUserProgress = user.progress[currentRealm];
-    await updateUserProgress({ [currentRealm]: currentUserProgress + 1 });
-    setPending(false);
-    setShowPopUpXp(true);
-  }
-};
+  };
+  
   
 
   const handleCancelExit = () => {

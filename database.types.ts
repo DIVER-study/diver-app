@@ -9,6 +9,50 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      user_progress: {
+        Row: {
+          user_id: string;    // UUID do usuário (Foreign Key para profiles)
+          module_id: number;  // ID do módulo concluído
+          subject_id: number; // ID do tema associado
+          completed_at: string; // Timestamp da conclusão
+        };
+        Insert: {
+          user_id: string;
+          module_id: number;
+          subject_id: number;
+          completed_at?: string; // Pode ser opcional
+        };
+        Update: {
+          user_id?: string;
+          module_id?: number;
+          subject_id?: number;
+          completed_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "user_progress_user_id_fkey";
+            columns: ["user_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "user_progress_module_id_fkey";
+            columns: ["module_id"];
+            isOneToOne: false;
+            referencedRelation: "modules";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "user_progress_subject_id_fkey";
+            columns: ["subject_id"];
+            isOneToOne: false;
+            referencedRelation: "subjects";
+            referencedColumns: ["id"];
+          }
+        ];
+      };
+
       exercises: {
         Row: {
           answer: number

@@ -7,66 +7,96 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 
-// Types
+// Tipos de módulo
 type ModuleType = {
-  description: string;
   id: number;
   subject_id: number;
+  description: string;
+  level: 'easy' | 'medium' | 'difficult';
 };
+
 export type Realms = Database['public']['Enums']['realms'];
 
-export function ModuleList({ subjectId, realm }: { subjectId: number; realm: Realms }) {
+export function ModuleList({ subjectId, realm }: { subjectId: number; realm: string }) {
   const supabase = createClient();
 
   const [pending, setPending] = useState<boolean>(true);
   const [modules, setModules] = useState<ModuleType[]>([]);
+  const [completedModules, setCompletedModules] = useState<{ module_id: number; subject_id: number }[]>([]);
 
   useEffect(() => {
-    const init = async () => {
+    const fetchModules = async () => {
       try {
-        const { data, error } = await supabase
-          .from('modules')
-          .select('id, subject_id, description')
-          .eq('subject_id', subjectId);
-        if (error) throw error;
+        const {
+          data: { user },
+          error: userError,
+        } = await supabase.auth.getUser();
 
-        setModules(data);
-        setPending(false);
-      } catch (error: unknown) {
-        if (error instanceof Error) {
-          console.error('Erro ao buscar módulos:', error.message);
-          toast.error('Erro ao buscar módulos: ' + error.message);
-        } else {
-          console.error('Erro desconhecido:', error);
-          toast.error('Erro desconhecido');
+        if (userError || !user) {
+          toast.error('Erro ao obter usuário autenticado.');
+          return;
         }
+
+        const { data: modulesData, error: modulesError } = await supabase
+          .from('modules')
+          .select('id, subject_id, description, level')
+          .eq('subject_id', subjectId)
+          .order('id', { ascending: true });
+
+        if (modulesError) throw modulesError;
+
+        setModules((modulesData || []) as ModuleType[]);
+
+        const { data: progressData, error: progressError } = await supabase
+          .from('user_progress')
+          .select('module_id, subject_id')
+          .eq('user_id', user.id);
+
+        if (progressError) throw progressError;
+
+        setCompletedModules(progressData || []);
+      } catch (error) {
+        console.error('Erro ao carregar módulos:', error);
+        toast.error('Erro ao carregar módulos.');
+      } finally {
+        setPending(false);
       }
     };
-    init();
-  }, [supabase, subjectId]);
 
-  if (pending)
+    fetchModules();
+  }, [subjectId, supabase]);
+
+  if (pending) {
     return (
       <div className='flex flex-col items-center flex-1 gap-4'>
         {new Array(3).fill('').map((_, index) => (
           <div
             key={index}
-            className='w-full h-[40px] rounded-xl bg-neutral-500 animate-pulse'
+            className='inline-flex min-w-fit min-h-fit p-4 rounded-full bg-gray-300 animate-pulse'
           />
         ))}
       </div>
     );
+  }
+
   return (
     <div className='flex flex-col items-center flex-1 gap-4'>
       {modules.length > 0 ? (
-        modules.map(({ id, subject_id, description }) => {
-          const linkHref = `/${realm}/exercises?moduleId=${id}&temaId=${subject_id}`;
+        modules.map(({ id, description }, index) => {
+          const highestCompletedModule = completedModules
+            .filter(({ subject_id }) => subject_id === subjectId)
+            .reduce((max, { module_id }) => Math.max(max, module_id), 0); // Encontra o maior módulo concluído
+
+          const isUnlocked =
+            index === 0 || // O primeiro módulo sempre fica desbloqueado
+            id <= highestCompletedModule + 1; // Mantém todos os anteriores e o próximo desbloqueados
 
           return (
             <Link
-              href={linkHref}
-              className='text-center p-2 rounded-xl border-2 border-black hover:bg-neutral-800 hover:text-white w-full'
               key={id}
+              data-disable={!isUnlocked}
+              href={`/${realm}/exercises?moduleId=${id}&temaId=${subjectId}`}
+              className='flex items-center justify-center p-4 rounded-full border-4 border-black bg-white hover:bg-neutral-800 hover:text-white transition-all duration-200 shadow-xl text-sm font-medium text-center whitespace-nowrap data-[disable=true]:pointer-events-none data-[disable=true]:cursor-not-allowed'
             >
               {description}
             </Link>
@@ -89,8 +119,10 @@ export function SubjectInfo({ subjectId, realm }: { subjectId: number; realm: Re
     const init = async () => {
       try {
         const { data, error } = await supabase.from('subjects').select('name').eq('id', subjectId).eq('realm', realm);
+
         if (error) throw error;
-        setSubject(data[0].name || '');
+
+        setSubject(data?.[0]?.name || '');
         setPending(false);
       } catch (error: unknown) {
         if (error instanceof Error) {
@@ -114,6 +146,7 @@ export function SubjectInfo({ subjectId, realm }: { subjectId: number; realm: Re
         <div className='h-[40px] w-full rounded-lg bg-neutral-500 animate-pulse'></div>
       </div>
     );
+
   return (
     <div className='border-4 border-black rounded-xl w-[25rem] h-[17rem] p-6'>
       <h2 className='text-lg font-semibold pb-4'>{subject || 'Tema não encontrado.'}</h2>

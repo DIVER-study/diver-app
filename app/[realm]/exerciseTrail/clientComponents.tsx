@@ -55,10 +55,10 @@ export function ModuleList({ subjectId, realm }: { subjectId: number; realm: str
         if (progressError) throw progressError;
 
         setCompletedModules(progressData || []);
-        setPending(false);
       } catch (error) {
         console.error('Erro ao carregar módulos:', error);
         toast.error('Erro ao carregar módulos.');
+      } finally {
         setPending(false);
       }
     };
@@ -68,41 +68,38 @@ export function ModuleList({ subjectId, realm }: { subjectId: number; realm: str
 
   if (pending) {
     return (
-      <div className="flex flex-col items-center flex-1 gap-4">
+      <div className='flex flex-col items-center flex-1 gap-4'>
         {new Array(3).fill('').map((_, index) => (
-          <div key={index} className="inline-flex min-w-fit min-h-fit p-4 rounded-full bg-gray-300 animate-pulse" />
+          <div
+            key={index}
+            className='inline-flex min-w-fit min-h-fit p-4 rounded-full bg-gray-300 animate-pulse'
+          />
         ))}
       </div>
     );
   }
 
   return (
-    <div className="flex flex-col items-center flex-1 gap-4">
+    <div className='flex flex-col items-center flex-1 gap-4'>
       {modules.length > 0 ? (
-        modules.map((module, index) => {
+        modules.map(({ id, description }, index) => {
           const highestCompletedModule = completedModules
-            .filter((m) => m.subject_id === subjectId)
-            .reduce((max, m) => Math.max(max, m.module_id), 0); // Encontra o maior módulo concluído
+            .filter(({ subject_id }) => subject_id === subjectId)
+            .reduce((max, { module_id }) => Math.max(max, module_id), 0); // Encontra o maior módulo concluído
 
           const isUnlocked =
             index === 0 || // O primeiro módulo sempre fica desbloqueado
-            module.id <= highestCompletedModule + 1; // Mantém todos os anteriores e o próximo desbloqueados
+            id <= highestCompletedModule + 1; // Mantém todos os anteriores e o próximo desbloqueados
 
           return (
-            <div key={module.id} className="w-full flex justify-center">
-              {isUnlocked ? (
-                <Link
-                  href={`/${realm}/exercises?moduleId=${module.id}&temaId=${subjectId}`}
-                  className="inline-flex items-center justify-center min-w-fit min-h-fit p-4 rounded-full border-4 border-black bg-white hover:bg-neutral-800 hover:text-white transition-all duration-200 shadow-xl text-sm font-medium text-center whitespace-nowrap"
-                >
-                  {module.description}
-                </Link>
-              ) : (
-                <div className="inline-flex items-center justify-center min-w-fit min-h-fit p-4 rounded-full border-4 border-gray-400 bg-gray-300 text-gray-600 cursor-not-allowed shadow-xl text-sm whitespace-nowrap">
-                  🔒 {module.description}
-                </div>
-              )}
-            </div>
+            <Link
+              key={id}
+              data-disable={!isUnlocked}
+              href={`/${realm}/exercises?moduleId=${id}&temaId=${subjectId}`}
+              className='flex items-center justify-center p-4 rounded-full border-4 border-black bg-white hover:bg-neutral-800 hover:text-white transition-all duration-200 shadow-xl text-sm font-medium text-center whitespace-nowrap data-[disable=true]:pointer-events-none data-[disable=true]:cursor-not-allowed'
+            >
+              {description}
+            </Link>
           );
         })
       ) : (
@@ -121,11 +118,7 @@ export function SubjectInfo({ subjectId, realm }: { subjectId: number; realm: Re
   useEffect(() => {
     const init = async () => {
       try {
-        const { data, error } = await supabase
-          .from('subjects')
-          .select('name')
-          .eq('id', subjectId)
-          .eq('realm', realm);
+        const { data, error } = await supabase.from('subjects').select('name').eq('id', subjectId).eq('realm', realm);
 
         if (error) throw error;
 
@@ -147,26 +140,29 @@ export function SubjectInfo({ subjectId, realm }: { subjectId: number; realm: Re
 
   if (pending)
     return (
-      <div className="border-4 border-black rounded-xl w-[25rem] h-[17rem] p-6">
-        <div className="h-[1.75rem] mb-4 rounded-lg bg-neutral-500 animate-pulse"></div>
-        <div className="mb-4 h-[8rem] rounded-lg bg-neutral-500 animate-pulse"></div>
-        <div className="h-[40px] w-full rounded-lg bg-neutral-500 animate-pulse"></div>
+      <div className='border-4 border-black rounded-xl w-[25rem] h-[17rem] p-6'>
+        <div className='h-[1.75rem] mb-4 rounded-lg bg-neutral-500 animate-pulse'></div>
+        <div className='mb-4 h-[8rem] rounded-lg bg-neutral-500 animate-pulse'></div>
+        <div className='h-[40px] w-full rounded-lg bg-neutral-500 animate-pulse'></div>
       </div>
     );
 
   return (
-    <div className="border-4 border-black rounded-xl w-[25rem] h-[17rem] p-6">
-      <h2 className="text-lg font-semibold pb-4">{subject || 'Tema não encontrado.'}</h2>
-      <p className="text-xs pb-8">
+    <div className='border-4 border-black rounded-xl w-[25rem] h-[17rem] p-6'>
+      <h2 className='text-lg font-semibold pb-4'>{subject || 'Tema não encontrado.'}</h2>
+      <p className='text-xs pb-8'>
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis magni libero perspiciatis laudantium illum
         ea cumque porro repellat, quas ducimus beatae recusandae culpa harum nobis vero natus ex sapiente? Soluta?
       </p>
 
-      <div className="flex items-center justify-end">
-        <LibraryIconWithoutCircle width={40} height={40} />
+      <div className='flex items-center justify-end'>
+        <LibraryIconWithoutCircle
+          width={40}
+          height={40}
+        />
         <Link
-          href="/library"
-          className="text-sm font-medium h-7 pl-2 pr-2 rounded-md border-2 border-b-4 border-r-4 border-black hover:bg-neutral-800 hover:text-white uppercase w-fit"
+          href='/library'
+          className='text-sm font-medium h-7 pl-2 pr-2 rounded-md border-2 border-b-4 border-r-4 border-black hover:bg-neutral-800 hover:text-white uppercase w-fit'
         >
           EXPLICAÇÃO
         </Link>

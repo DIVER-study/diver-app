@@ -9,58 +9,24 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      user_progress: {
+      badges: {
         Row: {
-            id: number;           // Identificador único da progressão (Primary Key)
-            user_id: string;      // UUID do usuário (Foreign Key para profiles)
-            module_id: number;    // ID do módulo concluído (Foreign Key para modules)
-            subject_id: number;   // ID do tema/assunto relacionado (Foreign Key para subjects)
-            completed_at: string; // Timestamp da conclusão
-        };
+          created_at: string
+          id: number
+          name: string | null
+        }
         Insert: {
-            user_id: string;
-            module_id: number;
-            subject_id: number;   // Agora obrigatório para saber a qual tema pertence
-            completed_at?: string; // Pode ser opcional, será preenchido automaticamente
-        };
+          created_at?: string
+          id?: number
+          name?: string | null
+        }
         Update: {
-            user_id?: string;
-            module_id?: number;
-            subject_id?: number;
-            completed_at?: string;
-        };
-        Relationships: [
-            {
-                foreignKeyName: "user_progress_user_id_fkey";
-                columns: ["user_id"];
-                isOneToOne: false;
-                referencedRelation: "profiles";
-                referencedColumns: ["id"];
-            },
-            {
-                foreignKeyName: "user_progress_module_id_fkey";
-                columns: ["module_id"];
-                isOneToOne: false;
-                referencedRelation: "modules";
-                referencedColumns: ["id"];
-            },
-            {
-                foreignKeyName: "user_progress_subject_id_fkey";
-                columns: ["subject_id"];
-                isOneToOne: false;
-                referencedRelation: "subjects";
-                referencedColumns: ["id"];
-            }
-        ];
-        Indexes: [
-            {
-                name: "user_progress_unique";
-                columns: ["user_id", "module_id"];
-                isUnique: true; // Garante que um usuário não possa registrar o mesmo módulo mais de uma vez
-            }
-        ];
-    };
-  
+          created_at?: string
+          id?: number
+          name?: string | null
+        }
+        Relationships: []
+      }
       exercises: {
         Row: {
           answer: number
@@ -101,6 +67,7 @@ export type Database = {
       }
       modules: {
         Row: {
+          badge: number | null
           created_at: string
           description: string
           id: number
@@ -109,6 +76,7 @@ export type Database = {
           subject_id: number
         }
         Insert: {
+          badge?: number | null
           created_at?: string
           description?: string
           id?: number
@@ -117,6 +85,7 @@ export type Database = {
           subject_id: number
         }
         Update: {
+          badge?: number | null
           created_at?: string
           description?: string
           id?: number
@@ -125,6 +94,13 @@ export type Database = {
           subject_id?: number
         }
         Relationships: [
+          {
+            foreignKeyName: "modules_badge_fkey"
+            columns: ["badge"]
+            isOneToOne: false
+            referencedRelation: "badges"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "modules_subject_id_fkey"
             columns: ["subject_id"]
@@ -138,25 +114,31 @@ export type Database = {
         Row: {
           accepted_ranking: boolean
           avatar_url: string
+          badges: Json | null
           display_name: string
           email: string
           id: string
+          progress: number
           updated_at: string
         }
         Insert: {
           accepted_ranking?: boolean
           avatar_url?: string
+          badges?: Json | null
           display_name?: string
           email: string
           id: string
+          progress?: number
           updated_at?: string
         }
         Update: {
           accepted_ranking?: boolean
           avatar_url?: string
+          badges?: Json | null
           display_name?: string
           email?: string
           id?: string
+          progress?: number
           updated_at?: string
         }
         Relationships: []
@@ -181,6 +163,52 @@ export type Database = {
           realm?: Database["public"]["Enums"]["realms"]
         }
         Relationships: []
+      }
+      user_progress: {
+        Row: {
+          completed_at: string | null
+          id: number
+          module_id: number | null
+          subject_id: number | null
+          user_id: string
+        }
+        Insert: {
+          completed_at?: string | null
+          id?: number
+          module_id?: number | null
+          subject_id?: number | null
+          user_id: string
+        }
+        Update: {
+          completed_at?: string | null
+          id?: number
+          module_id?: number | null
+          subject_id?: number | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_progress_module_id_fkey"
+            columns: ["module_id"]
+            isOneToOne: true
+            referencedRelation: "modules"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "user_progress_subject_id_fkey"
+            columns: ["subject_id"]
+            isOneToOne: false
+            referencedRelation: "subjects"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "user_progress_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: true
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       user_study_progress: {
         Row: {

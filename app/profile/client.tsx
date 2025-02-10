@@ -2,13 +2,15 @@
 
 import { FilledStar, ProfileIcon, RankingStar } from '@/components/Svgs';
 import { UserState } from '@/stores/userStore';
+import { createClient } from '@/utils/supabase/client';
 import Image from 'next/image';
+import { useState, useEffect } from 'react';
 
 export function ProfileClientPage({ profile }: { profile: UserState['user']['profile'] }) {
   return (
     <div className='bg-white/80 rounded-3xl px-6 pb-8 pt-2 space-y-8 shadow-cogtec max-w-(--breakpoint-lg) mx-auto h-min'>
       <UserProfile profile={profile} />
-      <UserStatistics />
+      <UserStatistics profile={profile} />
       <UserAchivments />
     </div>
   );
@@ -36,12 +38,31 @@ function UserProfile({ profile }: { profile: UserState['user']['profile'] }) {
           )}
         </div>
       </div>
-      <span>{profile?.display_name || 'Usuário'}</span>
+      <span>{profile.display_name}</span>
     </div>
   );
 }
 
-function UserStatistics() {
+function UserStatistics({ profile }: { profile: UserState['user']['profile'] }) {
+  const supabase = createClient();
+  const [userPosition, setUserPosition] = useState<number>(-1);
+
+  useEffect(() => {
+    const prepareData = async () => {
+      const { data: users } = await supabase
+        .from('profiles')
+        .select('display_name')
+        .eq('accepted_ranking', true)
+        .order('progress', { ascending: false });
+      if (users) {
+        const userNames = users.map(({ display_name }) => display_name);
+        const pos = userNames.indexOf(profile.display_name);
+        setUserPosition(pos + 1);
+      }
+    };
+    prepareData();
+  }, [supabase, profile]);
+
   return (
     <div className='flex flex-col gap-4 max-w-(--breakpoint-md) mx-auto text-4xl font-semibold'>
       Status
@@ -49,7 +70,7 @@ function UserStatistics() {
         <div className='p-4 bg-white shadow-cogtec rounded-xl flex gap-2 items-center justify-between text-3xl flex-1'>
           <div className='flex gap-2 items-center'>
             <FilledStar className='shrink-0 size-16' />
-            100
+            {profile?.progress || 0}
           </div>
           xp
         </div>
@@ -58,7 +79,7 @@ function UserStatistics() {
             <RankingStar className='shrink-0 size-16' />
             Pódio
           </div>
-          10
+          {userPosition}
         </div>
       </div>
     </div>

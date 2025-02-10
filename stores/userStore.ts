@@ -10,7 +10,7 @@ export type UserProfile = {
   display_name: string;
   email: string;
   id: string;
-  // updated_at: string;
+  progress: number;
 };
 
 export type Progress = {
@@ -21,8 +21,8 @@ export type Progress = {
 
 export type UserState = {
   user: {
-    auth: User | undefined;
-    profile: UserProfile | undefined | null;
+    auth: User | null;
+    profile: UserProfile;
     progress: Progress;
   };
   setUser: (user: UserState['user']) => void;
@@ -38,10 +38,19 @@ const emptyProgress = {
   tsc: 0,
 };
 
+const emptyProfile = {
+  accepted_ranking: false,
+  avatar_url: '/empty-user.png',
+  display_name: 'user',
+  email: 'empty@null.com',
+  id: '000-000-000-000',
+  progress: -1,
+};
+
 export const useUserStore = create<UserState>((set, get) => ({
   user: {
-    auth: undefined,
-    profile: undefined,
+    auth: null,
+    profile: emptyProfile,
     progress: emptyProgress,
   },
   setUser: (user) => set({ user }),
@@ -57,7 +66,7 @@ export const useUserStore = create<UserState>((set, get) => ({
         .limit(1)
         .single();
 
-      set({ user: { auth: data.user, profile, progress: progress || emptyProgress } });
+      set({ user: { auth: data.user, profile: profile || emptyProfile, progress: progress || emptyProgress } });
     }
   },
   updateUserProgress: async (newData) => {

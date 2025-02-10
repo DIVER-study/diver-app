@@ -22,7 +22,7 @@ export function ModuleList({ subjectId, realm }: { subjectId: number; realm: str
 
   const [pending, setPending] = useState<boolean>(true);
   const [modules, setModules] = useState<ModuleType[]>([]);
-  const [completedModules, setCompletedModules] = useState<number[]>([]);
+  const [completedModules, setCompletedModules] = useState<{ module_id: number; subject_id: number }[]>([]);
 
   useEffect(() => {
     const fetchModules = async () => {
@@ -49,12 +49,12 @@ export function ModuleList({ subjectId, realm }: { subjectId: number; realm: str
 
         const { data: progressData, error: progressError } = await supabase
           .from('user_progress')
-          .select('module_id')
+          .select('module_id, subject_id')
           .eq('user_id', user.id);
 
         if (progressError) throw progressError;
 
-        setCompletedModules(progressData?.map((p) => p.module_id) || []);
+        setCompletedModules(progressData || []);
         setPending(false);
       } catch (error) {
         console.error('Erro ao carregar módulos:', error);
@@ -81,7 +81,10 @@ export function ModuleList({ subjectId, realm }: { subjectId: number; realm: str
       {modules.length > 0 ? (
         modules.map((module, index) => {
           const previousModuleId = index > 0 ? modules[index - 1].id : null;
-          const isUnlocked = index === 0 || (previousModuleId !== null && completedModules.includes(previousModuleId));
+          const isUnlocked =
+            index === 0 ||
+            (previousModuleId !== null &&
+              completedModules.some((m) => m.module_id === previousModuleId && m.subject_id === subjectId));
 
           return (
             <div key={module.id} className="w-full flex justify-center">

@@ -80,11 +80,13 @@ export function ModuleList({ subjectId, realm }: { subjectId: number; realm: str
     <div className="flex flex-col items-center flex-1 gap-4">
       {modules.length > 0 ? (
         modules.map((module, index) => {
-          const previousModuleId = index > 0 ? modules[index - 1].id : null;
+          const highestCompletedModule = completedModules
+            .filter((m) => m.subject_id === subjectId)
+            .reduce((max, m) => Math.max(max, m.module_id), 0); // Encontra o maior módulo concluído
+
           const isUnlocked =
-            index === 0 ||
-            (previousModuleId !== null &&
-              completedModules.some((m) => m.module_id === previousModuleId && m.subject_id === subjectId));
+            index === 0 || // O primeiro módulo sempre fica desbloqueado
+            module.id <= highestCompletedModule + 1; // Mantém todos os anteriores e o próximo desbloqueados
 
           return (
             <div key={module.id} className="w-full flex justify-center">

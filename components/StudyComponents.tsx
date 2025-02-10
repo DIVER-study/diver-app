@@ -53,7 +53,7 @@ export function StudySection({ sectionName, sectionType, progress }: SectionProp
           {pending ? 'carregando...' : finished ? 'concluido' : started ? 'em andamento' : 'a fazer'}
         </div>
       </div>
-      <div className='grid grid-flow-col auto-cols-[1fr] gap-8 overflow-x-scroll scroll-smooth snap-x rounded-xl border-2 border-black p-4'>
+      <div className='grid grid-flow-col auto-cols-[1fr] gap-8 overflow-x-auto scroll-smooth snap-x rounded-xl border-2 border-black p-4'>
         {subjects.map(({ id, name }, idx) => (
           <ExerciseItem
             key={idx}

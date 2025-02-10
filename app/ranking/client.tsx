@@ -13,15 +13,14 @@ export default function ClientRankingPage() {
   useEffect(() => {
     const prepareData = async () => {
       const { data: users } = await supabase
-      .from('profiles')
-      .select('*')
-      .eq('accepted_ranking', true)
-      .order('progress', {ascending: false});
+        .from('profiles')
+        .select('*')
+        .eq('accepted_ranking', true)
+        .order('progress', { ascending: false });
       setProfiles(users || []);
     };
     prepareData();
   });
-
 
   return (
     <main className='flex-1 overflow-y-scroll content-center'>
@@ -59,13 +58,13 @@ function RankingTable({ profiles }: { profiles: UserProfile[] }) {
         </tr>
       </thead>
       <tbody>
-        {profiles.map(({ avatar_url, display_name }, index) => (
+        {profiles.map(({ avatar_url, display_name, progress }, index) => (
           <UserRankingItem
             key={display_name}
             avatarUrl={avatar_url}
             displayName={display_name}
             index={index}
-            exp={50}
+            exp={progress}
           />
         ))}
       </tbody>

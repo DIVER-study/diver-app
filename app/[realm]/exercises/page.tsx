@@ -1,7 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
-import Image from 'next/image';
+import { useEffect, useState } from 'react';
 import { ConfirmAnswerIcon, ExitButtonIcon } from '@/components/Svgs';
 import { AlertConfirm, AlertRightAnswer, AlertWrongAnswer } from '@/components/Alerts';
 import { PopUpXp } from '@/components/PopUpXp';
@@ -65,17 +64,75 @@ export default function ExercisePage({ params }: { params: Promise<{ realm: stri
     if (currentQuestion + 1 < questions.length) {
       setCurrentQuestion((prev) => prev + 1);
     } else {
+      try {
+        const supabase = createClient();
+        const { data: userData, error: userError } = await supabase.auth.getUser();
+
+        if (userError || !userData?.user) {
+          console.error('Erro ao obter usuário autenticado:', userError);
+          return;
+        }
+
+        const userId = userData.user.id;
+        if (!userId || !moduleId || !subjectId) {
+          console.error('Erro: userId, moduleId ou subjectId estão indefinidos.');
+          return;
+        }
+
+        // 🔹 Busca o último módulo concluído pelo usuário nesse subject
+        const { data: lastProgress, error: fetchError } = await supabase
+          .from('user_completed_modules')
+          .select('id, completed')
+          .eq('user_id', userId)
+          .eq('subject_id', subjectId)
+          .eq('module_id', moduleId)
+          .limit(1)
+          .single();
+
+        if (fetchError && fetchError.code !== 'PGRST116') {
+          console.error('Erro ao verificar progresso:', fetchError);
+          return;
+        }
+
+        if (lastProgress) {
+          if (!lastProgress.completed) {
+            const { error } = await supabase
+              .from('user_completed_modules')
+              .update({
+                completed: true,
+              })
+              .eq('id', lastProgress.id);
+
+            if (error) {
+              console.error('Erro ao atualizar progresso:', error.message);
+              return;
+            }
+          }
+        } else {
+          // Se não houver progresso, insere um novo registro
+          const { error: insertError } = await supabase.from('user_completed_modules').insert([
+            {
+              user_id: userId,
+              module_id: moduleId,
+              subject_id: subjectId,
+              completed: true,
+            },
+          ]);
+
+          if (insertError) {
+            console.error('Erro ao inserir progresso:', insertError);
+            return;
+          }
+        }
+      } catch (error) {
+        console.error('Erro inesperado ao salvar progresso:', error);
+      }
+
+      const currentUserProgress = user.progress[currentRealm] || 0;
+      await updateUserProgress({ [currentRealm]: currentUserProgress + 1 });
+      setPending(false);
       // 🔹 Exibe o PopUp antes de continuar
       setShowPopUpXp(true);
-
-      // 🔹 Aguarda 2 segundos antes de seguir para a próxima tela
-      setTimeout(async () => {
-        setPending(true);
-        const currentUserProgress = user.progress[currentRealm];
-        await updateUserProgress({ [currentRealm]: currentUserProgress + 1 });
-        setPending(false);
-        setShowPopUpXp(false);
-      }, 2000);
     }
   };
 
@@ -112,7 +169,10 @@ export default function ExercisePage({ params }: { params: Promise<{ realm: stri
         <div className='absolute inset-0 bg-white opacity-60 backdrop-blur-xs z-40 content-center'></div>
       )}
 
-      <div hidden={!pending} className='absolute inset-0 bg-white z-40 content-center'>
+      <div
+        hidden={!pending}
+        className='absolute inset-0 bg-white z-40 content-center'
+      >
         <div className='size-20 bg-linear-to-r from-black to-neutral-500 animate-spin rounded-full mx-auto'></div>
       </div>
 
@@ -120,15 +180,29 @@ export default function ExercisePage({ params }: { params: Promise<{ realm: stri
 
       <div className='flex items-center justify-center w-full pl-0 gap-2 mr-[15%]'>
         {/* Botão de saída */}
-        <button onClick={() => setShowAlertExit(true)} className='mr-[15%]'>
-          <ExitButtonIcon width={40} height={40} />
+        <button
+          onClick={() => setShowAlertExit(true)}
+          className='mr-[15%]'
+        >
+          <ExitButtonIcon
+            width={40}
+            height={40}
+          />
         </button>
 
-        {showAlertExit && <AlertConfirm message='TEM CERTEZA?' action={handleCancelExit} />}
+        {showAlertExit && (
+          <AlertConfirm
+            message='TEM CERTEZA?'
+            action={handleCancelExit}
+          />
+        )}
 
         {/* Barra de progresso */}
         <div className='w-[60%] bg-white border-2 border-black rounded-full h-5'>
-          <div className='bg-black h-4 rounded-full' style={{ width: `${progress}%` }} />
+          <div
+            className='bg-black h-4 rounded-full'
+            style={{ width: `${progress}%` }}
+          />
         </div>
         <p className='text-sm text-gray-600'>{Math.round(progress)}%</p>
       </div>
@@ -156,21 +230,39 @@ export default function ExercisePage({ params }: { params: Promise<{ realm: stri
           </div>
 
           <div className='flex flex-col items-end'>
-            {/* Imagem */}
-            <div className='relative w-[18rem] h-[20rem] border rounded-lg overflow-hidden mt-[4.5rem]'>
-              <Image src='/chad-freddy.webp' alt='Descrição da imagem' fill sizes='100%' className='w-full h-full object-cover' priority />
-            </div>
-
             {/* Botões de navegação */}
             <div className='flex mt-4'>
-              <button onClick={handleConfirm} disabled={selectedAnswer === -1} className='px-8 py-[12px] bg-white-500 text-white rounded-md disabled:bg-white-300 border-2 border-black shadow-[4px_4px_4px_rgba(0,0,0,0.6)] hover:shadow-[6px_6px_6px_rgba(0,0,0,0.7)]'>
-                <ConfirmAnswerIcon width={26} height={20} />
+              <button
+                onClick={handleConfirm}
+                disabled={selectedAnswer === -1}
+                className='px-8 py-[12px] bg-white-500 text-white rounded-md disabled:bg-white-300 border-2 border-black shadow-[4px_4px_4px_rgba(0,0,0,0.6)] hover:shadow-[6px_6px_6px_rgba(0,0,0,0.7)]'
+              >
+                <ConfirmAnswerIcon
+                  width={26}
+                  height={20}
+                />
               </button>
 
               {/* Alerts */}
-              {showAlertCertaResposta && <AlertRightAnswer message='CERTA RESPOSTA :)' action={handleGoToNextQuestion} />}
-              {showAlertRespostaErrada && <AlertWrongAnswer message='RESPOSTA ERRADA :(' explanation={questions[currentQuestion].explanation} action={handleGoToNextQuestion} />}
-              {showPopUpXp && <PopUpXp currentRealm={currentRealm} subjectId={subjectId} />}
+              {showAlertCertaResposta && (
+                <AlertRightAnswer
+                  message='CERTA RESPOSTA :)'
+                  action={handleGoToNextQuestion}
+                />
+              )}
+              {showAlertRespostaErrada && (
+                <AlertWrongAnswer
+                  message='RESPOSTA ERRADA :('
+                  explanation={questions[currentQuestion].explanation}
+                  action={handleGoToNextQuestion}
+                />
+              )}
+              {showPopUpXp && (
+                <PopUpXp
+                  currentRealm={currentRealm}
+                  subjectId={subjectId}
+                />
+              )}
             </div>
           </div>
         </div>

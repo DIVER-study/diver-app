@@ -59,6 +59,8 @@ export default function ExercisePage({ params }: { params: Promise<{ realm: stri
     if (currentQuestion + 1 < questions.length) {
         setCurrentQuestion((prev) => prev + 1);
     } else {
+        // 🔹 Atualiza progresso do usuário na interface
+        setPending(true);
         try {
             const supabase = createClient();
             const { data: userData, error: userError } = await supabase.auth.getUser();
@@ -90,8 +92,9 @@ export default function ExercisePage({ params }: { params: Promise<{ realm: stri
             }
 
             if (lastProgress) {
+              console.log(lastProgress)
                 // Se o módulo atual for MENOR que o último concluído, NÃO atualiza, apenas mantém registro
-                if (moduleId <= lastProgress.module_id) {
+                if (moduleId <= lastProgress.module_id!) {
                     console.log('Este módulo já foi concluído anteriormente. Nenhuma atualização necessária.');
                     const { error: updateError } = await supabase
                       .from('user_progress')
@@ -142,8 +145,6 @@ export default function ExercisePage({ params }: { params: Promise<{ realm: stri
             console.error('Erro inesperado ao salvar progresso:', error);
         }
 
-        // 🔹 Atualiza progresso do usuário na interface
-        setPending(true);
         const currentUserProgress = user.progress[currentRealm] || 0;
         await updateUserProgress({ [currentRealm]: currentUserProgress + 1 });
         setPending(false);

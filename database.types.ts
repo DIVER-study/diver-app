@@ -166,31 +166,34 @@ export type Database = {
       }
       user_progress: {
         Row: {
-          completed_at: string | null
+          completed_at: string
           id: number
-          module_id: number | null
-          subject_id: number | null
+          module_id: number
+          subject_id: number
           user_id: string
+          xp: number
         }
         Insert: {
-          completed_at?: string | null
+          completed_at?: string
           id?: number
-          module_id?: number | null
-          subject_id?: number | null
-          user_id: string
+          module_id?: number
+          subject_id?: number
+          user_id?: string
+          xp?: number
         }
         Update: {
-          completed_at?: string | null
+          completed_at?: string
           id?: number
-          module_id?: number | null
-          subject_id?: number | null
+          module_id?: number
+          subject_id?: number
           user_id?: string
+          xp?: number
         }
         Relationships: [
           {
             foreignKeyName: "user_progress_module_id_fkey"
             columns: ["module_id"]
-            isOneToOne: true
+            isOneToOne: false
             referencedRelation: "modules"
             referencedColumns: ["id"]
           },

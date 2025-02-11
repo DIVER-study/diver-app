@@ -96,8 +96,9 @@ export function ModuleList({ subjectId, realm }: { subjectId: number; realm: str
               key={id}
               data-disable={!isUnlocked}
               href={`/${realm}/exercises?moduleId=${id}&temaId=${subjectId}`}
-              className='flex items-center justify-center p-4 rounded-full border-4 border-black bg-white hover:bg-neutral-800 hover:text-white transition-all duration-200 shadow-xl text-sm font-medium text-center whitespace-nowrap data-[disable=true]:pointer-events-none data-[disable=true]:cursor-not-allowed'
+              className='flex items-center justify-center p-4 rounded-full border-4 border-black bg-white hover:bg-neutral-800 hover:text-white transition-all duration-200 shadow-xl text-sm font-medium text-center whitespace-nowrap data-[disable=true]:pointer-events-none data-[disable=true]:cursor-not-allowed data-[disable=true]:bg-neutral-700 data-[disable=true]:text-neutral-100'
             >
+              {!isUnlocked && '🔒'}
               {description}
             </Link>
           );

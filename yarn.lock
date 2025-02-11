@@ -1398,7 +1398,7 @@ __metadata:
     react: "npm:^19.0.0"
     react-dom: "npm:^19.0.0"
     sonner: "npm:^1.7.1"
-    supabase: "npm:2.6.8"
+    supabase: "npm:>=1.8.1"
     tailwindcss: "npm:4.0.0"
     typescript: "npm:^5"
     uuid: "npm:^11.0.5"
@@ -3939,9 +3939,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"supabase@npm:2.6.8":
-  version: 2.6.8
-  resolution: "supabase@npm:2.6.8"
+"supabase@npm:>=1.8.1":
+  version: 2.12.0
+  resolution: "supabase@npm:2.12.0"
   dependencies:
     bin-links: "npm:^5.0.0"
     https-proxy-agent: "npm:^7.0.2"
@@ -3949,7 +3949,7 @@ __metadata:
     tar: "npm:7.4.3"
   bin:
     supabase: bin/supabase
-  checksum: 10c0/88fc0b173a1c5bd51429b81f037060adcab33392734ff1d531b178dd8850a666c8750e712bf5ddad6c7d2af7f363940b29954fef2c71814ca718a53e5f00564e
+  checksum: 10c0/945b0207f7d73ae566cff93395e1679a89444bcb5404c2c50101d1bf015fe0e0a0afa3cd0f891ffa64c2fe7a8929f122e83e58526bb50028c865225fc8f85c46
   languageName: node
   linkType: hard
 

@@ -1,7 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
-import Image from 'next/image';
+import { useEffect, useState } from 'react';
 import { ConfirmAnswerIcon, ExitButtonIcon } from '@/components/Svgs';
 import { AlertConfirm, AlertRightAnswer, AlertWrongAnswer } from '@/components/Alerts';
 import { PopUpXp } from '@/components/PopUpXp';
@@ -39,16 +38,23 @@ export default function ExercisePage({ params }: { params: Promise<{ realm: stri
   };
 
   const handleConfirm = () => {
-    if (!selectedAnswer) return;
+    if (selectedAnswer === -1) return;
+
     const correctAnswer = questions[currentQuestion].answer;
+
     if (selectedAnswer === correctAnswer) {
       setShowAlertCertaResposta(true);
     } else {
       setShowAlertRespostaErrada(true);
     }
+
     setProgress((prevProgress) => Math.min(prevProgress + 100 / questions.length, 100));
-    // Limpa a resposta selecionada para a próxima questão
     setSelectedAnswer(-1);
+
+    // 🔹 Aguarda 2 segundos e chama a próxima pergunta
+    setTimeout(() => {
+      handleGoToNextQuestion();
+    }, 2000);
   };
 
   const handleGoToNextQuestion = async () => {
@@ -58,7 +64,6 @@ export default function ExercisePage({ params }: { params: Promise<{ realm: stri
     if (currentQuestion + 1 < questions.length) {
       setCurrentQuestion((prev) => prev + 1);
     } else {
-      // 🔹 Atualiza progresso do usuário na interface
       setPending(true);
       try {
         const supabase = createClient();
@@ -75,7 +80,6 @@ export default function ExercisePage({ params }: { params: Promise<{ realm: stri
           return;
         }
 
-        // 🔹 Busca o último módulo concluído pelo usuário nesse subject
         const { data: lastProgress, error: fetchError } = await supabase
           .from('user_completed_modules')
           .select('id, completed')
@@ -94,9 +98,7 @@ export default function ExercisePage({ params }: { params: Promise<{ realm: stri
           if (!lastProgress.completed) {
             const { error } = await supabase
               .from('user_completed_modules')
-              .update({
-                completed: true,
-              })
+              .update({ completed: true })
               .eq('id', lastProgress.id);
 
             if (error) {
@@ -105,7 +107,6 @@ export default function ExercisePage({ params }: { params: Promise<{ realm: stri
             }
           }
         } else {
-          // Se não houver progresso, insere um novo registro
           const { error: insertError } = await supabase.from('user_completed_modules').insert([
             {
               user_id: userId,
@@ -141,6 +142,7 @@ export default function ExercisePage({ params }: { params: Promise<{ realm: stri
       if (realm) setCurrentRealm(realm as Database['public']['Enums']['realms']);
     };
     grabParameters();
+
     const grabQuestions = async () => {
       if (!moduleId) return;
       const supabase = createClient();
@@ -148,6 +150,7 @@ export default function ExercisePage({ params }: { params: Promise<{ realm: stri
         .from('exercises')
         .select('answer, explanation, options, question')
         .eq('module_id', moduleId);
+
       if (data) {
         setQuestions(data);
         setPending(false);
@@ -168,7 +171,9 @@ export default function ExercisePage({ params }: { params: Promise<{ realm: stri
       >
         <div className='size-20 bg-linear-to-r from-black to-neutral-500 animate-spin rounded-full mx-auto'></div>
       </div>
+
       <UserStore />
+
       <div className='flex items-center justify-center w-full pl-0 gap-2 mr-[15%]'>
         {/* Botão de saída */}
         <button
@@ -187,6 +192,7 @@ export default function ExercisePage({ params }: { params: Promise<{ realm: stri
             action={handleCancelExit}
           />
         )}
+
         {/* Barra de progresso */}
         <div className='w-[60%] bg-white border-2 border-black rounded-full h-5'>
           <div
@@ -202,7 +208,6 @@ export default function ExercisePage({ params }: { params: Promise<{ realm: stri
           <div className='flex flex-col mt-10 mr-8'>
             {/* Pergunta */}
             <h2 className='text-3xl font-bold text-left mb-4'>Exercício {currentQuestion + 1}</h2>
-
             <p className='text-sm text-black text-left mb-10'>{questions[currentQuestion].question}</p>
 
             {/* Opções de resposta */}
@@ -219,25 +224,14 @@ export default function ExercisePage({ params }: { params: Promise<{ realm: stri
               ))}
             </div>
           </div>
-          <div className='flex flex-col items-end'>
-            {/*imagem */}
-            <div className='relative w-[18rem] h-[20rem] border rounded-lg overflow-hidden mt-[4.5rem]'>
-              <Image
-                src='/chad-freddy.webp'
-                alt='Descrição da imagem'
-                fill
-                sizes='100%'
-                className='w-full h-full object-cover'
-                priority
-              />
-            </div>
 
+          <div className='flex flex-col items-end'>
             {/* Botões de navegação */}
             <div className='flex mt-4'>
               <button
                 onClick={handleConfirm}
                 disabled={selectedAnswer === -1}
-                className='px-8 py-[12px] bg-white-500 text-white rounded-md disabled:bg-white-300 border-2 border-black shadow-[4px_4px_4px_rgba(0,0,0,0.6)] hover:shadow-[6px_6px_6px_rgba(0,0,0,0.7)'
+                className='px-8 py-[12px] bg-white-500 text-white rounded-md disabled:bg-white-300 border-2 border-black shadow-[4px_4px_4px_rgba(0,0,0,0.6)] hover:shadow-[6px_6px_6px_rgba(0,0,0,0.7)]'
               >
                 <ConfirmAnswerIcon
                   width={26}
@@ -252,7 +246,6 @@ export default function ExercisePage({ params }: { params: Promise<{ realm: stri
                   action={handleGoToNextQuestion}
                 />
               )}
-
               {showAlertRespostaErrada && (
                 <AlertWrongAnswer
                   message='RESPOSTA ERRADA :('

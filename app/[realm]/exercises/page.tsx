@@ -11,7 +11,6 @@ import { UserStore } from '@/components/UserStore';
 import { Database } from '@/database.types';
 import { createClient } from '@/utils/supabase/client';
 
-
 type ExerciseType = {
   answer: number;
   explanation: string;
@@ -57,101 +56,80 @@ export default function ExercisePage({ params }: { params: Promise<{ realm: stri
     setShowAlertRespostaErrada(false);
 
     if (currentQuestion + 1 < questions.length) {
-        setCurrentQuestion((prev) => prev + 1);
+      setCurrentQuestion((prev) => prev + 1);
     } else {
-        // 🔹 Atualiza progresso do usuário na interface
-        setPending(true);
-        try {
-            const supabase = createClient();
-            const { data: userData, error: userError } = await supabase.auth.getUser();
+      // 🔹 Atualiza progresso do usuário na interface
+      setPending(true);
+      try {
+        const supabase = createClient();
+        const { data: userData, error: userError } = await supabase.auth.getUser();
 
-            if (userError || !userData?.user) {
-                console.error('Erro ao obter usuário autenticado:', userError);
-                return;
-            }
-
-            const userId = userData.user.id;
-            if (!userId || !moduleId || !subjectId) {
-                console.error('Erro: userId, moduleId ou subjectId estão indefinidos.');
-                return;
-            }
-
-            // 🔹 Busca o último módulo concluído pelo usuário nesse subject
-            const { data: lastProgress, error: fetchError } = await supabase
-                .from('user_progress')
-                .select('id, module_id')
-                .eq('user_id', userId)
-                .eq('subject_id', subjectId)
-                .order('module_id', { ascending: false }) // Pega o maior module_id concluído
-                .limit(1)
-                .single();
-
-            if (fetchError && fetchError.code !== 'PGRST116') { 
-                console.error('Erro ao verificar progresso:', fetchError);
-                return;
-            }
-
-            if (lastProgress) {
-              console.log(lastProgress)
-                // Se o módulo atual for MENOR que o último concluído, NÃO atualiza, apenas mantém registro
-                if (moduleId <= lastProgress.module_id!) {
-                    console.log('Este módulo já foi concluído anteriormente. Nenhuma atualização necessária.');
-                    const { error: updateError } = await supabase
-                      .from('user_progress')
-                      .update({
-                          completed_at: new Date().toISOString(), // Atualiza data de conclusão
-                      })
-                      .eq('id', lastProgress.id);
-
-                  if (updateError) {
-                      console.error('Erro ao atualizar progresso:', updateError);
-                      return;
-                  }
-                }else{
-                  // Se for um novo módulo, atualiza o progresso
-                      const { error: updateError } = await supabase
-                      .from('user_progress')
-                      .update({
-                          completed_at: new Date().toISOString(), // Atualiza data de conclusão
-                          module_id: moduleId, // Atualiza apenas se for um módulo novo
-                      })
-                      .eq('id', lastProgress.id);
-
-                  if (updateError) {
-                      console.error('Erro ao atualizar progresso:', updateError);
-                      return;
-                  }
-                }
-
-            } else {
-                // Se não houver progresso, insere um novo registro
-                const { error: insertError } = await supabase
-                    .from('user_progress')
-                    .insert([
-                        {
-                            user_id: userId.trim(),
-                            module_id: moduleId,
-                            subject_id: subjectId,
-                            completed_at: new Date().toISOString(),
-                        },
-                    ]);
-
-                if (insertError) {
-                    console.error('Erro ao inserir progresso:', insertError);
-                    return;
-                }
-            }
-        } catch (error) {
-            console.error('Erro inesperado ao salvar progresso:', error);
+        if (userError || !userData?.user) {
+          console.error('Erro ao obter usuário autenticado:', userError);
+          return;
         }
 
-        const currentUserProgress = user.progress[currentRealm] || 0;
-        await updateUserProgress({ [currentRealm]: currentUserProgress + 1 });
-        setPending(false);
-        setShowPopUpXp(true);
-    }
-};
+        const userId = userData.user.id;
+        if (!userId || !moduleId || !subjectId) {
+          console.error('Erro: userId, moduleId ou subjectId estão indefinidos.');
+          return;
+        }
 
+        // 🔹 Busca o último módulo concluído pelo usuário nesse subject
+        const { data: lastProgress, error: fetchError } = await supabase
+          .from('user_completed_modules')
+          .select('id, completed')
+          .eq('user_id', userId)
+          .eq('subject_id', subjectId)
+          .eq('module_id', moduleId)
+          .limit(1)
+          .single();
+
+        if (fetchError && fetchError.code !== 'PGRST116') {
+          console.error('Erro ao verificar progresso:', fetchError);
+          return;
+        }
+
+        if (lastProgress) {
+          if (!lastProgress.completed) {
+            const { error } = await supabase
+              .from('user_completed_modules')
+              .update({
+                completed: true,
+              })
+              .eq('id', lastProgress.id);
+
+            if (error) {
+              console.error('Erro ao atualizar progresso:', error.message);
+              return;
+            }
+          }
+        } else {
+          // Se não houver progresso, insere um novo registro
+          const { error: insertError } = await supabase.from('user_completed_modules').insert([
+            {
+              user_id: userId,
+              module_id: moduleId,
+              subject_id: subjectId,
+              completed: true,
+            },
+          ]);
+
+          if (insertError) {
+            console.error('Erro ao inserir progresso:', insertError);
+            return;
+          }
+        }
+      } catch (error) {
+        console.error('Erro inesperado ao salvar progresso:', error);
+      }
+
+      const currentUserProgress = user.progress[currentRealm] || 0;
+      await updateUserProgress({ [currentRealm]: currentUserProgress + 1 });
+      setPending(false);
+      setShowPopUpXp(true);
+    }
+  };
 
   const handleCancelExit = () => {
     setShowAlertExit(false);

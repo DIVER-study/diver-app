@@ -20,7 +20,7 @@ type ModuleItemProps = {
   isUnlocked: boolean;
   subjectId: number;
   realm: string;
-  index: number;
+  completed: boolean;
 };
 
 // Loading Skeleton
@@ -36,13 +36,13 @@ const LoadingSkeleton = () => (
 );
 
 // Single Module Item
-const ModuleItem = ({ id, isUnlocked, subjectId, realm, index }: ModuleItemProps) => (
+const ModuleItem = ({ id, isUnlocked, subjectId, realm, completed }: ModuleItemProps) => (
   <Link
     data-disable={!isUnlocked || null}
+    data-completed={completed || null}
     data-realm={realm}
-    data-pos={index % 3}
     href={`/${realm}/exercises?moduleId=${id}&temaId=${subjectId}`}
-    className='p-4 rounded-full transition-all duration-200 shadow-cogtec data-disable:pointer-events-none data-disable:cursor-not-allowed data-disable:bg-neutral-400 data-[pos=0]:col-span-2 size-20 aspect-square data-[realm=tsc]:not-data-disable:bg-tsc-100 data-[realm=gestalt]:not-data-disable:bg-gestalt-100 data-[realm=behaviorism]:not-data-disable:bg-behaviorism-100 content-center'
+    className='block rounded-full transition-all duration-200 data-disable:pointer-events-none data-disable:cursor-not-allowed data-disable:bg-neutral-400 size-full aspect-square data-[realm=tsc]:not-data-disable:not-data-completed:bg-tsc-100 data-[realm=gestalt]:not-data-disable:not-data-completed:bg-gestalt-100 data-[realm=behaviorism]:not-data-disable:not-data-completed:bg-behaviorism-100 content-center text-xs data-completed:not-data-disable:bg-finished-100'
   >
     <div className='mx-auto w-fit'>{!isUnlocked && '🔒'}</div>
   </Link>
@@ -72,40 +72,72 @@ export function ModuleList({ subjectId, realm }: ModuleListProps) {
 
   if (pending) return <LoadingSkeleton />;
 
+  let pathString = 'M';
+  for (let i = 0; i < modules.length; i++) {
+    const offsetX = i % 3 === 0 ? 50 : i % 3 === 1 ? 70 : 30;
+    const offsetY = (i % 3 === 0 ? Math.floor((i / 3) * 2) : Math.round((i / 3) * 2)) * 40 + 10;
+    pathString = pathString.concat(offsetX + ' ' + offsetY);
+    if (i % 3 === 0 && i + 1 !== modules.length) {
+      pathString =
+        pathString +
+        ('L' + 70 + ' ' + offsetY + 'C 100 ' + offsetY + ' 100 ' + (Math.round(((i + 1) / 3) * 2) * 40 + 10) + ' ');
+    } else if (i % 3 === 2 && i + 1 !== modules.length) {
+      pathString =
+        pathString +
+        ('C 0 ' +
+          offsetY +
+          ' 0 ' +
+          (Math.round(((i + 1) / 3) * 2) * 40 + 10) +
+          ' ' +
+          30 +
+          ' ' +
+          (Math.round(((i + 1) / 3) * 2) * 40 + 10) +
+          'L');
+    } else {
+      pathString = pathString + 'L';
+    }
+  }
+  pathString = pathString + 'Z';
+
   return (
-    <div className='grid grid-cols-2 flex-1 relative'>
-      {modules.length > 0 ? (
-        modules.map(({ id }, index) => (
-          <ModuleItem
+    <svg
+      viewBox={`0 0 100 ${40 * Math.floor((modules.length / 3) * 2)}`}
+      fill='none'
+      xmlns='http://www.w3.org/2000/svg'
+      className='flex-1 mx-auto max-w-100'
+    >
+      <path
+        d={pathString}
+        stroke='var(--color-beige-300)'
+        strokeWidth='5'
+        strokeLinecap='round'
+        strokeLinejoin='round'
+      />
+      {modules.map(({ id }, index) => {
+        const offsetX = index % 3 === 0 ? 50 : index % 3 === 1 ? 70 : 30;
+        const offsetY = index % 3 === 0 ? Math.floor((index / 3) * 2) : Math.round((index / 3) * 2);
+        return (
+          <foreignObject
+            x={offsetX - 10}
+            y={offsetY * 40}
+            width='20'
+            height='20'
             key={id}
-            id={id}
-            isUnlocked={
-              completedModules.findIndex(({ module_id }) => module_id === id) === index ||
-              completedModules.findLastIndex(({ completed }) => completed) + 1 === index
-            }
-            index={index}
-            subjectId={subjectId}
-            realm={realm}
-          />
-        ))
-      ) : (
-        <p>Nenhum módulo encontrado.</p>
-      )}
-      <svg
-        viewBox='0 0 470 713'
-        fill='none'
-        xmlns='http://www.w3.org/2000/svg'
-        className='absolute top-0 left-0 right-0 -z-10'
-      >
-        <path
-          d='M240 15H365C485 15 485 184.5 365 184.5H105C-15 184.5 -15 357.5 105 357.5H365C485 357.5 485 528 365 528H105C-15 528 -15 697.5 105 697.5H240'
-          stroke='#F0EBD8'
-          strokeWidth='30'
-          strokeLinecap='round'
-          strokeLinejoin='round'
-        />
-      </svg>
-    </div>
+          >
+            <ModuleItem
+              id={id}
+              subjectId={subjectId}
+              realm={realm}
+              isUnlocked={
+                completedModules.findIndex(({ module_id }) => module_id === id) === index ||
+                completedModules.findLastIndex(({ completed }) => completed) + 1 === index
+              }
+              completed={completedModules.findIndex(({ module_id, completed }) => module_id === id && completed) !== -1}
+            />
+          </foreignObject>
+        );
+      })}
+    </svg>
   );
 }
 
@@ -120,7 +152,7 @@ export function SubjectInfo({ subjectId, realm }: SubjectInfoProps) {
         setSubject(await getSubject(subjectId, realm));
       } catch (error) {
         console.error('Erro ao buscar módulos:', error instanceof Error ? error.message : error);
-        toast.error('Erro ao buscar módulos.' + (error instanceof Error ? error.message : ''));
+        toast.error('Erro ao buscar módulos.');
       } finally {
         setPending(false);
       }
@@ -135,8 +167,8 @@ export function SubjectInfo({ subjectId, realm }: SubjectInfoProps) {
     realm === 'tsc' ? TSCIcon : realm === 'gestalt' ? GestaltIcon : realm === 'behaviorism' ? BehaviorismIcon : 'div';
 
   return (
-    <div className='p-4 bg-beige-100 shadow-cogtec flex flex-col gap-4 rounded-4xl max-w-110 h-fit sticky top-8 bottom-8'>
-      <div className='flex'>
+    <div className='p-4 bg-beige-100 shadow-cogtec flex flex-col gap-4 rounded-4xl w-full lg:max-w-100 h-fit sticky top-2'>
+      <div className='flex justify-between'>
         <div className='flex flex-col gap-2'>
           <span className='text-logo-200 uppercase font-extrabold text-sm'>teoria sociocultural &gt; história</span>
           <h1 className='text-lg font-bold'>{subject.name}</h1>

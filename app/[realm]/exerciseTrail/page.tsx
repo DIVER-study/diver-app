@@ -23,7 +23,7 @@ export default async function ExerciseTrailPage({
       <SideBar activeTab='estudos' />
       <main className='flex-1 h-full space-y-8 overflow-y-scroll py-8'>
         {realm.match(/^(?:behaviorism|gestalt|tsc)$/g) ? (
-          <div className='flex p-[6%] gap-[4.5rem] w-full'>
+          <div className='flex px-4 gap-8 w-full h-fit flex-col lg:flex-row lg:gap-4 relative'>
             <SubjectInfo
               subjectId={Number(temaId)}
               realm={realm as Realms}

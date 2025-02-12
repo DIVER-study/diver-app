@@ -5,7 +5,14 @@ import { createClient } from '@/utils/supabase/server';
 
 type Realms = Database['public']['Enums']['realms'];
 
-export async function getModules(subjectId: number) {
+type ModuleType = {
+  id: number;
+  subject_id: number;
+  description: string;
+  level: string;
+};
+
+export async function getModules(subjectId: number): Promise<ModuleType[]> {
   const supabase = await createClient();
   const { data, error } = await supabase
     .from('modules')
@@ -17,7 +24,7 @@ export async function getModules(subjectId: number) {
   return data || [];
 }
 
-export async function getUserCompletedModules(subjectId: number) {
+export async function getUserCompletedModules(subjectId: number): Promise<{ module_id: number; completed: boolean }[]> {
   const supabase = await createClient();
   const {
     data: { user },
@@ -30,7 +37,6 @@ export async function getUserCompletedModules(subjectId: number) {
       .eq('user_id', user.id)
       .eq('subject_id', subjectId);
 
-    console.log(data);
     if (error) throw moduleError;
     return data || [];
   } else {
@@ -38,10 +44,16 @@ export async function getUserCompletedModules(subjectId: number) {
   }
 }
 
-export async function getSubject(subjectId: number, realm: Realms) {
+export async function getSubject(subjectId: number, realm: Realms): Promise<{ name: string }> {
   const supabase = await createClient();
-  const { data, error } = await supabase.from('subjects').select('name').eq('id', subjectId).eq('realm', realm);
+  const { data, error } = await supabase
+    .from('subjects')
+    .select('name')
+    .eq('id', subjectId)
+    .eq('realm', realm)
+    .limit(1)
+    .single();
 
   if (error) throw error;
-  return data?.[0]?.name || '';
+  return data || { name: '' };
 }

@@ -147,19 +147,19 @@ export type Database = {
         Row: {
           created_at: string
           id: number
-          name: string | null
+          name: string
           realm: Database["public"]["Enums"]["realms"]
         }
         Insert: {
           created_at?: string
           id?: number
-          name?: string | null
+          name?: string
           realm?: Database["public"]["Enums"]["realms"]
         }
         Update: {
           created_at?: string
           id?: number
-          name?: string | null
+          name?: string
           realm?: Database["public"]["Enums"]["realms"]
         }
         Relationships: []

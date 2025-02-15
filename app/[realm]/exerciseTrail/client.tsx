@@ -6,6 +6,8 @@ import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import { getModules, getSubject, getUserCompletedModules } from './server';
 import { BehaviorismIcon, GestaltIcon, TSCIcon } from '@/components/svgs/RealmIcons';
+import IdeaIcon from '@/components/svgs/IdeiaIcon';
+import { IntroTema } from '@/components/ui/alert-boxes/IntroTema';
 
 // Types
 type ModuleType = { id: number; subject_id: number; description: string; level: string };
@@ -60,7 +62,7 @@ export function ModuleList({ subjectId, realm }: ModuleListProps) {
         setModules(await getModules(subjectId));
         setCompletedModules(await getUserCompletedModules(subjectId));
       } catch (error) {
-        console.error('Erro ao carregar módulos:', error);
+        console.error('Erro ao carregar módulos:', error instanceof Error ? error.message : error);
         toast.error('Erro ao carregar módulos.');
       } finally {
         setPending(false);
@@ -72,32 +74,27 @@ export function ModuleList({ subjectId, realm }: ModuleListProps) {
 
   if (pending) return <LoadingSkeleton />;
 
-  let pathString = 'M';
-  for (let i = 0; i < modules.length; i++) {
-    const offsetX = i % 3 === 0 ? 50 : i % 3 === 1 ? 70 : 30;
-    const offsetY = (i % 3 === 0 ? Math.floor((i / 3) * 2) : Math.round((i / 3) * 2)) * 40 + 10;
-    pathString = pathString.concat(offsetX + ' ' + offsetY);
-    if (i % 3 === 0 && i + 1 !== modules.length) {
-      pathString =
-        pathString +
-        ('L' + 70 + ' ' + offsetY + 'C 100 ' + offsetY + ' 100 ' + (Math.round(((i + 1) / 3) * 2) * 40 + 10) + ' ');
-    } else if (i % 3 === 2 && i + 1 !== modules.length) {
-      pathString =
-        pathString +
-        ('C 0 ' +
-          offsetY +
-          ' 0 ' +
-          (Math.round(((i + 1) / 3) * 2) * 40 + 10) +
-          ' ' +
-          30 +
-          ' ' +
-          (Math.round(((i + 1) / 3) * 2) * 40 + 10) +
-          'L');
-    } else {
-      pathString = pathString + 'L';
+  const getPathString = (array: Array<unknown>) => {
+    let pathString = 'M';
+    for (let i = 0; i < array.length; i++) {
+      const cx = i % 3 === 0 ? 50 : i % 3 === 1 ? 70 : 30;
+      const cy = Math.round((i / 3) * 2) * 40 + 10;
+      const j = i + 1;
+      const ny = Math.round((j / 3) * 2) * 40 + 10;
+
+      pathString += cx + ' ' + cy;
+      if (j === array.length) {
+        break;
+      } else if (i % 3 === 0) {
+        pathString += 'L' + 70 + ' ' + cy + 'C 100 ' + cy + ' 100 ' + ny + ' ';
+      } else if (i % 3 === 2) {
+        pathString += 'C 0 ' + cy + ' 0 ' + ny + ' ' + 30 + ' ' + ny + 'L';
+      } else {
+        pathString += 'L';
+      }
     }
-  }
-  pathString = pathString + 'Z';
+    return pathString;
+  };
 
   return (
     <svg
@@ -107,7 +104,7 @@ export function ModuleList({ subjectId, realm }: ModuleListProps) {
       className='flex-1 mx-auto max-w-100'
     >
       <path
-        d={pathString}
+        d={getPathString(modules)}
         stroke='var(--color-beige-300)'
         strokeWidth='5'
         strokeLinecap='round'
@@ -178,8 +175,20 @@ export function SubjectInfo({ subjectId, realm }: SubjectInfoProps) {
         </div>
       </div>
       <p></p>
-      <div className='flex justify-end gap-2'>
+      <div className='flex justify-end gap-2 items-center'>
         <span className='font-semibold'>Orientação</span>
+        <button
+          popoverTarget='intro-tema'
+          popoverTargetAction='show'
+          className='cursor-pointer size-8'
+        >
+          <IdeaIcon />
+        </button>
+        <IntroTema
+          title={subject.name}
+          desc='lorem'
+          id='intro-tema'
+        />
       </div>
     </div>
   );

@@ -114,7 +114,7 @@ export type Database = {
         Row: {
           accepted_ranking: boolean
           avatar_url: string
-          badges: Json | null
+          badges: number[]
           display_name: string
           email: string
           id: string
@@ -124,7 +124,7 @@ export type Database = {
         Insert: {
           accepted_ranking?: boolean
           avatar_url?: string
-          badges?: Json | null
+          badges?: number[]
           display_name?: string
           email: string
           id: string
@@ -134,7 +134,7 @@ export type Database = {
         Update: {
           accepted_ranking?: boolean
           avatar_url?: string
-          badges?: Json | null
+          badges?: number[]
           display_name?: string
           email?: string
           id?: string
@@ -147,47 +147,44 @@ export type Database = {
         Row: {
           created_at: string
           id: number
-          name: string | null
+          name: string
           realm: Database["public"]["Enums"]["realms"]
         }
         Insert: {
           created_at?: string
           id?: number
-          name?: string | null
+          name?: string
           realm?: Database["public"]["Enums"]["realms"]
         }
         Update: {
           created_at?: string
           id?: number
-          name?: string | null
+          name?: string
           realm?: Database["public"]["Enums"]["realms"]
         }
         Relationships: []
       }
-      user_progress: {
+      user_completed_modules: {
         Row: {
-          completed_at: string
+          completed: boolean
           id: number
           module_id: number
           subject_id: number
           user_id: string
-          xp: number
         }
         Insert: {
-          completed_at?: string
+          completed?: boolean
           id?: number
           module_id?: number
           subject_id?: number
           user_id?: string
-          xp?: number
         }
         Update: {
-          completed_at?: string
+          completed?: boolean
           id?: number
           module_id?: number
           subject_id?: number
           user_id?: string
-          xp?: number
         }
         Relationships: [
           {
@@ -207,7 +204,7 @@ export type Database = {
           {
             foreignKeyName: "user_progress_user_id_fkey"
             columns: ["user_id"]
-            isOneToOne: true
+            isOneToOne: false
             referencedRelation: "profiles"
             referencedColumns: ["id"]
           },

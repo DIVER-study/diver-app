@@ -64,6 +64,7 @@ export default function ExercisePage({ params }: { params: Promise<{ realm: stri
     if (currentQuestion + 1 < questions.length) {
       setCurrentQuestion((prev) => prev + 1);
     } else {
+      setPending(true);
       try {
         const supabase = createClient();
         const { data: userData, error: userError } = await supabase.auth.getUser();

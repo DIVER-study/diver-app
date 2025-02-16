@@ -7,10 +7,12 @@ import { toast } from 'sonner';
 import Link from 'next/link';
 import CheckMarkIcon from '@/components/svgs/CheckMarkIcon';
 import ViewPasswordIcon from '@/components/svgs/ViewPasswordIcon';
+import { TermsOfUse } from '@/components/TermsOfUse';
 
 export default function SignupForm() {
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [showTermsOfUse, setTermsOfUse] = useState(false);
   
   const signUp = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -77,6 +79,10 @@ export default function SignupForm() {
     }
   };
 
+  const handleCloseTerms = () => {
+    setTermsOfUse(false);
+  };
+
   return (
     <form
       className="flex flex-col items-center mx-4"
@@ -102,7 +108,10 @@ export default function SignupForm() {
       </div>
         
       <div>
-        <label htmlFor="email" className="text-sm text-[#555555] font-semibold font-medium flex flex-col items-start w-full pb-1">
+        <label 
+          htmlFor="email" 
+          className="text-sm text-[#555555] font-semibold font-medium flex flex-col items-start w-full pb-1"
+        >
           Email Institucional:
         </label>
         <input
@@ -118,7 +127,10 @@ export default function SignupForm() {
 
         
       <div className="relative">
-        <label htmlFor="password" className="text-sm text-[#555555] font-semibold font-medium flex flex-col items-start w-full pb-1">
+        <label 
+          htmlFor="password" 
+          className="text-sm text-[#555555] font-semibold font-medium flex flex-col items-start w-full pb-1"
+        >
           Senha:
         </label>
         <input
@@ -168,7 +180,11 @@ export default function SignupForm() {
           <span className={`w-4 h-4 flex items-center justify-center border-2 border-orange-500 rounded-sm ${termsAccepted ? 'bg-[#FD7401]' : 'bg-white'}`}>
             {termsAccepted && <CheckMarkIcon width={80} height={80} className="text-white" />}
           </span>
-          <a href="/termsOfUse" target="_blank" className="text-sm text-[#1E2772] underline underline-offset-1 hover:underline">
+          <a 
+            onClick={() => setTermsOfUse(true)}
+            target="_blank" 
+            className="text-sm text-[#1E2772] underline underline-offset-1 hover:underline"
+          >
             Concordar com os Termos de Uso
           </a>
         </label>
@@ -196,6 +212,12 @@ export default function SignupForm() {
             Já tem conta?
           </Link>
       </div>
+
+      {showTermsOfUse && (
+        <TermsOfUse
+          action={handleCloseTerms}
+        />
+       )}
     </form>
   );
 }

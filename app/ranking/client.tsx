@@ -8,7 +8,7 @@ import { useUserStore, type UserProfile } from '@/stores/userStore';
 export default function ClientRankingPage() {
   const supabase = createClient();
   const [profiles, setProfiles] = useState<UserProfile[]>([]);
-  const { user, updateRankingChoice } = useUserStore();
+  const { user, updateUserProfile } = useUserStore();
 
   useEffect(() => {
     const prepareData = async () => {
@@ -16,7 +16,7 @@ export default function ClientRankingPage() {
         .from('profiles')
         .select('*')
         .eq('accepted_ranking', true)
-        .order('progress', { ascending: false });
+        .order('xp', { ascending: false });
       setProfiles(users || []);
     };
     prepareData();
@@ -31,7 +31,7 @@ export default function ClientRankingPage() {
           <p className='text-3xl font-semibold'>Participe do Ranking!</p>
           <button
             className='p-2 border-2 border-black'
-            onClick={() => updateRankingChoice(true)}
+            onClick={() => updateUserProfile({ accepted_ranking: true })}
           >
             Participe
           </button>
@@ -58,7 +58,7 @@ function RankingTable({ profiles }: { profiles: UserProfile[] }) {
         </tr>
       </thead>
       <tbody>
-        {profiles.map(({ avatar_url, display_name, progress }, index) => (
+        {profiles.map(({ avatar_url, display_name, xp: progress }, index) => (
           <UserRankingItem
             key={display_name}
             avatarUrl={avatar_url}

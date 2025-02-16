@@ -1,7 +1,4 @@
-'use client';
-import { SVGProps } from 'react';
-
-type IconProps = SVGProps<SVGSVGElement>;
+import { type IconProps } from '.';
 
 const IdeaIcon = (props: IconProps) => (
   <svg

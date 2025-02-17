@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { LibraryIcon, SadFace } from './Svgs';
+import { LibraryIcon, SadFace } from './svgs/Svgs';
 
 type AlertModalProps = {
   message: string;

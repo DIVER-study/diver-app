@@ -1,4 +1,4 @@
-import { SearchIcon } from './Svgs';
+import { SearchIcon } from './svgs/Svgs';
 
 export function SearchBar() {
   return (

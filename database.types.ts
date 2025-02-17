@@ -9,6 +9,24 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      badges: {
+        Row: {
+          created_at: string
+          id: number
+          name: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          name?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          name?: string | null
+        }
+        Relationships: []
+      }
       exercises: {
         Row: {
           answer: number
@@ -49,6 +67,7 @@ export type Database = {
       }
       modules: {
         Row: {
+          badge: number | null
           created_at: string
           description: string
           id: number
@@ -57,6 +76,7 @@ export type Database = {
           subject_id: number
         }
         Insert: {
+          badge?: number | null
           created_at?: string
           description?: string
           id?: number
@@ -65,6 +85,7 @@ export type Database = {
           subject_id: number
         }
         Update: {
+          badge?: number | null
           created_at?: string
           description?: string
           id?: number
@@ -73,6 +94,13 @@ export type Database = {
           subject_id?: number
         }
         Relationships: [
+          {
+            foreignKeyName: "modules_badge_fkey"
+            columns: ["badge"]
+            isOneToOne: false
+            referencedRelation: "badges"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "modules_subject_id_fkey"
             columns: ["subject_id"]
@@ -86,26 +114,32 @@ export type Database = {
         Row: {
           accepted_ranking: boolean
           avatar_url: string
+          badges: number[]
           display_name: string
           email: string
           id: string
           updated_at: string
+          xp: number
         }
         Insert: {
           accepted_ranking?: boolean
           avatar_url?: string
+          badges?: number[]
           display_name?: string
           email: string
           id: string
           updated_at?: string
+          xp?: number
         }
         Update: {
           accepted_ranking?: boolean
           avatar_url?: string
+          badges?: number[]
           display_name?: string
           email?: string
           id?: string
           updated_at?: string
+          xp?: number
         }
         Relationships: []
       }
@@ -113,22 +147,71 @@ export type Database = {
         Row: {
           created_at: string
           id: number
-          name: string | null
+          name: string
           realm: Database["public"]["Enums"]["realms"]
         }
         Insert: {
           created_at?: string
           id?: number
-          name?: string | null
+          name?: string
           realm?: Database["public"]["Enums"]["realms"]
         }
         Update: {
           created_at?: string
           id?: number
-          name?: string | null
+          name?: string
           realm?: Database["public"]["Enums"]["realms"]
         }
         Relationships: []
+      }
+      user_completed_modules: {
+        Row: {
+          completed: boolean
+          id: number
+          module_id: number
+          realm: Database["public"]["Enums"]["realms"]
+          subject_id: number
+          user_id: string
+        }
+        Insert: {
+          completed?: boolean
+          id?: number
+          module_id?: number
+          realm?: Database["public"]["Enums"]["realms"]
+          subject_id?: number
+          user_id?: string
+        }
+        Update: {
+          completed?: boolean
+          id?: number
+          module_id?: number
+          realm?: Database["public"]["Enums"]["realms"]
+          subject_id?: number
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_progress_module_id_fkey"
+            columns: ["module_id"]
+            isOneToOne: false
+            referencedRelation: "modules"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "user_progress_subject_id_fkey"
+            columns: ["subject_id"]
+            isOneToOne: false
+            referencedRelation: "subjects"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "user_progress_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       user_study_progress: {
         Row: {

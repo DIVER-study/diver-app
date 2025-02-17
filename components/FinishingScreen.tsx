@@ -1,7 +1,10 @@
-import { redirect } from 'next/navigation';
 import React, { useState, useEffect } from 'react';
+import { Button } from './ui/Button';
+import Link from 'next/link';
 
-export const PopUpXp = ({ currentRealm, subjectId }: { currentRealm: string; subjectId: number }) => {
+type Props = { currentRealm: string; subjectId: number; xpDelta: number };
+
+export const FinishingScreen = ({ currentRealm, subjectId, xpDelta }: Props) => {
   const [animate, setAnimate] = useState(false);
 
   useEffect(() => {
@@ -20,12 +23,12 @@ export const PopUpXp = ({ currentRealm, subjectId }: { currentRealm: string; sub
       </h1>
 
       <div className='flex gap-4 mb-6'>
-        <button className='border-2 border-black rounded-lg px-8 py-4 text-xl transition-transform transform hover:scale-110'>
-          XP
-        </button>
-        <button className='border-2 border-black rounded-lg px-8 py-4 flex items-center justify-center transition-transform transform hover:scale-110'>
+        <div className='border-2 border-black rounded-lg px-8 py-4 text-xl transition-transform transform hover:scale-110'>
+          + {xpDelta}XP
+        </div>
+        <div className='border-2 border-black rounded-lg px-8 py-4 flex items-center justify-center transition-transform transform hover:scale-110'>
           <span className='text-3xl'>🏆</span>
-        </button>
+        </div>
       </div>
 
       <div className='w-full max-w-md border-t-2 border-black pt-4'>
@@ -50,14 +53,9 @@ export const PopUpXp = ({ currentRealm, subjectId }: { currentRealm: string; sub
         </div>
       </div>
 
-      <button
-        className='absolute bottom-6 right-6 border-2 border-black px-6 py-3 flex items-center bg-white transition-transform transform hover:scale-110'
-        onClick={() => {
-          redirect(`/${currentRealm}/exerciseTrail?temaId=${subjectId}`);
-        }}
-      >
-        <span className='text-black text-xl'>✔</span>
-      </button>
+      <Button asChild>
+        <Link href={`/${currentRealm}/exerciseTrail?temaId=${subjectId}`}>Continuar</Link>
+      </Button>
     </div>
   );
 };

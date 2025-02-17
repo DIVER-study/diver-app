@@ -286,10 +286,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@next/env@npm:15.1.6":
-  version: 15.1.6
-  resolution: "@next/env@npm:15.1.6"
-  checksum: 10c0/b68d541abe0cf5f8bab83633680c193ff1756e73b024ffb18c146502a588e038ee705c6064d9c39609a9c0097c563162a296ae43041b34e06831f5b72a215121
+"@next/env@npm:15.2.0-canary.61":
+  version: 15.2.0-canary.61
+  resolution: "@next/env@npm:15.2.0-canary.61"
+  checksum: 10c0/28c71207537ec0eab3339d95973d8f7f9bc9a720514cba9e44bc8ab116f8ae4fddc375b4ea210ffebd53f7d8441418e7b062e3585bc44419829ec714a14af7ee
   languageName: node
   linkType: hard
 
@@ -302,58 +302,58 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@next/swc-darwin-arm64@npm:15.1.6":
-  version: 15.1.6
-  resolution: "@next/swc-darwin-arm64@npm:15.1.6"
+"@next/swc-darwin-arm64@npm:15.2.0-canary.61":
+  version: 15.2.0-canary.61
+  resolution: "@next/swc-darwin-arm64@npm:15.2.0-canary.61"
   conditions: os=darwin & cpu=arm64
   languageName: node
   linkType: hard
 
-"@next/swc-darwin-x64@npm:15.1.6":
-  version: 15.1.6
-  resolution: "@next/swc-darwin-x64@npm:15.1.6"
+"@next/swc-darwin-x64@npm:15.2.0-canary.61":
+  version: 15.2.0-canary.61
+  resolution: "@next/swc-darwin-x64@npm:15.2.0-canary.61"
   conditions: os=darwin & cpu=x64
   languageName: node
   linkType: hard
 
-"@next/swc-linux-arm64-gnu@npm:15.1.6":
-  version: 15.1.6
-  resolution: "@next/swc-linux-arm64-gnu@npm:15.1.6"
+"@next/swc-linux-arm64-gnu@npm:15.2.0-canary.61":
+  version: 15.2.0-canary.61
+  resolution: "@next/swc-linux-arm64-gnu@npm:15.2.0-canary.61"
   conditions: os=linux & cpu=arm64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@next/swc-linux-arm64-musl@npm:15.1.6":
-  version: 15.1.6
-  resolution: "@next/swc-linux-arm64-musl@npm:15.1.6"
+"@next/swc-linux-arm64-musl@npm:15.2.0-canary.61":
+  version: 15.2.0-canary.61
+  resolution: "@next/swc-linux-arm64-musl@npm:15.2.0-canary.61"
   conditions: os=linux & cpu=arm64 & libc=musl
   languageName: node
   linkType: hard
 
-"@next/swc-linux-x64-gnu@npm:15.1.6":
-  version: 15.1.6
-  resolution: "@next/swc-linux-x64-gnu@npm:15.1.6"
+"@next/swc-linux-x64-gnu@npm:15.2.0-canary.61":
+  version: 15.2.0-canary.61
+  resolution: "@next/swc-linux-x64-gnu@npm:15.2.0-canary.61"
   conditions: os=linux & cpu=x64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@next/swc-linux-x64-musl@npm:15.1.6":
-  version: 15.1.6
-  resolution: "@next/swc-linux-x64-musl@npm:15.1.6"
+"@next/swc-linux-x64-musl@npm:15.2.0-canary.61":
+  version: 15.2.0-canary.61
+  resolution: "@next/swc-linux-x64-musl@npm:15.2.0-canary.61"
   conditions: os=linux & cpu=x64 & libc=musl
   languageName: node
   linkType: hard
 
-"@next/swc-win32-arm64-msvc@npm:15.1.6":
-  version: 15.1.6
-  resolution: "@next/swc-win32-arm64-msvc@npm:15.1.6"
+"@next/swc-win32-arm64-msvc@npm:15.2.0-canary.61":
+  version: 15.2.0-canary.61
+  resolution: "@next/swc-win32-arm64-msvc@npm:15.2.0-canary.61"
   conditions: os=win32 & cpu=arm64
   languageName: node
   linkType: hard
 
-"@next/swc-win32-x64-msvc@npm:15.1.6":
-  version: 15.1.6
-  resolution: "@next/swc-win32-x64-msvc@npm:15.1.6"
+"@next/swc-win32-x64-msvc@npm:15.2.0-canary.61":
+  version: 15.2.0-canary.61
+  resolution: "@next/swc-win32-x64-msvc@npm:15.2.0-canary.61"
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
@@ -512,109 +512,109 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tailwindcss/node@npm:^4.0.0":
-  version: 4.0.4
-  resolution: "@tailwindcss/node@npm:4.0.4"
+"@tailwindcss/node@npm:^4.0.6":
+  version: 4.0.6
+  resolution: "@tailwindcss/node@npm:4.0.6"
   dependencies:
     enhanced-resolve: "npm:^5.18.0"
     jiti: "npm:^2.4.2"
-    tailwindcss: "npm:4.0.4"
-  checksum: 10c0/28b2398f4e4a79972d489155688240f571ee40705ad3daa818f33b1b3c0a476a4e48202540ca070c2de5fac59d518184cc8461e382c97457e0753545978578ec
+    tailwindcss: "npm:4.0.6"
+  checksum: 10c0/9bde079ebe7ea4839057149636940cd8972cb2732f0bea57b233addbff2ba655a7f7a6294fbcdac9b37f7b00b84f250b9c5f0625f1055ab560d2dbbc2dd85b82
   languageName: node
   linkType: hard
 
-"@tailwindcss/oxide-android-arm64@npm:4.0.4":
-  version: 4.0.4
-  resolution: "@tailwindcss/oxide-android-arm64@npm:4.0.4"
+"@tailwindcss/oxide-android-arm64@npm:4.0.6":
+  version: 4.0.6
+  resolution: "@tailwindcss/oxide-android-arm64@npm:4.0.6"
   conditions: os=android & cpu=arm64
   languageName: node
   linkType: hard
 
-"@tailwindcss/oxide-darwin-arm64@npm:4.0.4":
-  version: 4.0.4
-  resolution: "@tailwindcss/oxide-darwin-arm64@npm:4.0.4"
+"@tailwindcss/oxide-darwin-arm64@npm:4.0.6":
+  version: 4.0.6
+  resolution: "@tailwindcss/oxide-darwin-arm64@npm:4.0.6"
   conditions: os=darwin & cpu=arm64
   languageName: node
   linkType: hard
 
-"@tailwindcss/oxide-darwin-x64@npm:4.0.4":
-  version: 4.0.4
-  resolution: "@tailwindcss/oxide-darwin-x64@npm:4.0.4"
+"@tailwindcss/oxide-darwin-x64@npm:4.0.6":
+  version: 4.0.6
+  resolution: "@tailwindcss/oxide-darwin-x64@npm:4.0.6"
   conditions: os=darwin & cpu=x64
   languageName: node
   linkType: hard
 
-"@tailwindcss/oxide-freebsd-x64@npm:4.0.4":
-  version: 4.0.4
-  resolution: "@tailwindcss/oxide-freebsd-x64@npm:4.0.4"
+"@tailwindcss/oxide-freebsd-x64@npm:4.0.6":
+  version: 4.0.6
+  resolution: "@tailwindcss/oxide-freebsd-x64@npm:4.0.6"
   conditions: os=freebsd & cpu=x64
   languageName: node
   linkType: hard
 
-"@tailwindcss/oxide-linux-arm-gnueabihf@npm:4.0.4":
-  version: 4.0.4
-  resolution: "@tailwindcss/oxide-linux-arm-gnueabihf@npm:4.0.4"
+"@tailwindcss/oxide-linux-arm-gnueabihf@npm:4.0.6":
+  version: 4.0.6
+  resolution: "@tailwindcss/oxide-linux-arm-gnueabihf@npm:4.0.6"
   conditions: os=linux & cpu=arm
   languageName: node
   linkType: hard
 
-"@tailwindcss/oxide-linux-arm64-gnu@npm:4.0.4":
-  version: 4.0.4
-  resolution: "@tailwindcss/oxide-linux-arm64-gnu@npm:4.0.4"
+"@tailwindcss/oxide-linux-arm64-gnu@npm:4.0.6":
+  version: 4.0.6
+  resolution: "@tailwindcss/oxide-linux-arm64-gnu@npm:4.0.6"
   conditions: os=linux & cpu=arm64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@tailwindcss/oxide-linux-arm64-musl@npm:4.0.4":
-  version: 4.0.4
-  resolution: "@tailwindcss/oxide-linux-arm64-musl@npm:4.0.4"
+"@tailwindcss/oxide-linux-arm64-musl@npm:4.0.6":
+  version: 4.0.6
+  resolution: "@tailwindcss/oxide-linux-arm64-musl@npm:4.0.6"
   conditions: os=linux & cpu=arm64 & libc=musl
   languageName: node
   linkType: hard
 
-"@tailwindcss/oxide-linux-x64-gnu@npm:4.0.4":
-  version: 4.0.4
-  resolution: "@tailwindcss/oxide-linux-x64-gnu@npm:4.0.4"
+"@tailwindcss/oxide-linux-x64-gnu@npm:4.0.6":
+  version: 4.0.6
+  resolution: "@tailwindcss/oxide-linux-x64-gnu@npm:4.0.6"
   conditions: os=linux & cpu=x64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@tailwindcss/oxide-linux-x64-musl@npm:4.0.4":
-  version: 4.0.4
-  resolution: "@tailwindcss/oxide-linux-x64-musl@npm:4.0.4"
+"@tailwindcss/oxide-linux-x64-musl@npm:4.0.6":
+  version: 4.0.6
+  resolution: "@tailwindcss/oxide-linux-x64-musl@npm:4.0.6"
   conditions: os=linux & cpu=x64 & libc=musl
   languageName: node
   linkType: hard
 
-"@tailwindcss/oxide-win32-arm64-msvc@npm:4.0.4":
-  version: 4.0.4
-  resolution: "@tailwindcss/oxide-win32-arm64-msvc@npm:4.0.4"
+"@tailwindcss/oxide-win32-arm64-msvc@npm:4.0.6":
+  version: 4.0.6
+  resolution: "@tailwindcss/oxide-win32-arm64-msvc@npm:4.0.6"
   conditions: os=win32 & cpu=arm64
   languageName: node
   linkType: hard
 
-"@tailwindcss/oxide-win32-x64-msvc@npm:4.0.4":
-  version: 4.0.4
-  resolution: "@tailwindcss/oxide-win32-x64-msvc@npm:4.0.4"
+"@tailwindcss/oxide-win32-x64-msvc@npm:4.0.6":
+  version: 4.0.6
+  resolution: "@tailwindcss/oxide-win32-x64-msvc@npm:4.0.6"
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
 
-"@tailwindcss/oxide@npm:^4.0.0":
-  version: 4.0.4
-  resolution: "@tailwindcss/oxide@npm:4.0.4"
+"@tailwindcss/oxide@npm:^4.0.6":
+  version: 4.0.6
+  resolution: "@tailwindcss/oxide@npm:4.0.6"
   dependencies:
-    "@tailwindcss/oxide-android-arm64": "npm:4.0.4"
-    "@tailwindcss/oxide-darwin-arm64": "npm:4.0.4"
-    "@tailwindcss/oxide-darwin-x64": "npm:4.0.4"
-    "@tailwindcss/oxide-freebsd-x64": "npm:4.0.4"
-    "@tailwindcss/oxide-linux-arm-gnueabihf": "npm:4.0.4"
-    "@tailwindcss/oxide-linux-arm64-gnu": "npm:4.0.4"
-    "@tailwindcss/oxide-linux-arm64-musl": "npm:4.0.4"
-    "@tailwindcss/oxide-linux-x64-gnu": "npm:4.0.4"
-    "@tailwindcss/oxide-linux-x64-musl": "npm:4.0.4"
-    "@tailwindcss/oxide-win32-arm64-msvc": "npm:4.0.4"
-    "@tailwindcss/oxide-win32-x64-msvc": "npm:4.0.4"
+    "@tailwindcss/oxide-android-arm64": "npm:4.0.6"
+    "@tailwindcss/oxide-darwin-arm64": "npm:4.0.6"
+    "@tailwindcss/oxide-darwin-x64": "npm:4.0.6"
+    "@tailwindcss/oxide-freebsd-x64": "npm:4.0.6"
+    "@tailwindcss/oxide-linux-arm-gnueabihf": "npm:4.0.6"
+    "@tailwindcss/oxide-linux-arm64-gnu": "npm:4.0.6"
+    "@tailwindcss/oxide-linux-arm64-musl": "npm:4.0.6"
+    "@tailwindcss/oxide-linux-x64-gnu": "npm:4.0.6"
+    "@tailwindcss/oxide-linux-x64-musl": "npm:4.0.6"
+    "@tailwindcss/oxide-win32-arm64-msvc": "npm:4.0.6"
+    "@tailwindcss/oxide-win32-x64-msvc": "npm:4.0.6"
   dependenciesMeta:
     "@tailwindcss/oxide-android-arm64":
       optional: true
@@ -638,21 +638,21 @@ __metadata:
       optional: true
     "@tailwindcss/oxide-win32-x64-msvc":
       optional: true
-  checksum: 10c0/0b66441c56b5cafa51556b4a927a0c7a0cacbfc28b0c9e865f7fc09fcc1537edaccd11103393d26b90e61ffe40fe351027f5d399b46bee034a2e99f81c3bf2cf
+  checksum: 10c0/ca8ee1fc569dc49308957adb2946c4a8e8372a7e51dad0a3e040bee14484b260ea74e02b21fd9a9b5d67d9bf225b253ce593a9d8cf11f64b38e0ff7b12c590dd
   languageName: node
   linkType: hard
 
-"@tailwindcss/postcss@npm:4.0.0":
-  version: 4.0.0
-  resolution: "@tailwindcss/postcss@npm:4.0.0"
+"@tailwindcss/postcss@npm:^4.0.6":
+  version: 4.0.6
+  resolution: "@tailwindcss/postcss@npm:4.0.6"
   dependencies:
     "@alloc/quick-lru": "npm:^5.2.0"
-    "@tailwindcss/node": "npm:^4.0.0"
-    "@tailwindcss/oxide": "npm:^4.0.0"
+    "@tailwindcss/node": "npm:^4.0.6"
+    "@tailwindcss/oxide": "npm:^4.0.6"
     lightningcss: "npm:^1.29.1"
     postcss: "npm:^8.4.41"
-    tailwindcss: "npm:4.0.0"
-  checksum: 10c0/a605393e9939026d8b723f676dfe5ba0bfcfc8dc3c3c26329890b0f9119b1f78ef9c8c6983bdeecbd5dc88bd2700a31f64ebdd386ac4c973ba789237baa8d55c
+    tailwindcss: "npm:4.0.6"
+  checksum: 10c0/c733d7970ba1df77f2eb7d3badd2d5de92c28785b46553809c98876160a4e09724c66f6011ccb5028aa2f24105774b9727d6f8208e083d1fe5d8f3c8f45a44ce
   languageName: node
   linkType: hard
 
@@ -1183,10 +1183,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"class-variance-authority@npm:^0.7.1":
+  version: 0.7.1
+  resolution: "class-variance-authority@npm:0.7.1"
+  dependencies:
+    clsx: "npm:^2.1.1"
+  checksum: 10c0/0f438cea22131808b99272de0fa933c2532d5659773bfec0c583de7b3f038378996d3350683426b8e9c74a6286699382106d71fbec52f0dd5fbb191792cccb5b
+  languageName: node
+  linkType: hard
+
 "client-only@npm:0.0.1":
   version: 0.0.1
   resolution: "client-only@npm:0.0.1"
   checksum: 10c0/9d6cfd0c19e1c96a434605added99dff48482152af791ec4172fb912a71cff9027ff174efd8cdb2160cc7f377543e0537ffc462d4f279bc4701de3f2a3c4b358
+  languageName: node
+  linkType: hard
+
+"clsx@npm:^2.1.1":
+  version: 2.1.1
+  resolution: "clsx@npm:2.1.1"
+  checksum: 10c0/c4c8eb865f8c82baab07e71bfa8897c73454881c4f99d6bc81585aecd7c441746c1399d08363dc096c550cceaf97bd4ce1e8854e1771e9998d9f94c4fe075839
   languageName: node
   linkType: hard
 
@@ -1384,22 +1400,24 @@ __metadata:
   dependencies:
     "@supabase/ssr": "npm:^0.5.2"
     "@supabase/supabase-js": "npm:^2.46.2"
-    "@tailwindcss/postcss": "npm:4.0.0"
+    "@tailwindcss/postcss": "npm:^4.0.6"
     "@types/node": "npm:^20"
     "@types/react": "npm:^19.0.8"
     "@types/react-dom": "npm:^19.0.3"
     "@types/uuid": "npm:^10.0.0"
     browser-image-compression: "npm:^2.0.2"
+    class-variance-authority: "npm:^0.7.1"
     eslint: "npm:^8"
     eslint-config-next: "npm:15.0.3"
-    next: "npm:^15.1.6"
+    next: "npm:^15.2.0-canary.61"
     postcss: "npm:^8"
     prettier: "npm:^3.4.2"
     react: "npm:^19.0.0"
     react-dom: "npm:^19.0.0"
     sonner: "npm:^1.7.1"
-    supabase: "npm:2.6.8"
-    tailwindcss: "npm:4.0.0"
+    supabase: "npm:>=1.8.1"
+    tailwind-merge: "npm:^3.0.1"
+    tailwindcss: "npm:^4.0.6"
     typescript: "npm:^5"
     uuid: "npm:^11.0.5"
     zustand: "npm:^5.0.3"
@@ -2972,19 +2990,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"next@npm:^15.1.6":
-  version: 15.1.6
-  resolution: "next@npm:15.1.6"
+"next@npm:^15.2.0-canary.61":
+  version: 15.2.0-canary.61
+  resolution: "next@npm:15.2.0-canary.61"
   dependencies:
-    "@next/env": "npm:15.1.6"
-    "@next/swc-darwin-arm64": "npm:15.1.6"
-    "@next/swc-darwin-x64": "npm:15.1.6"
-    "@next/swc-linux-arm64-gnu": "npm:15.1.6"
-    "@next/swc-linux-arm64-musl": "npm:15.1.6"
-    "@next/swc-linux-x64-gnu": "npm:15.1.6"
-    "@next/swc-linux-x64-musl": "npm:15.1.6"
-    "@next/swc-win32-arm64-msvc": "npm:15.1.6"
-    "@next/swc-win32-x64-msvc": "npm:15.1.6"
+    "@next/env": "npm:15.2.0-canary.61"
+    "@next/swc-darwin-arm64": "npm:15.2.0-canary.61"
+    "@next/swc-darwin-x64": "npm:15.2.0-canary.61"
+    "@next/swc-linux-arm64-gnu": "npm:15.2.0-canary.61"
+    "@next/swc-linux-arm64-musl": "npm:15.2.0-canary.61"
+    "@next/swc-linux-x64-gnu": "npm:15.2.0-canary.61"
+    "@next/swc-linux-x64-musl": "npm:15.2.0-canary.61"
+    "@next/swc-win32-arm64-msvc": "npm:15.2.0-canary.61"
+    "@next/swc-win32-x64-msvc": "npm:15.2.0-canary.61"
     "@swc/counter": "npm:0.1.3"
     "@swc/helpers": "npm:0.5.15"
     busboy: "npm:1.6.0"
@@ -3029,7 +3047,7 @@ __metadata:
       optional: true
   bin:
     next: dist/bin/next
-  checksum: 10c0/261d27589b159387700df5f40de7dee6edfc84525a090e2b29326084124fac87b033dea8b24ada2b6ade25ffc7e2169383b6e19c96ca0c33adb830f76a6d75be
+  checksum: 10c0/d2ab6eafc6cfec762b62d714012deb0e48fee2303c1c7405b00920ab34d4089833cae3f7b35eaec7d96a83b0110eea764da03c874d095aa3ac7dd4ee6970a509
   languageName: node
   linkType: hard
 
@@ -3939,9 +3957,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"supabase@npm:2.6.8":
-  version: 2.6.8
-  resolution: "supabase@npm:2.6.8"
+"supabase@npm:>=1.8.1":
+  version: 2.12.0
+  resolution: "supabase@npm:2.12.0"
   dependencies:
     bin-links: "npm:^5.0.0"
     https-proxy-agent: "npm:^7.0.2"
@@ -3949,7 +3967,7 @@ __metadata:
     tar: "npm:7.4.3"
   bin:
     supabase: bin/supabase
-  checksum: 10c0/88fc0b173a1c5bd51429b81f037060adcab33392734ff1d531b178dd8850a666c8750e712bf5ddad6c7d2af7f363940b29954fef2c71814ca718a53e5f00564e
+  checksum: 10c0/945b0207f7d73ae566cff93395e1679a89444bcb5404c2c50101d1bf015fe0e0a0afa3cd0f891ffa64c2fe7a8929f122e83e58526bb50028c865225fc8f85c46
   languageName: node
   linkType: hard
 
@@ -3969,17 +3987,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tailwindcss@npm:4.0.0":
-  version: 4.0.0
-  resolution: "tailwindcss@npm:4.0.0"
-  checksum: 10c0/418b1cb02c46f5064bdd4931d8bb030e5c2a986744226dc282b47ecd4b95d1eb919a6f35a68cac948fbf3224fd976feafd9476e289cb5774062f6a3b2a49606e
+"tailwind-merge@npm:^3.0.1":
+  version: 3.0.1
+  resolution: "tailwind-merge@npm:3.0.1"
+  checksum: 10c0/973d754687ad82d25cb55bf16958153999d080cd68dd0a6c1c74909bd92d05bcca01c24d9642e9e6ec95b3a207b15cd4b32bca49d586f2e743d311358ecb584b
   languageName: node
   linkType: hard
 
-"tailwindcss@npm:4.0.4":
-  version: 4.0.4
-  resolution: "tailwindcss@npm:4.0.4"
-  checksum: 10c0/2f430f81a981c9dfd7072ce7cd6f9935a5e36187a4f12e998caa2b5d159f1acf4ebd1d608b06272bf94a041c24b17cd5f625d049972dccdf6a75027eb03f916e
+"tailwindcss@npm:4.0.6, tailwindcss@npm:^4.0.6":
+  version: 4.0.6
+  resolution: "tailwindcss@npm:4.0.6"
+  checksum: 10c0/e1d40616c2aa69844a065c74d022960efc820d974c86415faec6d485f841c0112776a52d9a150e8f3375c4e04d22b0b4c33c07086c35b9725487b314dc7a7f71
   languageName: node
   linkType: hard
 

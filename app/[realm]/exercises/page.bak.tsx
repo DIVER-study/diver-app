@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { ConfirmAnswerIcon, ExitButtonIcon } from '@/components/Svgs';
 import { AlertConfirm, AlertRightAnswer, AlertWrongAnswer } from '@/components/Alerts';
-import { PopUpXp } from '@/components/PopUpXp';
+import { PopUpXp } from '@/components/FinishingScreen';
 import { useSearchParams } from 'next/navigation';
 import { useUserStore } from '@/stores/userStore';
 import { UserStore } from '@/components/UserStore';

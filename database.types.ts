@@ -169,6 +169,7 @@ export type Database = {
           completed: boolean
           id: number
           module_id: number
+          realm: Database["public"]["Enums"]["realms"]
           subject_id: number
           user_id: string
         }
@@ -176,6 +177,7 @@ export type Database = {
           completed?: boolean
           id?: number
           module_id?: number
+          realm?: Database["public"]["Enums"]["realms"]
           subject_id?: number
           user_id?: string
         }
@@ -183,6 +185,7 @@ export type Database = {
           completed?: boolean
           id?: number
           module_id?: number
+          realm?: Database["public"]["Enums"]["realms"]
           subject_id?: number
           user_id?: string
         }

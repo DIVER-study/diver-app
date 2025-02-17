@@ -9,7 +9,7 @@ export type ExerciseType = {
   answer: number;
 };
 
-const getUserId = async () => {
+export const getUserId = async () => {
   const supabase = await createClient();
   const {
     data: { user },
@@ -45,7 +45,11 @@ const getUserPastProgress = async (userId: string, subjectId: number, moduleId: 
   return { data, error };
 };
 
-export const updateUserProgress = async (moduleId: number, subjectId: number) => {
+export const updateUserProgress = async (
+  moduleId: number,
+  subjectId: number,
+  realm: 'behaviorism' | 'gestalt' | 'tsc'
+) => {
   const supabase = await createClient();
   const { id, error: authError } = await getUserId();
   if (!id) return { error: authError };
@@ -58,6 +62,7 @@ export const updateUserProgress = async (moduleId: number, subjectId: number) =>
       user_id: id,
       module_id: moduleId,
       subject_id: subjectId,
+      realm,
       completed: true,
     },
   ]);

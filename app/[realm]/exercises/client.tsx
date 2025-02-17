@@ -16,6 +16,7 @@ import {
 } from '@/components/ui/AlertBox';
 import { toast } from 'sonner';
 import Link from 'next/link';
+import { FinishingScreen } from '@/components/FinishingScreen';
 
 type ExerciseClientProps = {
   exercises: ExerciseType[];
@@ -33,6 +34,7 @@ export default function ExercisePageClient({ exercises, realm, subjectId, module
   const [currentExercise, setCurrentExercise] = useState<ExerciseType>(exercises[0]);
   const [exerciseProgress, setExerciseProgress] = useState<number>(0);
   const [selectedOption, setSelectedOption] = useState<number>(-1);
+  const [finished, setFinished] = useState<boolean>(false);
   const [isPending, startTransition] = useTransition();
 
   const handleSubmit = () => {
@@ -69,13 +71,18 @@ export default function ExercisePageClient({ exercises, realm, subjectId, module
         const { error } = await updateUserProgress(moduleId, subjectId);
         if (error) toast.error(error.message);
         await updateUserXp(xpDelta);
+        wrongAnswer.current?.hidePopover();
+        rightAnswer.current?.hidePopover();
+        setFinished(true);
+      });
+    } else {
+      startTransition(async () => {
+        await new Promise((resolve) => setTimeout(resolve, 3000));
+        setCurrentExercise(exercises[exerciseProgress + 1]);
+        wrongAnswer.current?.hidePopover();
+        rightAnswer.current?.hidePopover();
       });
     }
-
-    startTransition(async () => {
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-      setCurrentExercise(exercises[exerciseProgress + 1]);
-    });
   };
   return (
     <div className='flex flex-col p-10 gap-16 items-center justify-start'>
@@ -98,7 +105,7 @@ export default function ExercisePageClient({ exercises, realm, subjectId, module
       {/* Progress Bar */}
       <div
         className='flex w-full gap-8 justify-center items-center'
-        hidden={isPending || undefined}
+        hidden={finished || undefined}
       >
         <Button
           size='icon'
@@ -126,6 +133,13 @@ export default function ExercisePageClient({ exercises, realm, subjectId, module
         hidden={isPending}
       />
       {isPending && <LoadingBuffer />}
+      {finished && (
+        <FinishingScreen
+          currentRealm={realm}
+          subjectId={subjectId}
+          xpDelta={userXp.current}
+        />
+      )}
     </div>
   );
 }

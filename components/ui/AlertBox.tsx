@@ -7,7 +7,7 @@ import { Slot } from './Slot';
 export const AlertBoxOverlay = ({ className, children, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
   <div
     className={cn(
-      'absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-fit z-50 bg-beige-300 opacity-0 starting:open:opacity-0 open:opacity-100 rounded-lg py-8 px-6',
+      'absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 size-fit bg-logo-100 rounded-lg py-8 px-6 shadow-xl',
       className
     )}
     {...props}
@@ -43,7 +43,7 @@ export const AlertBoxTitle = ({ className, ...props }: React.HTMLAttributes<HTML
 
 export const AlertBoxDescription = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
   <div
-    className={cn('text-sm', className)}
+    className={cn('text-sm max-w-100 text-wrap', className)}
     {...props}
   />
 );

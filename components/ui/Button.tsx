@@ -4,19 +4,20 @@ import React from 'react';
 import { Slot } from './Slot';
 
 export const buttonVariants = cva(
-  'inline-flex gap-2 px-3 py-6 rounded-lg items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0',
+  'inline-flex gap-2 px-3 rounded-lg items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0',
   {
     variants: {
       variant: {
-        default: 'bg-logo-200 text-white shadow-cogtec hover:bg-logo-200/90',
+        default: 'border-2 border-logo-200 bg-logo-200 text-white shadow-cogtec hover:bg-logo-200/90',
         outline: 'border-2 border-logo-200 bg-white shadow-cogtec hover:bg-logo-200 text-logo-200 hover:text-white',
         destructive: 'bg-warning text-white shadow-cogtec hover:bg-warning/90',
+        ghost: 'hover:bg-beige-100 hover:text-black hover:shadow-cog-tec',
       },
       size: {
         default: 'h-9 px-4 py-2',
-        sm: 'h-8 rounded-md px-3 text-xs',
-        lg: 'h-10 rounded-lg px-8',
-        icon: 'size-9',
+        sm: 'h-8 rounded-md px-3 text-xs py-4',
+        lg: 'h-10 rounded-lg px-8 py-12',
+        icon: 'size-9 p-2',
       },
     },
     defaultVariants: {

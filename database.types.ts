@@ -118,8 +118,8 @@ export type Database = {
           display_name: string
           email: string
           id: string
-          progress: number
           updated_at: string
+          xp: number
         }
         Insert: {
           accepted_ranking?: boolean
@@ -128,8 +128,8 @@ export type Database = {
           display_name?: string
           email: string
           id: string
-          progress?: number
           updated_at?: string
+          xp?: number
         }
         Update: {
           accepted_ranking?: boolean
@@ -138,8 +138,8 @@ export type Database = {
           display_name?: string
           email?: string
           id?: string
-          progress?: number
           updated_at?: string
+          xp?: number
         }
         Relationships: []
       }
@@ -169,6 +169,7 @@ export type Database = {
           completed: boolean
           id: number
           module_id: number
+          realm: Database["public"]["Enums"]["realms"]
           subject_id: number
           user_id: string
         }
@@ -176,6 +177,7 @@ export type Database = {
           completed?: boolean
           id?: number
           module_id?: number
+          realm?: Database["public"]["Enums"]["realms"]
           subject_id?: number
           user_id?: string
         }
@@ -183,6 +185,7 @@ export type Database = {
           completed?: boolean
           id?: number
           module_id?: number
+          realm?: Database["public"]["Enums"]["realms"]
           subject_id?: number
           user_id?: string
         }

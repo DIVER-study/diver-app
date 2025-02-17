@@ -10,7 +10,7 @@ export type UserProfile = {
   display_name: string;
   email: string;
   id: string;
-  progress: number;
+  xp: number;
 };
 
 export type Progress = {
@@ -28,7 +28,7 @@ export type UserState = {
   setUser: (user: UserState['user']) => void;
   setUserFromDB: () => Promise<void>;
   updateUserProgress: (newData: Partial<Progress>) => Promise<{ error: PostgrestError | null } | { error: Error }>;
-  updateRankingChoice: (choice: boolean) => Promise<{ error: PostgrestError | null } | { error: Error }>;
+  updateUserProfile: (data: Partial<UserProfile>) => Promise<{ error: PostgrestError | null } | { error: Error }>;
   updateUserSupa: (data: UserAttributes) => Promise<UserResponse>;
 };
 
@@ -43,8 +43,8 @@ const emptyProfile = {
   avatar_url: '/empty-user.png',
   display_name: 'user',
   email: 'empty@null.com',
-  id: '000-000-000-000',
-  progress: -1,
+  id: '00000000-0000-0000-0000-000000000000',
+  xp: 0,
 };
 
 export const useUserStore = create<UserState>((set, get) => ({
@@ -78,11 +78,11 @@ export const useUserStore = create<UserState>((set, get) => ({
     }
     return { error: new Error('Houve um erro encontrando o usuário.') };
   },
-  updateRankingChoice: async (choice) => {
+  updateUserProfile: async (data) => {
     const { user, setUserFromDB } = get();
     const supabase = createClient();
     if (user.auth?.id) {
-      const { error } = await supabase.from('profiles').update({ accepted_ranking: choice }).eq('id', user.auth.id);
+      const { error } = await supabase.from('profiles').update(data).eq('id', user.auth.id);
       await setUserFromDB();
       return { error };
     }

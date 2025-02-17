@@ -98,7 +98,7 @@ export function ModuleList({ subjectId, realm }: ModuleListProps) {
 
   return (
     <svg
-      viewBox={`0 0 100 ${40 * Math.floor((modules.length / 3) * 2)}`}
+      viewBox={`0 0 100 ${40 * Math.ceil((modules.length / 3) * 2)}`}
       fill='none'
       xmlns='http://www.w3.org/2000/svg'
       className='flex-1 mx-auto max-w-100'

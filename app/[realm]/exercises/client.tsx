@@ -68,7 +68,7 @@ export default function ExercisePageClient({ exercises, realm, subjectId, module
 
     if (exerciseProgress + 1 === exercises.length) {
       startTransition(async () => {
-        const { error } = await updateUserProgress(moduleId, subjectId);
+        const { error } = await updateUserProgress(moduleId, subjectId, realm);
         if (error) toast.error(error.message);
         await updateUserXp(xpDelta);
         wrongAnswer.current?.hidePopover();

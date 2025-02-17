@@ -1,6 +1,6 @@
 'use client';
 
-import { FilledStar, ProfileIcon, RankingStar } from '@/components/Svgs';
+import { FilledStar, ProfileIcon, RankingStar } from '@/components/svgs/Svgs';
 import { UserState } from '@/stores/userStore';
 import { createClient } from '@/utils/supabase/client';
 import Image from 'next/image';

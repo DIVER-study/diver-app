@@ -3,7 +3,7 @@
 import { useRef, useState, useTransition } from 'react';
 import { ExerciseType, updateUserProgress, updateUserXp } from './server';
 import { Button } from '@/components/ui/Button';
-import { CloseIcon } from '@/components/svgs';
+import { CloseIcon } from '@/components/svgs/Svgs';
 import { LoadingBuffer } from '@/components/ui/LoadingBuffer';
 import {
   AlertBoxAction,
@@ -70,7 +70,7 @@ export default function ExercisePageClient({ exercises, realm, subjectId, module
       startTransition(async () => {
         const { error } = await updateUserProgress(moduleId, subjectId, realm);
         if (error) toast.error(error.message);
-        await updateUserXp(xpDelta);
+        await updateUserXp(userXp.current);
         wrongAnswer.current?.hidePopover();
         rightAnswer.current?.hidePopover();
         setFinished(true);

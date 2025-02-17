@@ -1,4 +1,4 @@
-import { ConfirmAnswerIcon } from '@/components/Svgs';
+import { ConfirmAnswerIcon } from '@/components/svgs/Svgs';
 
 type ConfirmButtonProps = {
   handleConfirm: () => void;

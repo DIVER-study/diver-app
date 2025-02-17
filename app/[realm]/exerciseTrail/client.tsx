@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import { getModules, getSubject, getUserCompletedModules } from './server';
-import { BehaviorismIcon, GestaltIcon, TSCIcon } from '@/components/svgs/RealmIcons';
+import { BehaviorismIcon, GestaltIcon, TSCIcon } from '@/components/svgs';
 import IdeaIcon from '@/components/svgs/IdeiaIcon';
 import { IntroTema } from '@/components/ui/alert-boxes/IntroTema';
 

@@ -70,7 +70,7 @@ function UserStatistics({ profile }: { profile: UserState['user']['profile'] }) 
         <div className='p-4 bg-white shadow-cogtec rounded-xl flex gap-2 items-center justify-between text-3xl flex-1'>
           <div className='flex gap-2 items-center'>
             <FilledStar className='shrink-0 size-16' />
-            {profile?.progress || 0}
+            {profile?.xp || 0}
           </div>
           xp
         </div>

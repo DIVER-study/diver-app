@@ -13,8 +13,6 @@ export function SideBar({ activeTab }: { activeTab?: 'estudos' | 'biblioteca' | 
   const { profile } = useUserStore((state) => state.user);
 
   const signOut = async () => {
-    // const popup = document.getElementById('signout-popup');
-    // popup?.hidePopover();
     signOutPopup.current?.hidePopover();
 
     const supabase = createClient();
@@ -63,33 +61,36 @@ export function SideBar({ activeTab }: { activeTab?: 'estudos' | 'biblioteca' | 
         </button>
       </div>
       {/* Side Bar */}
-      <aside className='sticky top-0 left-0 flex flex-col py-4 w-48 h-screen gap-8 text-black bg-logo-100 rounded-r-[2rem] drop-shadow-md'>
-        <div className='flex justify-start gap-4 items-center p-4 text-logo-200'>
-          <CogTecLogo height={40} />
-          <span className='italic font-bold text-3xl'>CogTec</span>
+      <aside className='min-w-75 min-h-screen py-10 bg-logo-100 rounded-r-3xl flex-col justify-between flex sticky top-0 left-0'>
+        <div className='justify-center items-center gap-8 inline-flex h-15 text-logo-200'>
+          <CogTecLogo
+            height={61}
+            width={64}
+          />
+          <span className='h-13 text-[40px] font-extrabold'>CogTec</span>
         </div>
-        <nav className='flex-1 flex flex-col gap-4 justify-center items-center font-semibold capitalize'>
+        <nav className='grow flex-col justify-center items-start flex gap-2.5'>
           {['estudos', 'biblioteca', 'ranking', 'perfil'].map((tab) => {
             const { href, icon: Icon } = tabRoutes[tab];
             return (
               <Link
                 href={href}
-                className='text-neutral-800 text-2xl w-full p-2 rounded-r-xl hover:bg-logo-200/90 hover:text-white data-[active=true]:bg-logo-200 data-[active=true]:text-white flex items-center gap-2'
-                data-active={activeTab === tab}
+                className='pl-17.5 py-6 hover:bg-logo-200 data-active:bg-logo-200 rounded-r-3xl items-center gap-4 inline-flex hover:text-white data-active:text-white text-2xl font-bold text-black'
+                data-active={activeTab === tab || null}
                 key={tab}
               >
-                <Icon className='size-6' />
+                <Icon className='size-12' />
                 {tab}
               </Link>
             );
           })}
         </nav>
         <button
-          className='hover:bg-logo-200/90 hover:text-white text-sm p-2 text-warning rounded-r-lg capitalize font-light flex gap-2 items-center cursor-pointer'
+          className='h-8 px-8 justify-start items-center gap-4 inline-flex text-warning text-xl font-medium'
           popoverTarget='signout-popup'
           popoverTargetAction='show'
         >
-          <ExitIcon className='pointer-events-none shrink-0 size-[16px]' />
+          <ExitIcon className='pointer-events-none shrink-0 size-8' />
           Sair
         </button>
       </aside>

@@ -1,7 +1,7 @@
 'use client';
 
 import { Database } from '@/database.types';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useTransition } from 'react';
 import { toast } from 'sonner';
 import { getModules, getSubject, getUserCompletedModules } from './server';
 import { BehaviorismIcon, GestaltIcon, TSCIcon } from '@/components/svgs';
@@ -26,15 +26,34 @@ type ModuleItemProps = {
 };
 
 // Loading Skeleton
-const LoadingSkeleton = () => (
-  <div className='flex flex-col items-center flex-1 gap-4'>
-    {[...Array(3)].map((_, index) => (
-      <div
-        key={index}
-        className='w-full min-h-fit p-6 rounded-full bg-gray-300 animate-pulse'
-      />
-    ))}
-  </div>
+const LoadingSkeleton = ({ getPath }: { getPath: (array: object[]) => string }) => (
+  <svg
+    viewBox={`0 0 100 ${40 * Math.ceil((7 / 3) * 2)}`}
+    fill='none'
+    xmlns='http://www.w3.org/2000/svg'
+    className='w-100 animate-pulse'
+  >
+    <path
+      d={getPath([...Array(7).fill({})])}
+      stroke='var(--color-beige-200)'
+      strokeWidth='7'
+      strokeLinecap='round'
+      strokeLinejoin='round'
+    />
+    {[...Array(7).fill({})].map((_, index) => {
+      const offsetX = index % 3 === 0 ? 50 : index % 3 === 1 ? 70 : 30;
+      const offsetY = index % 3 === 0 ? Math.floor((index / 3) * 2) : Math.round((index / 3) * 2);
+      return (
+        <circle
+          key={index}
+          cx={offsetX}
+          cy={offsetY * 40 + 10}
+          r={10}
+          fill='var(--color-neutral-500)'
+        ></circle>
+      );
+    })}
+  </svg>
 );
 
 // Single Module Item
@@ -50,27 +69,21 @@ const ModuleItem = ({ id, isUnlocked, subjectId, realm, completed }: ModuleItemP
 
 // Module List
 export function ModuleList({ subjectId, realm }: ModuleListProps) {
-  const [pending, setPending] = useState(true);
+  const [isPending, startTransition] = useTransition();
   const [modules, setModules] = useState<ModuleType[]>([]);
   const [completedModules, setCompletedModules] = useState<CompletedModule[]>([]);
 
   useEffect(() => {
-    const fetchData = async () => {
+    startTransition(async () => {
       try {
         setModules(await getModules(subjectId));
         setCompletedModules(await getUserCompletedModules(subjectId));
       } catch (error) {
         console.error('Erro ao carregar módulos:', error instanceof Error ? error.message : error);
         toast.error('Erro ao carregar módulos.');
-      } finally {
-        setPending(false);
       }
-    };
-
-    fetchData();
+    });
   }, [subjectId]);
-
-  if (pending) return <LoadingSkeleton />;
 
   const getPathString = (array: Array<unknown>) => {
     let pathString = 'M';
@@ -94,12 +107,14 @@ export function ModuleList({ subjectId, realm }: ModuleListProps) {
     return pathString;
   };
 
+  if (isPending) return <LoadingSkeleton getPath={getPathString} />;
+
   return (
     <svg
       viewBox={`0 0 100 ${40 * Math.ceil((modules.length / 3) * 2)}`}
       fill='none'
       xmlns='http://www.w3.org/2000/svg'
-      className='flex-1 mx-auto'
+      className='w-100'
     >
       <path
         d={getPathString(modules)}
@@ -156,7 +171,7 @@ export function SubjectInfo({ subjectId, realm }: SubjectInfoProps) {
     fetchData();
   }, [subjectId, realm]);
 
-  if (pending) return <LoadingSkeleton />;
+  if (pending) return <div className='w-130 h-80 rounded-4xl bg-neutral-500 animate-pulse' />;
 
   const Icon =
     realm === 'tsc' ? TSCIcon : realm === 'gestalt' ? GestaltIcon : realm === 'behaviorism' ? BehaviorismIcon : 'div';
@@ -166,20 +181,20 @@ export function SubjectInfo({ subjectId, realm }: SubjectInfoProps) {
     <div className='px-6 py-7 bg-white rounded-4xl shadow-cogtec flex-col flex gap-6 max-w-130 h-fit'>
       <div className='self-stretch justify-between items-center flex'>
         <div className='grow shrink basis-0 flex-col gap-4 flex'>
-          <span className='self-stretch text-logo-200 text-base font-bold uppercase'>
+          <span className='self-stretch text-logo-200 text-sm proto:text-base font-bold uppercase'>
             {realmName} &gt; {subject.name}
           </span>
-          <h1 className='self-stretch text-4xl font-bold'>{subject.name}</h1>
+          <h1 className='self-stretch text-2xl proto:text-4xl font-bold'>{subject.name}</h1>
         </div>
         <Icon className='size-25' />
       </div>
-      <p className='self-strecth text-xl font-medium'>Descrição do tema inserir aqui!</p>
+      <p className='self-strecth text-base proto:text-xl font-medium'>Descrição do tema inserir aqui!</p>
       <div className='self-stretch justify-end items-center gap-3 flex'>
-        <span className='font-bold text-xl'>Orientação</span>
+        <span className='font-bold text-base proto:text-xl'>Orientação</span>
         <button
           popoverTarget='intro-tema'
           popoverTargetAction='show'
-          className='cursor-pointer size-14'
+          className='cursor-pointer size-8 proto:size-14'
         >
           <IdeaIcon />
         </button>

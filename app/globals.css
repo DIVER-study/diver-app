@@ -33,6 +33,8 @@
   --shadow-cogtec: 0 4px 4px 0 rgb(0 0 0 / 0.25);
 
   --drop-shadow-cogtec: 0 4px 4px 0 rgb(0 0 0 / 0.25);
+
+  --breakpoint-proto: 1400px;
 }
 
 @layer components {

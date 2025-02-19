@@ -3,14 +3,13 @@
 import { Database } from '@/database.types';
 import { useEffect, useState, useTransition } from 'react';
 import { toast } from 'sonner';
-import { getModules, getSubject, getUserCompletedModules } from './server';
+import { getModules, getSubject, getUserCompletedModules, type ModuleType } from './server';
 import { BehaviorismIcon, GestaltIcon, TSCIcon } from '@/components/svgs';
 import IdeaIcon from '@/components/svgs/IdeiaIcon';
 import { IntroTema } from '@/components/ui/alert-boxes/IntroTema';
 import { redirect } from 'next/navigation';
 
 // Types
-type ModuleType = { id: number; subject_id: number; description: string; level: string };
 type CompletedModule = { module_id: number; completed: boolean };
 export type Realms = Database['public']['Enums']['realms'];
 
@@ -154,7 +153,7 @@ export function ModuleList({ subjectId, realm }: ModuleListProps) {
 // Subject Info
 export function SubjectInfo({ subjectId, realm }: SubjectInfoProps) {
   const [pending, setPending] = useState(true);
-  const [subject, setSubject] = useState<{ name: string }>({ name: '' });
+  const [subject, setSubject] = useState<{ name: string, description: string }>({ name: '', description: '' });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -200,7 +199,7 @@ export function SubjectInfo({ subjectId, realm }: SubjectInfoProps) {
         </button>
         <IntroTema
           title={subject.name}
-          desc='Descrição avançada do tema inserir aqui!'
+          desc={subject.description}
           id='intro-tema'
         />
       </div>

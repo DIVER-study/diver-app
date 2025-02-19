@@ -85,7 +85,7 @@ export default function ExercisePageClient({ exercises, realm, subjectId, module
     }
   };
   return (
-    <div className='flex flex-col p-10 gap-16 items-center justify-start relative'>
+    <div className='flex flex-col p-10 gap-16 items-center justify-start relative h-[100dvh]'>
       <ExitAlert
         onCancelPressed={() => exitAlert.current?.hidePopover()}
         exitLink={`/${realm}/exerciseTrail?temaId=${subjectId}`}
@@ -101,6 +101,7 @@ export default function ExercisePageClient({ exercises, realm, subjectId, module
         onActionPressed={() => wrongAnswer.current?.hidePopover()}
         ref={wrongAnswer}
         popover='manual'
+        explanation={currentExercise.explanation}
       />
       {/* Progress Bar */}
       <div
@@ -164,7 +165,7 @@ function QuestionScreen({ number, question, options, onSubmit, selectedOption, o
         <p className='text-lg font-medium '>{question}</p>
       </div>
       <div
-        className='grid grid-cols-2 gap-8 justify-center'
+        className='grid grid-cols-2 gap-8 justify-center grow'
         hidden={hidden || undefined}
       >
         {options.map((option, index) => (
@@ -172,6 +173,7 @@ function QuestionScreen({ number, question, options, onSubmit, selectedOption, o
             key={index}
             variant={selectedOption === index ? 'default' : 'board'}
             onClick={() => onSelect(index)}
+            className='h-full'
           >
             {option}
           </Button>
@@ -202,8 +204,10 @@ function ProgressBar({ value, maxValue = 100, minValue = 0 }: { value: number; m
 
 function WrongAnswerAlert({
   onActionPressed,
+  explanation,
   ...props
-}: React.HTMLAttributes<HTMLDivElement> & React.RefAttributes<HTMLDivElement> & { onActionPressed: () => void }) {
+}: React.HTMLAttributes<HTMLDivElement> &
+  React.RefAttributes<HTMLDivElement> & { onActionPressed: () => void; explanation: string }) {
   return (
     <AlertBox {...props}>
       <AlertBoxHeader>
@@ -211,6 +215,7 @@ function WrongAnswerAlert({
         <AlertBoxDescription>
           Você não acertou essa questão, mas não desanime! Voçê pode sempre refazer esses exercícios e tentar de novo!
         </AlertBoxDescription>
+        <AlertBoxDescription>{explanation}</AlertBoxDescription>
       </AlertBoxHeader>
       <AlertBoxFooter>
         <AlertBoxAction onClick={onActionPressed}>Continuar</AlertBoxAction>

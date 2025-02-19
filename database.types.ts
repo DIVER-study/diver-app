@@ -30,7 +30,6 @@ export type Database = {
       exercises: {
         Row: {
           answer: number
-          created_at: string
           explanation: string
           id: number
           module_id: number
@@ -39,7 +38,6 @@ export type Database = {
         }
         Insert: {
           answer?: number
-          created_at?: string
           explanation?: string
           id?: number
           module_id: number
@@ -48,7 +46,6 @@ export type Database = {
         }
         Update: {
           answer?: number
-          created_at?: string
           explanation?: string
           id?: number
           module_id?: number
@@ -68,28 +65,22 @@ export type Database = {
       modules: {
         Row: {
           badge: number | null
-          created_at: string
           description: string
           id: number
-          level: string
           name: string
           subject_id: number
         }
         Insert: {
           badge?: number | null
-          created_at?: string
           description?: string
           id?: number
-          level?: string
           name?: string
           subject_id: number
         }
         Update: {
           badge?: number | null
-          created_at?: string
           description?: string
           id?: number
-          level?: string
           name?: string
           subject_id?: number
         }
@@ -145,19 +136,19 @@ export type Database = {
       }
       subjects: {
         Row: {
-          created_at: string
+          description: string
           id: number
           name: string
           realm: Database["public"]["Enums"]["realms"]
         }
         Insert: {
-          created_at?: string
+          description?: string
           id?: number
           name?: string
           realm?: Database["public"]["Enums"]["realms"]
         }
         Update: {
-          created_at?: string
+          description?: string
           id?: number
           name?: string
           realm?: Database["public"]["Enums"]["realms"]

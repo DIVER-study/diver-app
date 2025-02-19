@@ -1,27 +1,21 @@
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap')
-layer(base);
-
 @import url('https://use.typekit.net/srw5lkl.css') layer(base);
-
 @import 'tailwindcss';
 
 @theme {
-  --font-poppins: Poppins, Arial, sans-serif;
-  --font-jetbrains-mono: JetBrains Mono, monospace;
   --font-new-zen: new-zen, sans-serif;
 
   --color-logo-100: #fcf0c2;
   --color-logo-200: #fd7401;
   --color-logo-300: #884e1d;
 
-  --color-beige-100: #fcf9ef;
-  --color-beige-200: #f8f3e0;
-  --color-beige-300: #f0ebd8;
+  --color-beige-50: #fcf9ef;
+  --color-beige-100: #f8f3e0;
+  --color-beige-200: #f0ebd8;
 
-  --color-behaviorism-100: #f8bfbf;
-  --color-behaviorism-200: #cc9d9d;
+  --color-behaviorism-100: #f89595;
+  --color-behaviorism-200: #b57878;
 
-  --color-gestalt-100: #b4d0f0;
+  --color-gestalt-100: #90bcf0;
   --color-gestalt-200: #709bcc;
 
   --color-tsc-100: #f3bb8a;

@@ -1,5 +1,6 @@
 'use server';
 
+import { getUserId } from '@/app/server';
 import { createClient } from '@/utils/supabase/server';
 
 export type ExerciseType = {
@@ -7,18 +8,6 @@ export type ExerciseType = {
   explanation: string;
   options: string[];
   answer: number;
-};
-
-export const getUserId = async () => {
-  const supabase = await createClient();
-  const {
-    data: { user },
-    error,
-  } = await supabase.auth.getUser();
-  if (!user) {
-    return { id: null, error };
-  }
-  return { id: user.id, error: null };
 };
 
 export const grabExercises = async (moduleId: number) => {

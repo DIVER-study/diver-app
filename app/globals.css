@@ -34,3 +34,79 @@
 
   --drop-shadow-cogtec: 0 4px 4px 0 rgb(0 0 0 / 0.25);
 }
+
+@layer components {
+  .exercise-realm {
+    border-radius: calc(infinity * 1px);
+    background-color: var(--color-neutral-400);
+    cursor: pointer;
+    position: relative;
+    transform-style: preserve-3d;
+
+    &:hover {
+      transform: translate(0, 1px);
+
+      &::before {
+        transform: translate3d(0, 2px, -1rem);
+      }
+    }
+
+    &:active {
+      transform: translate(0, 3px);
+
+      &::before {
+        transform: translate3d(0, 0px, -1rem);
+      }
+    }
+
+    &::before {
+      background-color: var(--color-neutral-600);
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      transform: translate3d(0, 3px, -1rem);
+    }
+
+    &[data-realm='behaviorism'] {
+      background-color: var(--color-behaviorism-100);
+
+      &::before {
+        background-color: var(--color-behaviorism-200);
+      }
+    }
+
+    &[data-realm='gestalt'] {
+      background-color: var(--color-gestalt-100);
+
+      &::before {
+        background-color: var(--color-gestalt-200);
+      }
+    }
+
+    &[data-realm='tsc'] {
+      background-color: var(--color-tsc-100);
+
+      &::before {
+        background-color: var(--color-tsc-200);
+      }
+    }
+
+    &[data-completed] {
+      background-color: var(--color-finished-100);
+
+      &::before {
+        background-color: var(--color-finished-200);
+      }
+    }
+
+    &:disabled {
+      background-color: var(--color-neutral-400);
+      pointer-events: none;
+
+      &::before {
+        background-color: var(--color-neutral-600);
+      }
+    }
+  }
+}

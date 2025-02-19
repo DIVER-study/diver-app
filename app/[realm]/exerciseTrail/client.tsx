@@ -1,13 +1,13 @@
 'use client';
 
 import { Database } from '@/database.types';
-import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import { getModules, getSubject, getUserCompletedModules } from './server';
 import { BehaviorismIcon, GestaltIcon, TSCIcon } from '@/components/svgs';
 import IdeaIcon from '@/components/svgs/IdeiaIcon';
 import { IntroTema } from '@/components/ui/alert-boxes/IntroTema';
+import { redirect } from 'next/navigation';
 
 // Types
 type ModuleType = { id: number; subject_id: number; description: string; level: string };
@@ -39,15 +39,13 @@ const LoadingSkeleton = () => (
 
 // Single Module Item
 const ModuleItem = ({ id, isUnlocked, subjectId, realm, completed }: ModuleItemProps) => (
-  <Link
-    data-disable={!isUnlocked || null}
+  <button
+    disabled={!isUnlocked}
     data-completed={completed || null}
     data-realm={realm}
-    href={`/${realm}/exercises?moduleId=${id}&temaId=${subjectId}`}
-    className='block rounded-full transition-all duration-200 data-disable:pointer-events-none data-disable:cursor-not-allowed data-disable:bg-neutral-400 size-full aspect-square data-[realm=tsc]:not-data-disable:not-data-completed:bg-tsc-100 data-[realm=gestalt]:not-data-disable:not-data-completed:bg-gestalt-100 data-[realm=behaviorism]:not-data-disable:not-data-completed:bg-behaviorism-100 content-center text-xs data-completed:not-data-disable:bg-finished-100'
-  >
-    <div className='mx-auto w-fit'>{!isUnlocked && '🔒'}</div>
-  </Link>
+    onClick={() => redirect(`/${realm}/exercises?moduleId=${id}&temaId=${subjectId}`)}
+    className='block exercise-realm w-full aspect-square data-completed:bg-finished-100'
+  ></button>
 );
 
 // Module List
@@ -101,12 +99,12 @@ export function ModuleList({ subjectId, realm }: ModuleListProps) {
       viewBox={`0 0 100 ${40 * Math.ceil((modules.length / 3) * 2)}`}
       fill='none'
       xmlns='http://www.w3.org/2000/svg'
-      className='flex-1 mx-auto max-w-100'
+      className='flex-1 mx-auto'
     >
       <path
         d={getPathString(modules)}
-        stroke='var(--color-beige-300)'
-        strokeWidth='5'
+        stroke='var(--color-beige-200)'
+        strokeWidth='7'
         strokeLinecap='round'
         strokeLinejoin='round'
       />
@@ -118,7 +116,7 @@ export function ModuleList({ subjectId, realm }: ModuleListProps) {
             x={offsetX - 10}
             y={offsetY * 40}
             width='20'
-            height='20'
+            height='24'
             key={id}
           >
             <ModuleItem
@@ -162,31 +160,32 @@ export function SubjectInfo({ subjectId, realm }: SubjectInfoProps) {
 
   const Icon =
     realm === 'tsc' ? TSCIcon : realm === 'gestalt' ? GestaltIcon : realm === 'behaviorism' ? BehaviorismIcon : 'div';
+  const realmName = realm === 'tsc' ? 'teoria sociocultural' : realm === 'gestalt' ? 'gestalt' : 'behaviorismo';
 
   return (
-    <div className='p-4 bg-beige-100 shadow-cogtec flex flex-col gap-4 rounded-4xl w-full lg:max-w-100 h-fit sticky top-2'>
-      <div className='flex justify-between'>
-        <div className='flex flex-col gap-2'>
-          <span className='text-logo-200 uppercase font-extrabold text-sm'>teoria sociocultural &gt; história</span>
-          <h1 className='text-lg font-bold'>{subject.name}</h1>
+    <div className='px-6 py-7 bg-white rounded-4xl shadow-cogtec flex-col flex gap-6 max-w-130 h-fit'>
+      <div className='self-stretch justify-between items-center flex'>
+        <div className='grow shrink basis-0 flex-col gap-4 flex'>
+          <span className='self-stretch text-logo-200 text-base font-bold uppercase'>
+            {realmName} &gt; {subject.name}
+          </span>
+          <h1 className='self-stretch text-4xl font-bold'>{subject.name}</h1>
         </div>
-        <div className='content-center'>
-          <Icon className='aspect-square min-h-20' />
-        </div>
+        <Icon className='size-25' />
       </div>
-      <p></p>
-      <div className='flex justify-end gap-2 items-center'>
-        <span className='font-semibold'>Orientação</span>
+      <p className='self-strecth text-xl font-medium'>Descrição do tema inserir aqui!</p>
+      <div className='self-stretch justify-end items-center gap-3 flex'>
+        <span className='font-bold text-xl'>Orientação</span>
         <button
           popoverTarget='intro-tema'
           popoverTargetAction='show'
-          className='cursor-pointer size-8'
+          className='cursor-pointer size-14'
         >
           <IdeaIcon />
         </button>
         <IntroTema
           title={subject.name}
-          desc='lorem'
+          desc='Descrição avançada do tema inserir aqui!'
           id='intro-tema'
         />
       </div>

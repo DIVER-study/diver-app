@@ -14,7 +14,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
-      <body className='antialiased bg-beige-200 font-new-zen'>
+      <body className='antialiased bg-beige-100 font-new-zen'>
         <Toaster
           richColors
           position='top-right'

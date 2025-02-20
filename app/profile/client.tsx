@@ -2,16 +2,16 @@
 
 import { FilledStar, ProfileIcon, RankingStar } from '@/components/svgs/Svgs';
 import { UserState } from '@/stores/userStore';
-import { createClient } from '@/utils/supabase/client';
 import Image from 'next/image';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useTransition } from 'react';
+import { getUserRankingPos } from '../server';
 
 export function ProfileClientPage({ profile }: { profile: UserState['user']['profile'] }) {
   return (
     <div className='bg-white/80 rounded-3xl px-6 pb-8 pt-2 space-y-8 shadow-cogtec max-w-(--breakpoint-lg) mx-auto h-min'>
       <UserProfile profile={profile} />
       <UserStatistics profile={profile} />
-      <UserAchivments />
+      <UserAchivements />
     </div>
   );
 }
@@ -44,24 +44,12 @@ function UserProfile({ profile }: { profile: UserState['user']['profile'] }) {
 }
 
 function UserStatistics({ profile }: { profile: UserState['user']['profile'] }) {
-  const supabase = createClient();
   const [userPosition, setUserPosition] = useState<number>(-1);
+  const [isPending, startTransition] = useTransition();
 
   useEffect(() => {
-    const prepareData = async () => {
-      const { data: users } = await supabase
-        .from('profiles')
-        .select('display_name')
-        .eq('accepted_ranking', true)
-        .order('progress', { ascending: false });
-      if (users) {
-        const userNames = users.map(({ display_name }) => display_name);
-        const pos = userNames.indexOf(profile.display_name);
-        setUserPosition(pos + 1);
-      }
-    };
-    prepareData();
-  }, [supabase, profile]);
+    startTransition(async () => setUserPosition(await getUserRankingPos(profile.id)));
+  }, [profile]);
 
   return (
     <div className='flex flex-col gap-4 max-w-(--breakpoint-md) mx-auto text-4xl font-semibold'>
@@ -79,14 +67,14 @@ function UserStatistics({ profile }: { profile: UserState['user']['profile'] }) 
             <RankingStar className='shrink-0 size-16' />
             Pódio
           </div>
-          {userPosition}
+          {isPending ? '...' : userPosition}
         </div>
       </div>
     </div>
   );
 }
 
-function UserAchivments() {
+function UserAchivements() {
   return (
     <div className='flex flex-col gap-4 max-w-(--breakpoint-md) mx-auto text-4xl font-semibold mb-2'>
       Conquistas

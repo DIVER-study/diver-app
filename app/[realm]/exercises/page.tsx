@@ -1,4 +1,3 @@
-import { UserStore } from '@/components/UserStore';
 import ExercisePageClient from './client';
 import { grabExercises } from './server';
 
@@ -17,14 +16,11 @@ export default async function ExercisePage({ params, searchParams }: PageProps) 
   if (error) console.error('Houve um erro buscando os exercícios. ', error.message);
 
   return (
-    <>
-      <UserStore />
-      <ExercisePageClient
-        exercises={exercises}
-        realm={realm.match(regex) ? (realm as 'behaviorism' | 'gestalt' | 'tsc') : 'behaviorism'}
-        subjectId={Number(temaId)}
-        moduleId={Number(moduleId)}
-      />
-    </>
+    <ExercisePageClient
+      exercises={exercises}
+      realm={realm.match(regex) ? (realm as 'behaviorism' | 'gestalt' | 'tsc') : 'behaviorism'}
+      subjectId={Number(temaId)}
+      moduleId={Number(moduleId)}
+    />
   );
 }

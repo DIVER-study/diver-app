@@ -2,56 +2,36 @@
 
 // import { createClient } from '@/utils/supabase/client';
 import Link from 'next/link';
+import { Button } from './ui/Button';
+import { cn } from '@/utils/cnUtil';
 
-type SectionProps = {
-  sectionName: string;
-};
-
-export function LibrarySection({ sectionName }: SectionProps) {
-
+export const LibraryCard = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => {
   return (
-    <div className='space-y-1 mx-auto max-w-(--breakpoint-md)'>
-      <div className='flex flex-row items-center p-1'>
-        <div className='flex-1 flex items-center gap-2'>
-          <h2 className='uppercase text-2xl'>{sectionName}</h2>
-        </div>
-      </div>
-      <div className='grid grid-flow-col auto-cols-[1fr] gap-8 overflow-x-scroll scroll-smooth snap-x rounded-xl border-2 border-black p-4'>
-        {new Array(5).fill('').map((_, idx) => (
-          <ExerciseItem
-            key={idx}
-            title='definição'
-          />
-        ))}
-      </div>
+    <div
+      className={cn('flex flex-col gap-8 rounded-3xl bg-beige-50 shadow-cogtec', className)}
+      {...props}
+    >
+      <h2 className='text-2xl font-bold'></h2>
+      <Button
+        className='bg-behaviorism-100 border-behaviorism-100'
+        asChild
+      >
+        <Link href='#'></Link>
+      </Button>
+      <Button
+        className='bg-gestalt-100 border-gestalt-100'
+        asChild
+      >
+        <Link href='#'></Link>
+      </Button>
+      <Button
+        className='bg-tsc-100 border-tsc-100'
+        asChild
+      >
+        <Link href='#'></Link>
+      </Button>
     </div>
   );
-}
+};
 
-function ExerciseItem({ title }: { title: string }) {
-  return (
-    <Link
-      href={`/material-study`}
-      className='w-32 aspect-7/8 snap-center space-y-2'
-    >
-      <div className='rounded-lg bg-black size-full' />
-      <p className='text-sm uppercase text-center'>{title}</p>
-    </Link>
-  );
-}
-
-export function LibrarySections() {
-  return (
-    <>
-      <LibrarySection
-        sectionName='Behaviorismo'
-      />
-      <LibrarySection
-        sectionName='Gestalt'
-      />
-      <LibrarySection
-        sectionName='Teoria Sociocultural'
-      />
-    </>
-  );
-}
+export const LocalNav = () => <div className='flex gap-4'>Link</div>;

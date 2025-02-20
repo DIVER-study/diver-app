@@ -10,30 +10,32 @@ export default async function RealmsPage() {
     <div className='flex min-h-screen gap-14 mr-14'>
       <UserStore />
       <SideBar activeTab='estudos' />
-      <main className='flex-col py-14 gap-14 flex h-fit grow'>
-        <div className='spcace-y-2'>
-          <div className='text-logo-200 text-3xl font-bold'>
-            Olá,
-            <span className='text-black'> {await displayName()}! </span>
-            :)
+      <main className='py-14 flex-1'>
+        <div className='flex flex-col gap-14 h-fit'>
+          <div className='spcace-y-2'>
+            <div className='text-logo-200 text-3xl font-bold'>
+              Olá,
+              <span className='text-black'> {await displayName()}! </span>
+              :)
+            </div>
+            <span className='font-semibold text-xl ml-2 text-neutral-400'>Vamos estudar um pouco?</span>
           </div>
-          <span className='font-semibold text-xl ml-2 text-neutral-400'>Vamos estudar um pouco?</span>
+          <StudySection
+            sectionName='Behaviorismo'
+            sectionType='behaviorism'
+            motd='Estímulo no comando, resposta na ação!'
+          />
+          <StudySection
+            sectionName='Gestalt'
+            sectionType='gestalt'
+            motd='onde as partes se juntam'
+          />
+          <StudySection
+            sectionName='Teoria Sociocultural'
+            sectionType='tsc'
+            motd='sempre no modo multiplayer'
+          />
         </div>
-        <StudySection
-          sectionName='Behaviorismo'
-          sectionType='behaviorism'
-          motd='Estímulo no comando, resposta na ação!'
-        />
-        <StudySection
-          sectionName='Gestalt'
-          sectionType='gestalt'
-          motd='onde as partes se juntam'
-        />
-        <StudySection
-          sectionName='Teoria Sociocultural'
-          sectionType='tsc'
-          motd='sempre no modo multiplayer'
-        />
       </main>
     </div>
   );

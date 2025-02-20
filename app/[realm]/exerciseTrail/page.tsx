@@ -2,43 +2,35 @@ import { SideBar } from '@/components/SideBar';
 import { SubjectInfo, ModuleList, type Realms } from './client';
 import { UserStore } from '@/components/UserStore';
 
-type Params = Promise<{ realm: string }>;
-type SearchParams = Promise<{
-  temaId: string;
-}>;
+type Props = {
+  params: Promise<{ realm: string }>;
+  searchParams: Promise<{ temaId: string }>;
+};
 
-export default async function ExerciseTrailPage({
-  params,
-  searchParams,
-}: {
-  params: Params;
-  searchParams: SearchParams;
-}) {
+export default async function ExerciseTrailPage({ params, searchParams }: Props) {
   const { temaId } = await searchParams;
   const { realm } = await params;
 
   return (
-    <div className='flex h-screen'>
+    <div className='flex h-screen gap-14'>
       <UserStore />
       <SideBar activeTab='estudos' />
-      <main className='flex-1 h-full space-y-8 overflow-y-scroll py-8'>
-        {realm.match(/^(?:behaviorism|gestalt|tsc)$/g) ? (
-          <div className='flex px-4 gap-8 w-full h-fit flex-col lg:flex-row lg:gap-4 relative'>
-            <SubjectInfo
-              subjectId={Number(temaId)}
-              realm={realm as Realms}
-            />
-            <ModuleList
-              subjectId={Number(temaId)}
-              realm={realm as Realms}
-            />
-          </div>
-        ) : (
-          <div className='content-center text-center w-full'>
-            Algo deu errado. Reino &apos; {realm} &apos; não existe.
-          </div>
-        )}
-      </main>
+      {realm.match(/^(?:behaviorism|gestalt|tsc)$/g) ? (
+        <main className='py-28 justify-center gap-14 flex grow mr-14'>
+          <SubjectInfo
+            subjectId={Number(temaId)}
+            realm={realm as Realms}
+          />
+          <ModuleList
+            subjectId={Number(temaId)}
+            realm={realm as Realms}
+          />
+        </main>
+      ) : (
+        <main className='content-center text-center w-full'>
+          Algo deu errado. Reino &apos; {realm} &apos; não existe.
+        </main>
+      )}
     </div>
   );
 }

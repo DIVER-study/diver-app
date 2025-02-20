@@ -7,7 +7,7 @@ import {
   AlertBoxDescription,
   AlertBoxFooter,
   AlertBoxHeader,
-  AlertBoxOverlay,
+  AlertBox,
   AlertBoxTitle,
 } from '../AlertBox';
 
@@ -20,7 +20,7 @@ type IntroTemaProps = {
 
 export const IntroTema = ({ className, title, id, desc }: IntroTemaProps) => {
   return (
-    <AlertBoxOverlay
+    <AlertBox
       popover='manual'
       id={id}
       className={className}
@@ -40,6 +40,6 @@ export const IntroTema = ({ className, title, id, desc }: IntroTemaProps) => {
           OK
         </AlertBoxCancel>
       </AlertBoxFooter>
-    </AlertBoxOverlay>
+    </AlertBox>
   );
 };

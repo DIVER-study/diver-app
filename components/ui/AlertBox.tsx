@@ -4,46 +4,55 @@ import { cn } from '@/utils/cnUtil';
 import { buttonVariants } from './Button';
 import { Slot } from './Slot';
 
-export const AlertBoxOverlay = ({ className, children, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
+type DefaultProps = React.HTMLAttributes<HTMLDivElement> & React.RefAttributes<HTMLDivElement>;
+
+export const AlertBox = ({ className, children, ...props }: DefaultProps) => (
+  <div
+    className='absolute left-0 top-0 w-full h-[100dvh] bg-black/40 starting:open:opacity-0 open:opacity-100'
+    {...props}
+  >
+    <AlertBoxOverlay className={className}>{children}</AlertBoxOverlay>
+  </div>
+);
+
+const AlertBoxOverlay = ({ className, ...props }: DefaultProps) => (
   <div
     className={cn(
-      'absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 size-fit bg-logo-100 rounded-lg py-8 px-6 shadow-xl',
+      'absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 size-fit bg-logo-100 rounded-4xl py-10 px-18 shadow-cogtec flex-col justify-between gap-8 items-center flex',
       className
     )}
-    {...props}
-  >
-    <div className='flex flex-col gap-2'>{children}</div>
-  </div>
-);
-
-export const AlertBoxHeader = ({ className, children, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
-  <div
-    className={cn('flex flex-col space-y-2 text-center sm:text-left', className)}
-    {...props}
-  >
-    {children}
-  </div>
-);
-
-export const AlertBoxFooter = ({ className, children, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
-  <div
-    className={cn('flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2', className)}
-    {...props}
-  >
-    {children}
-  </div>
-);
-
-export const AlertBoxTitle = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
-  <div
-    className={cn('text-lg font-semibold', className)}
     {...props}
   />
 );
 
-export const AlertBoxDescription = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
+export const AlertBoxHeader = ({ className, children, ...props }: DefaultProps) => (
   <div
-    className={cn('text-sm max-w-100 text-wrap', className)}
+    className={cn('self-stretch flex flex-col gap-5 text-center sm:text-left', className)}
+    {...props}
+  >
+    {children}
+  </div>
+);
+
+export const AlertBoxFooter = ({ className, children, ...props }: DefaultProps) => (
+  <div
+    className={cn('self-stretch sm:justify-between items-center flex flex-col-reverse sm:flex-row', className)}
+    {...props}
+  >
+    {children}
+  </div>
+);
+
+export const AlertBoxTitle = ({ className, ...props }: DefaultProps) => (
+  <div
+    className={cn('self-stretch text-3xl font-bold', className)}
+    {...props}
+  />
+);
+
+export const AlertBoxDescription = ({ className, ...props }: DefaultProps) => (
+  <div
+    className={cn('text-normal text-2xl lg:max-w-150 max-w-70 text-wrap', className)}
     {...props}
   />
 );

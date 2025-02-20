@@ -5,12 +5,14 @@ import { createClient } from '@/utils/supabase/client';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
+import { BehaviorismIcon, GestaltIcon, TSCIcon } from './svgs';
 
 type SectionType = Database['public']['Enums']['realms'];
 
 type SectionProps = {
   sectionName: string;
   sectionType: SectionType;
+  motd: string;
 };
 
 export type SubjectType = {
@@ -18,9 +20,11 @@ export type SubjectType = {
   name: string | null;
 };
 
-export function StudySection({ sectionName, sectionType }: SectionProps) {
-  const [subjects, setSubjects] = useState<SubjectType[]>([...Array(3).fill({})]);
+export function StudySection({ sectionName, sectionType, motd }: SectionProps) {
+  const [subjects, setSubjects] = useState<SubjectType[]>([...Array(4).fill({})]);
   const [pending, setPending] = useState<boolean>(true);
+
+  const Icon = sectionType === 'behaviorism' ? BehaviorismIcon : sectionType === 'gestalt' ? GestaltIcon : TSCIcon;
 
   useEffect(() => {
     const supabase = createClient();
@@ -37,11 +41,13 @@ export function StudySection({ sectionName, sectionType }: SectionProps) {
   }, [sectionType]);
 
   return (
-    <div className='space-y-1 mx-auto max-w-(--breakpoint-md)'>
-      <div className='flex flex-row items-center p-1'>
-        <h2 className='uppercase text-2xl'>{sectionName}</h2>
+    <div className='flex gap-4 h-fit flex-col'>
+      <div className='inline-flex items-center gap-5'>
+        <Icon className='size-25' />
+        <h1 className='capitalize text-4xl font-bold text-black'>{sectionName}</h1>
+        <p className='text-base text-neutral-600 capitalize'>{motd}</p>
       </div>
-      <div className='flex gap-8 overflow-x-auto scroll-smooth rounded-xl bg-beige-300 p-4'>
+      <div className='px-16 py-8 bg-beige-200 rounded-3xl gap-16 h-fit grid grid-flow-col auto-cols-[min-content] overflow-x-auto overscroll-x-contain'>
         {subjects.map(({ id, name }, idx) => (
           <ExerciseItem
             key={idx}
@@ -66,37 +72,26 @@ type ExerciseItemProps = {
 function ExerciseItem({ title, temaId, sectionType, skeleton }: ExerciseItemProps) {
   if (skeleton)
     return (
-      <div className='w-32 aspect-square snap-center space-y-2'>
-        <div className='rounded-lg bg-logo-300 w-32 aspect-square animate-pulse' />
-        <div className='bg-logo-300 h-4 rounded-lg animate-pulse'></div>
+      <div
+        className='h-fit w-20 lg:w-30 proto:w-40 grid [grid-template-rows:min-content] items-center gap-3 data-[theme=gestalt]:text-gestalt-100 data-[theme=tsc]:text-tsc-100 data-[theme=behaviorism]:text-behaviorism-100'
+        data-theme={sectionType || null}
+      >
+        <div className='aspect-9/8 w-full shadow-cogtec flex-col justify-end items-center animate-pulse px-6 py-3 rounded-xl gap-2.5 shadow-current bg-beige-50 flex'>
+          <div className='self-stretch h-3 bg-current rounded-full' />
+        </div>
+        <div className='self-stretch text-center text-xl font-bold bg-current rounded-full h-5 animate-pulse'></div>
       </div>
     );
   return (
     <Link
       href={`/${sectionType}/exerciseTrail?temaId=${temaId}`}
-      className='w-32 aspect-square snap-center space-y-2'
+      className='h-fit w-20 lg:w-30 proto:w-40 grid [grid-template-rows:min-content] items-center gap-3 data-[theme=gestalt]:text-gestalt-100 data-[theme=tsc]:text-tsc-100 data-[theme=behaviorism]:text-behaviorism-100'
+      data-theme={sectionType || null}
     >
-      <div className='rounded-lg bg-logo-300 w-32 aspect-square ' />
-      <p className='text-sm uppercase text-center'>{title}</p>
+      <div className='aspect-9/8 w-full shadow-cogtec flex-col justify-end items-center px-6 py-3 rounded-xl gap-2.5 shadow-current bg-beige-50 flex'>
+        <div className='self-stretch h-3 bg-current rounded-full' />
+      </div>
+      <h3 className='text-center text-black text-xl font-bold'>{title}</h3>
     </Link>
-  );
-}
-
-export function StudySections() {
-  return (
-    <>
-      <StudySection
-        sectionName='Behaviorismo'
-        sectionType='behaviorism'
-      />
-      <StudySection
-        sectionName='Gestalt'
-        sectionType='gestalt'
-      />
-      <StudySection
-        sectionName='Teoria Sociocultural'
-        sectionType='tsc'
-      />
-    </>
   );
 }

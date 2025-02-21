@@ -4,6 +4,7 @@ import { UserRankingItem } from '@/components/UserRankingItem';
 import { createClient } from '@/utils/supabase/client';
 import { useEffect, useState } from 'react';
 import { useUserStore, type UserProfile } from '@/stores/userStore';
+import { TrofeusRanking } from '@/components/TrofeusRanking';
 
 export default function ClientRankingPage() {
   const supabase = createClient();
@@ -39,19 +40,10 @@ export default function ClientRankingPage() {
 
 function RankingTable({ profiles }: { profiles: UserProfile[] }) {
   return (
+    <>
+    <TrofeusRanking />    
     <table className='border-collapse my-4 min-w-[400px] [&_th]:p-4 [&_td]:p-4 mx-auto w-full max-w-[600px]'>
-      <caption>Ranking</caption>
       <thead>
-        <tr className='bg-emerald-600 text-white text-left font-bold'>
-          <th
-            scope='col'
-            className='w-min'
-          >
-            Posição
-          </th>
-          <th scope='col'>Usuário</th>
-          <th scope='col'>Experiência</th>
-        </tr>
       </thead>
       <tbody>
         {profiles.map(({ avatar_url, display_name }, index) => (
@@ -65,5 +57,7 @@ function RankingTable({ profiles }: { profiles: UserProfile[] }) {
         ))}
       </tbody>
     </table>
+    </>
+
   );
 }

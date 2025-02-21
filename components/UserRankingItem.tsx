@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
+import { GoldTrophy } from './Svgs';
 
 type RankingItemProps = {
   avatarUrl: string;
@@ -11,10 +12,13 @@ type RankingItemProps = {
 };
 
 export function UserRankingItem({ avatarUrl, displayName, index, exp }: RankingItemProps) {
-  return (
-    <tr>
-      <td>#{index + 1}</td>
+  return (    
+    <>
+    <div className='flex justify-center'>
+    </div>
+    <tr className='bg-white rounded-3xl'>
       <td>
+        {/* Nome do usuário */}
         <Link
           href={`/profile/${displayName}`}
           className='flex gap-2 items-center'
@@ -31,14 +35,13 @@ export function UserRankingItem({ avatarUrl, displayName, index, exp }: RankingI
                 onError={(e) => {
                   const target = e.target as HTMLImageElement;
                   target.hidden = true;
-                }}
-              />
+                } } />
             )}
           </div>
           {displayName}
         </Link>
       </td>
       <td>{exp}xp</td>
-    </tr>
+    </tr></>
   );
 }

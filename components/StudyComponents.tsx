@@ -41,13 +41,13 @@ export function StudySection({ sectionName, sectionType, motd }: SectionProps) {
   }, [sectionType]);
 
   return (
-    <div className='flex gap-4 h-fit flex-col'>
-      <div className='inline-flex items-center gap-5'>
-        <Icon className='size-25' />
+    <>
+      <div className='flex items-center gap-5'>
+        <Icon className='size-20' />
         <h1 className='capitalize text-4xl font-bold text-black'>{sectionName}</h1>
         <p className='text-base text-neutral-600 capitalize'>{motd}</p>
       </div>
-      <div className='px-16 py-8 bg-beige-200 rounded-3xl gap-16 h-fit grid grid-flow-col auto-cols-[min-content] overflow-x-auto overscroll-x-contain'>
+      <div className='px-12 py-8 bg-beige-200 rounded-3xl h-fit flex gap-8 overflow-x-scroll'>
         {subjects.map(({ id, name }, idx) => (
           <ExerciseItem
             key={idx}
@@ -58,7 +58,7 @@ export function StudySection({ sectionName, sectionType, motd }: SectionProps) {
           />
         ))}
       </div>
-    </div>
+    </>
   );
 }
 

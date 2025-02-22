@@ -61,9 +61,9 @@ export function SideBar({ activeTab }: { activeTab?: 'estudos' | 'biblioteca' | 
         </button>
       </div>
       {/* Side Bar */}
-      <nav className='w-[15%] proto:w-75 h-screen max-h-screen py-10 bg-logo-100 rounded-r-3xl flex-col justify-between flex sticky top-0 left-0'>
-        <div className='justify-center items-center gap-8 inline-flex text-logo-200'>
-          <CogTecLogo className='size-16' />
+      <nav className='w-fit h-screen max-h-screen py-10 bg-logo-100 rounded-r-3xl flex-col justify-between flex sticky top-0 left-0'>
+        <div className='justify-center items-center gap-2 inline-flex text-logo-200 px-4'>
+          <CogTecLogo className='size-12' />
           <span className='text-4xl font-extrabold'>CogTec</span>
         </div>
         <div className='grow flex-col justify-center items-start flex gap-2.5'>
@@ -72,22 +72,22 @@ export function SideBar({ activeTab }: { activeTab?: 'estudos' | 'biblioteca' | 
             return (
               <Link
                 href={href}
-                className='pl-17.5 py-6 hover:bg-logo-200 data-active:bg-logo-200 rounded-r-3xl items-center gap-4 inline-flex hover:text-white data-active:text-white text-2xl font-bold text-black w-full'
+                className='pl-6 py-3 hover:bg-logo-200 data-active:bg-logo-200 rounded-r-3xl items-center gap-2 inline-flex hover:text-white data-active:text-white text-lg font-bold text-black w-full'
                 data-active={activeTab === tab || null}
                 key={tab}
               >
-                <Icon className='size-12' />
+                <Icon className='size-10' />
                 {tab}
               </Link>
             );
           })}
         </div>
         <button
-          className='px-8 justify-start items-center gap-4 inline-flex text-warning text-xl font-medium cursor-pointer'
+          className='px-4 justify-start items-center gap-2 inline-flex text-warning text-lg font-medium cursor-pointer'
           popoverTarget='signout-popup'
           popoverTargetAction='show'
         >
-          <ExitIcon className='pointer-events-none shrink-0 size-8' />
+          <ExitIcon className='pointer-events-none shrink-0 size-6' />
           Sair
         </button>
       </nav>

@@ -23,19 +23,11 @@ export type UserState = {
   user: {
     auth: User | null;
     profile: UserProfile;
-    progress: Progress;
   };
   setUser: (user: UserState['user']) => void;
   setUserFromDB: () => Promise<void>;
-  updateUserProgress: (newData: Partial<Progress>) => Promise<{ error: PostgrestError | null } | { error: Error }>;
   updateUserProfile: (data: Partial<UserProfile>) => Promise<{ error: PostgrestError | null } | { error: Error }>;
   updateUserSupa: (data: UserAttributes) => Promise<UserResponse>;
-};
-
-const emptyProgress = {
-  behaviorism: 0,
-  gestalt: 0,
-  tsc: 0,
 };
 
 const emptyProfile = {
@@ -51,7 +43,6 @@ export const useUserStore = create<UserState>((set, get) => ({
   user: {
     auth: null,
     profile: emptyProfile,
-    progress: emptyProgress,
   },
   setUser: (user) => set({ user }),
   setUserFromDB: async () => {
@@ -59,24 +50,9 @@ export const useUserStore = create<UserState>((set, get) => ({
     const { data } = await supabase.auth.getUser();
     if (data.user) {
       const { data: profile } = await supabase.from('profiles').select('*').eq('id', data.user.id).limit(1).single();
-      const { data: progress } = await supabase
-        .from('user_study_progress')
-        .select('behaviorism, gestalt, tsc')
-        .eq('id', data.user.id)
-        .limit(1)
-        .single();
 
-      set({ user: { auth: data.user, profile: profile || emptyProfile, progress: progress || emptyProgress } });
+      set({ user: { auth: data.user, profile: profile || emptyProfile } });
     }
-  },
-  updateUserProgress: async (newData) => {
-    const { user } = get();
-    const supabase = createClient();
-    if (user.auth?.id) {
-      const { error } = await supabase.from('user_study_progress').update(newData).eq('id', user.auth.id);
-      return { error };
-    }
-    return { error: new Error('Houve um erro encontrando o usuário.') };
   },
   updateUserProfile: async (data) => {
     const { user, setUserFromDB } = get();

@@ -58,13 +58,13 @@ function RankingTable({ profiles }: { profiles: UserProfile[] }) {
         </tr>
       </thead>
       <tbody>
-        {profiles.map(({ avatar_url, display_name, xp: progress }, index) => (
+        {profiles.map(({ avatar_url, display_name, xp }, index) => (
           <UserRankingItem
             key={display_name}
             avatarUrl={avatar_url}
             displayName={display_name}
             index={index}
-            exp={progress}
+            exp={xp}
           />
         ))}
       </tbody>

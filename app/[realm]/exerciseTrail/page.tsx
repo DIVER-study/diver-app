@@ -12,11 +12,11 @@ export default async function ExerciseTrailPage({ params, searchParams }: Props)
   const { realm } = await params;
 
   return (
-    <div className='flex h-screen gap-14'>
+    <div className='flex h-screen'>
       <UserStore />
       <SideBar activeTab='estudos' />
       {realm.match(/^(?:behaviorism|gestalt|tsc)$/g) ? (
-        <main className='py-28 justify-center gap-14 flex grow mr-14'>
+        <main className='py-14 lg:py-20 lg:justify-center gap-14 flex grow px-14 flex-col lg:flex-row max-h-screen overflow-y-auto'>
           <SubjectInfo
             subjectId={Number(temaId)}
             realm={realm as Realms}

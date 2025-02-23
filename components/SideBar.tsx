@@ -7,6 +7,15 @@ import { toast } from 'sonner';
 import { CogTecLogo, ExitIcon, LibrarySideIcon, ProfileIcon, RankingIcon, StudyIcon } from './svgs/Svgs';
 import { useRef } from 'react';
 import { useUserStore } from '@/stores/userStore';
+import {
+  AlertBox,
+  AlertBoxAction,
+  AlertBoxCancel,
+  AlertBoxDescription,
+  AlertBoxFooter,
+  AlertBoxHeader,
+  AlertBoxTitle,
+} from './ui/AlertBox';
 
 export function SideBar({ activeTab }: { activeTab?: 'estudos' | 'biblioteca' | 'ranking' | 'perfil' }) {
   const signOutPopup = useRef<HTMLDivElement>(null);
@@ -38,29 +47,6 @@ export function SideBar({ activeTab }: { activeTab?: 'estudos' | 'biblioteca' | 
 
   return (
     <>
-      {/* Popup de signout */}
-      <div
-        popover='auto'
-        id='signout-popup'
-        ref={signOutPopup}
-        className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 p-4 hidden grid-cols-2 gap-4 [&:popover-open]:grid ring-1 ring-neutral-500 rounded-lg'
-      >
-        <div className='col-span-2'>Você tem Certeza?? :(</div>
-        <button
-          className='bg-warning hover:bg-warning/80'
-          onClick={signOut}
-        >
-          Sim
-        </button>
-        <button
-          className='ring-1 ring-neutral-500 hover:bg-neutral-500/80 hover:ring-neutral-500/80'
-          popoverTarget='signout-popup'
-          popoverTargetAction='hide'
-        >
-          Não
-        </button>
-      </div>
-      {/* Side Bar */}
       <nav className='w-fit h-screen max-h-screen py-10 bg-logo-100 rounded-r-3xl flex-col justify-between flex sticky top-0 left-0'>
         <div className='justify-center items-center gap-2 inline-flex text-logo-200 px-4'>
           <CogTecLogo className='size-12' />
@@ -91,6 +77,34 @@ export function SideBar({ activeTab }: { activeTab?: 'estudos' | 'biblioteca' | 
           Sair
         </button>
       </nav>
+      <SignOutAlert
+        id='signout-popup'
+        onActionPressed={signOut}
+        onCancelPressed={() => signOutPopup.current?.hidePopover()}
+        ref={signOutPopup}
+        popover='manual'
+      />
     </>
+  );
+}
+
+type SignOutAlertProps = React.HTMLAttributes<HTMLDivElement> &
+  React.RefAttributes<HTMLDivElement> & {
+    onActionPressed: React.MouseEventHandler<HTMLElement>;
+    onCancelPressed: React.MouseEventHandler<HTMLElement>;
+  };
+
+function SignOutAlert({ onActionPressed, onCancelPressed, ...props }: SignOutAlertProps) {
+  return (
+    <AlertBox {...props}>
+      <AlertBoxHeader>
+        <AlertBoxTitle>Tem certeza que quer sair? :(</AlertBoxTitle>
+        <AlertBoxDescription>Sentiremos sua falta! Estaremos sempre aqui para te ajudar a estudar!</AlertBoxDescription>
+      </AlertBoxHeader>
+      <AlertBoxFooter>
+        <AlertBoxAction onClick={onActionPressed}>Sair</AlertBoxAction>
+        <AlertBoxCancel onClick={onCancelPressed}>Cancelar</AlertBoxCancel>
+      </AlertBoxFooter>
+    </AlertBox>
   );
 }

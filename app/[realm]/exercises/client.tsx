@@ -85,7 +85,7 @@ export default function ExercisePageClient({ exercises, realm, subjectId, module
     }
   };
   return (
-    <div className='flex flex-col p-10 gap-16 items-center justify-start relative h-[100dvh]'>
+    <div className='flex flex-col p-10 gap-16 items-center justify-between relative h-[100dvh]'>
       <ExitAlert
         onCancelPressed={() => exitAlert.current?.hidePopover()}
         exitLink={`/${realm}/exerciseTrail?temaId=${subjectId}`}

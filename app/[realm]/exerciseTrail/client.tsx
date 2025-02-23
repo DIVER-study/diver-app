@@ -108,52 +108,56 @@ export function ModuleList({ subjectId, realm }: ModuleListProps) {
 
   if (isPending) return <LoadingSkeleton getPath={getPathString} />;
 
+  const height = 40 * Math.ceil((modules.length / 3) * 2);
+
   return (
-    <svg
-      viewBox={`0 0 100 ${40 * Math.ceil((modules.length / 3) * 2)}`}
-      fill='none'
-      xmlns='http://www.w3.org/2000/svg'
-      className='w-100'
-    >
-      <path
-        d={getPathString(modules)}
-        stroke='var(--color-beige-200)'
-        strokeWidth='7'
-        strokeLinecap='round'
-        strokeLinejoin='round'
-      />
-      {modules.map(({ id }, index) => {
-        const offsetX = index % 3 === 0 ? 50 : index % 3 === 1 ? 70 : 30;
-        const offsetY = index % 3 === 0 ? Math.floor((index / 3) * 2) : Math.round((index / 3) * 2);
-        return (
-          <foreignObject
-            x={offsetX - 10}
-            y={offsetY * 40}
-            width='20'
-            height='24'
-            key={id}
-          >
-            <ModuleItem
-              id={id}
-              subjectId={subjectId}
-              realm={realm}
-              isUnlocked={
-                completedModules.findIndex(({ module_id }) => module_id === id) === index ||
-                completedModules.findLastIndex(({ completed }) => completed) + 1 === index
-              }
-              completed={completedModules.findIndex(({ module_id, completed }) => module_id === id && completed) !== -1}
-            />
-          </foreignObject>
-        );
-      })}
-    </svg>
+<div className='w-100 mx-auto' style={{ aspectRatio: `100 / ${height}` }}>
+	<svg
+	      viewBox={`0 0 100 ${height}`}
+	      fill='none'
+	      xmlns='http://www.w3.org/2000/svg'
+	      className='w-full h-full'
+	    >
+	      <path
+	        d={getPathString(modules)}
+	        stroke='var(--color-beige-200)'
+	        strokeWidth='7'
+	        strokeLinecap='round'
+	        strokeLinejoin='round'
+	      />
+	      {modules.map(({ id }, index) => {
+	        const offsetX = index % 3 === 0 ? 50 : index % 3 === 1 ? 70 : 30;
+	        const offsetY = index % 3 === 0 ? Math.floor((index / 3) * 2) : Math.round((index / 3) * 2);
+	        return (
+	          <foreignObject
+	            x={offsetX - 10}
+	            y={offsetY * 40}
+	            width='20'
+	            height='24'
+	            key={id}
+	          >
+	            <ModuleItem
+	              id={id}
+	              subjectId={subjectId}
+	              realm={realm}
+	              isUnlocked={
+	                completedModules.findIndex(({ module_id }) => module_id === id) === index ||
+	                completedModules.findLastIndex(({ completed }) => completed) + 1 === index
+	              }
+	              completed={completedModules.findIndex(({ module_id, completed }) => module_id === id && completed) !== -1}
+	            />
+	          </foreignObject>
+	        );
+	      })}
+	    </svg>
+</div>
   );
 }
 
 // Subject Info
 export function SubjectInfo({ subjectId, realm }: SubjectInfoProps) {
   const [pending, setPending] = useState(true);
-  const [subject, setSubject] = useState<{ name: string, description: string }>({ name: '', description: '' });
+  const [subject, setSubject] = useState<{ name: string; description: string }>({ name: '', description: '' });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -177,7 +181,7 @@ export function SubjectInfo({ subjectId, realm }: SubjectInfoProps) {
   const realmName = realm === 'tsc' ? 'teoria sociocultural' : realm === 'gestalt' ? 'gestalt' : 'behaviorismo';
 
   return (
-    <div className='px-6 py-7 bg-white rounded-4xl shadow-cogtec flex-col flex gap-6 max-w-130 h-fit'>
+    <div className='px-6 py-7 bg-white rounded-4xl shadow-cogtec flex-col flex gap-6 max-w-130 h-fit mx-auto lg:mx-0'>
       <div className='self-stretch justify-between items-center flex'>
         <div className='grow shrink basis-0 flex-col gap-4 flex'>
           <span className='self-stretch text-logo-200 text-sm proto:text-base font-bold uppercase'>
@@ -185,7 +189,10 @@ export function SubjectInfo({ subjectId, realm }: SubjectInfoProps) {
           </span>
           <h1 className='self-stretch text-2xl proto:text-4xl font-bold'>{subject.name}</h1>
         </div>
-        <Icon className='size-25' />
+        <Icon
+          className='size-25'
+          style={{ color: `var(--color-${realm}-100)` }}
+        />
       </div>
       <p className='self-strecth text-base proto:text-xl font-medium'>Descrição do tema inserir aqui!</p>
       <div className='self-stretch justify-end items-center gap-3 flex'>

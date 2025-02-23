@@ -24,7 +24,10 @@ export const LibraryCard = ({
   const getTextSlug = (slug: string) => slug.replaceAll('-', ' ');
   return (
     <div
-      className={cn('flex flex-col gap-8 rounded-3xl bg-beige-50 shadow-cogtec px-8 py-4', className)}
+      className={cn(
+        'flex flex-col gap-8 rounded-3xl bg-beige-50 shadow-cogtec px-8 py-4 data-selected:shadow-logo-200',
+        className
+      )}
       {...props}
     >
       <h2 className='text-xl font-bold capitalize'>{category}</h2>

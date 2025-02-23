@@ -43,7 +43,10 @@ export function StudySection({ sectionName, sectionType, motd }: SectionProps) {
   return (
     <>
       <div className='flex items-center gap-5'>
-        <Icon className='size-20' />
+        <Icon
+          className='size-20 data-[theme=behaviorism]:text-behaviorism-100 data-[theme=gestalt]:text-gestalt-100 data-[theme=tsc]:text-tsc-100'
+          data-theme={sectionType || undefined}
+        />
         <h1 className='capitalize text-4xl font-bold text-black'>{sectionName}</h1>
         <p className='text-base text-neutral-600 capitalize'>{motd}</p>
       </div>
@@ -73,7 +76,7 @@ function ExerciseItem({ title, temaId, sectionType, skeleton }: ExerciseItemProp
   if (skeleton)
     return (
       <div
-        className='h-fit w-20 lg:w-30 proto:w-40 grid [grid-template-rows:min-content] items-center gap-3 data-[theme=gestalt]:text-gestalt-100 data-[theme=tsc]:text-tsc-100 data-[theme=behaviorism]:text-behaviorism-100'
+        className='h-fit min-w-30 lg:w-30 proto:w-40 grid [grid-template-rows:min-content] items-center gap-3 data-[theme=gestalt]:text-gestalt-100 data-[theme=tsc]:text-tsc-100 data-[theme=behaviorism]:text-behaviorism-100'
         data-theme={sectionType || null}
       >
         <div className='aspect-9/8 w-full shadow-cogtec flex-col justify-end items-center animate-pulse px-6 py-3 rounded-xl gap-2.5 shadow-current bg-beige-50 flex'>
@@ -85,13 +88,13 @@ function ExerciseItem({ title, temaId, sectionType, skeleton }: ExerciseItemProp
   return (
     <Link
       href={`/${sectionType}/exerciseTrail?temaId=${temaId}`}
-      className='h-fit w-20 lg:w-30 proto:w-40 grid [grid-template-rows:min-content] items-center gap-3 data-[theme=gestalt]:text-gestalt-100 data-[theme=tsc]:text-tsc-100 data-[theme=behaviorism]:text-behaviorism-100'
+      className='h-fit w-fit flex flex-col items-center gap-3 data-[theme=gestalt]:text-gestalt-100 data-[theme=tsc]:text-tsc-100 data-[theme=behaviorism]:text-behaviorism-100'
       data-theme={sectionType || null}
     >
-      <div className='aspect-9/8 w-full shadow-cogtec flex-col justify-end items-center px-6 py-3 rounded-xl gap-2.5 shadow-current bg-beige-50 flex'>
+      <div className='aspect-9/8 w-40 shadow-cogtec flex-col justify-end items-center px-6 py-3 rounded-xl gap-2.5 shadow-current bg-beige-50 flex'>
         <div className='self-stretch h-3 bg-current rounded-full' />
       </div>
-      <h3 className='text-center text-black text-xl font-bold'>{title}</h3>
+      <h3 className='text-center text-black text-base font-bold max-w-40'>{title}</h3>
     </Link>
   );
 }

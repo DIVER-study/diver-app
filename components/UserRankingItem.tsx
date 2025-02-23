@@ -2,7 +2,6 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { GoldTrophy } from './Svgs';
 
 type RankingItemProps = {
   avatarUrl: string;

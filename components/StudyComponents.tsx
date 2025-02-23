@@ -29,7 +29,7 @@ export function StudySection({ sectionName, sectionType, motd }: SectionProps) {
   useEffect(() => {
     const supabase = createClient();
     const grabData = async () => {
-      const { data, error } = await supabase.from('subjects').select('*').eq('realm', sectionType);
+      const { data, error } = await supabase.from('subjects').select('*').eq('realm', sectionType).order('id');
       if (data) {
         setSubjects(data);
         setPending(false);
@@ -73,6 +73,7 @@ type ExerciseItemProps = {
 };
 
 function ExerciseItem({ title, temaId, sectionType, skeleton }: ExerciseItemProps) {
+  const Icon = getIcon(temaId);
   if (skeleton)
     return (
       <div
@@ -92,9 +93,26 @@ function ExerciseItem({ title, temaId, sectionType, skeleton }: ExerciseItemProp
       data-theme={sectionType || null}
     >
       <div className='aspect-9/8 w-40 shadow-cogtec flex-col justify-end items-center px-6 py-3 rounded-xl gap-2.5 shadow-current bg-beige-50 flex'>
+        <div className='aspect-square w-full *:mx-auto content-center'>
+          <Icon />
+        </div>
         <div className='self-stretch h-3 bg-current rounded-full' />
       </div>
       <h3 className='text-center text-black text-base font-bold max-w-40'>{title}</h3>
     </Link>
   );
 }
+
+const getIcon = (temaId: string | number) => {
+  let i;
+  switch (temaId) {
+    case 1:
+      i = GestaltIcon;
+      break;
+
+    default:
+      i = 'div';
+      break;
+  }
+  return i;
+};

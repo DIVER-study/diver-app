@@ -62,6 +62,30 @@ export type Database = {
           },
         ]
       }
+      library_blogs: {
+        Row: {
+          category: string
+          id: number
+          markdown: string
+          slug: string
+          title: string
+        }
+        Insert: {
+          category: string
+          id?: number
+          markdown: string
+          slug: string
+          title: string
+        }
+        Update: {
+          category?: string
+          id?: number
+          markdown?: string
+          slug?: string
+          title?: string
+        }
+        Relationships: []
+      }
       modules: {
         Row: {
           badge: number | null
@@ -199,38 +223,6 @@ export type Database = {
             foreignKeyName: "user_progress_user_id_fkey"
             columns: ["user_id"]
             isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      user_study_progress: {
-        Row: {
-          behaviorism: number
-          gestalt: number
-          id: string
-          tsc: number
-          updated_at: string
-        }
-        Insert: {
-          behaviorism?: number
-          gestalt?: number
-          id: string
-          tsc?: number
-          updated_at?: string
-        }
-        Update: {
-          behaviorism?: number
-          gestalt?: number
-          id?: string
-          tsc?: number
-          updated_at?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "user_study_progress_id_fkey"
-            columns: ["id"]
-            isOneToOne: true
             referencedRelation: "profiles"
             referencedColumns: ["id"]
           },

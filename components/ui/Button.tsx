@@ -4,7 +4,7 @@ import React from 'react';
 import { Slot } from './Slot';
 
 export const buttonVariants = cva(
-  'flex gap-2.5 px-6 py-3 rounded-xl items-center justify-center text-3xl h-fit font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 cursor-pointer',
+  'flex gap-2.5 px-6 py-3 rounded-xl items-center justify-center text-xl h-fit font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-8 [&_svg]:shrink-0 cursor-pointer',
   {
     variants: {
       variant: {
@@ -19,13 +19,20 @@ export const buttonVariants = cva(
       size: {
         default: '',
         sm: 'rounded-md px-3 text-base py-1',
-        lg: 'text-5xl',
+        lg: 'text-3xl',
         icon: 'size-9 p-2',
+      },
+      theme: {
+        default: '',
+        behaviorism: 'hover:bg-behaviorism-100 hover:text-white text-behaviorism-100 border-behaviorism-100',
+        gestalt: 'hover:bg-gestalt-100 hover:text-white text-gestalt-100 border-gestalt-100',
+        tsc: 'hover:bg-tsc-100 hover:text-white text-tsc-100 border-tsc-100',
       },
     },
     defaultVariants: {
       variant: 'default',
       size: 'default',
+      theme: 'default',
     },
   }
 );
@@ -37,11 +44,11 @@ export interface ButtonProps
 }
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, asChild, ...props }, ref) => {
+  ({ className, variant, size, theme, asChild, ...props }, ref) => {
     const Comp = asChild ? Slot : 'button';
     return (
       <Comp
-        className={cn(buttonVariants({ variant, size, className }))}
+        className={cn(buttonVariants({ variant, size, className, theme }))}
         ref={ref}
         {...props}
       />

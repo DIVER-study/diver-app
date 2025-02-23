@@ -1,6 +1,8 @@
 @import url('https://use.typekit.net/srw5lkl.css') layer(base);
 @import 'tailwindcss';
 
+@plugin "@tailwindcss/typography";
+
 @theme {
   --font-new-zen: new-zen, sans-serif;
 

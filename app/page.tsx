@@ -7,35 +7,33 @@ export default async function RealmsPage() {
   const displayName = async () => await getUserDisplayname();
 
   return (
-    <div className='flex min-h-screen gap-14 mr-14'>
+    <div className='min-h-screen flex gap-14 mr-14 max-w-screen'>
       <UserStore />
       <SideBar activeTab='estudos' />
-      <main className='py-14 flex-1'>
-        <div className='flex flex-col gap-14 h-fit'>
-          <div className='spcace-y-2'>
-            <div className='text-logo-200 text-3xl font-bold'>
-              Olá,
-              <span className='text-black'> {await displayName()}! </span>
-              :)
-            </div>
-            <span className='font-semibold text-xl ml-2 text-neutral-400'>Vamos estudar um pouco?</span>
+      <main className='py-14 inline-flex flex-col flex-1 gap-4'>
+        <div className='space-y-2'>
+          <div className='text-logo-200 text-3xl font-bold'>
+            Olá,
+            <span className='text-black'> {await displayName()}! </span>
+            :)
           </div>
-          <StudySection
-            sectionName='Behaviorismo'
-            sectionType='behaviorism'
-            motd='Estímulo no comando, resposta na ação!'
-          />
-          <StudySection
-            sectionName='Gestalt'
-            sectionType='gestalt'
-            motd='onde as partes se juntam'
-          />
-          <StudySection
-            sectionName='Teoria Sociocultural'
-            sectionType='tsc'
-            motd='sempre no modo multiplayer'
-          />
+          <span className='font-semibold text-xl ml-2 text-neutral-400'>Vamos estudar um pouco?</span>
         </div>
+        <StudySection
+          sectionName='Behaviorismo'
+          sectionType='behaviorism'
+          motd='Estímulo no comando, resposta na ação!'
+        />
+        <StudySection
+          sectionName='Gestalt'
+          sectionType='gestalt'
+          motd='onde as partes se juntam'
+        />
+        <StudySection
+          sectionName='Teoria Sociocultural'
+          sectionType='tsc'
+          motd='sempre no modo multiplayer'
+        />
       </main>
     </div>
   );

@@ -1,34 +1,65 @@
 'use client';
 
-// import { createClient } from '@/utils/supabase/client';
 import Link from 'next/link';
 import { Button } from './ui/Button';
 import { cn } from '@/utils/cnUtil';
+import { BehaviorismIcon, GestaltIcon, TSCIcon } from './svgs';
 
-export const LibraryCard = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => {
+type LibraryCardProps = {
+  category: string;
+  behaviorismSlug: string;
+  gestaltSlug: string;
+  tscSlug: string;
+} & React.HTMLAttributes<HTMLDivElement>;
+
+export const LibraryCard = ({
+  className,
+  behaviorismSlug,
+  gestaltSlug,
+  tscSlug,
+  category,
+  ...props
+}: LibraryCardProps) => {
+  const getLinkSlug = (slug: string) => slug.replaceAll('ç', 'c').replaceAll('ã', 'a').replaceAll('í', 'i');
+  const getTextSlug = (slug: string) => slug.replaceAll('-', ' ');
   return (
     <div
-      className={cn('flex flex-col gap-8 rounded-3xl bg-beige-50 shadow-cogtec', className)}
+      className={cn('flex flex-col gap-8 rounded-3xl bg-beige-50 shadow-cogtec px-8 py-4', className)}
       {...props}
     >
-      <h2 className='text-2xl font-bold'></h2>
+      <h2 className='text-xl font-bold capitalize'>{category}</h2>
       <Button
-        className='bg-behaviorism-100 border-behaviorism-100'
+        variant='outline'
+        theme='behaviorism'
+        className='justify-start border-4 font-semibold capitalize'
         asChild
       >
-        <Link href='#'></Link>
+        <Link href={`/library/${getLinkSlug(behaviorismSlug)}`}>
+          <BehaviorismIcon />
+          <span>{getTextSlug(behaviorismSlug)}</span>
+        </Link>
       </Button>
       <Button
-        className='bg-gestalt-100 border-gestalt-100'
+        variant='outline'
+        theme='gestalt'
+        className='justify-start border-4 font-semibold capitalize'
         asChild
       >
-        <Link href='#'></Link>
+        <Link href={`/library/${getLinkSlug(gestaltSlug)}`}>
+          <GestaltIcon />
+          <span>{getTextSlug(gestaltSlug)}</span>
+        </Link>
       </Button>
       <Button
-        className='bg-tsc-100 border-tsc-100'
+        variant='outline'
+        theme='tsc'
+        className='justify-start border-4 font-semibold capitalize'
         asChild
       >
-        <Link href='#'></Link>
+        <Link href={`/library/${getLinkSlug(tscSlug)}`}>
+          <TSCIcon />
+          <span>{getTextSlug(tscSlug)}</span>
+        </Link>
       </Button>
     </div>
   );

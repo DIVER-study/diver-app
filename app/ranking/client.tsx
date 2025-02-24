@@ -20,9 +20,9 @@ export default function ClientRankingPage() {
   });
 
   return (
-    <main className='flex-1 overflow-y-scroll content-center'>
+    <main className='flex-1 overflow-y-scroll'>
       {user.profile?.accepted_ranking ? (
-        <RankingTable profiles={profiles} />
+        <RankingTable profiles={profiles} currentUser={user.profile.display_name} />
       ) : (
         <div className='text-center'>
           <p className='text-3xl font-semibold'>Participe do Ranking!</p>
@@ -38,20 +38,22 @@ export default function ClientRankingPage() {
   );
 }
 
-function RankingTable({ profiles }: { profiles: UserProfile[] }) {
+function RankingTable({ profiles, currentUser }: { profiles: UserProfile[], currentUser: string }) {
   return (
     <>
-    <RankingTrophies />    
-    {profiles.map(({ avatar_url, display_name }, index) => (
+      <RankingTrophies />
+      <div className='flex flex-col gap-4 mx-auto items-center'>
+        {profiles.map(({ avatar_url, display_name }, index) => (
           <UserRankingItem
-            key={display_name}
+            key={index}
             avatarUrl={avatar_url}
             displayName={display_name}
             index={index}
             exp={50}
+            current={display_name === currentUser}
           />
         ))}
+      </div>
     </>
-
   );
 }

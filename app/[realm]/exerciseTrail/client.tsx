@@ -3,11 +3,12 @@
 import { Database } from '@/database.types';
 import { useEffect, useState, useTransition } from 'react';
 import { toast } from 'sonner';
-import { getModules, getSubject, getUserCompletedModules, type ModuleType } from './server';
+import { getModules, getSubject, getUserCompletedModules, SubjectType, type ModuleType } from './server';
 import { BehaviorismIcon, GestaltIcon, MdCheckIcon, MdExerciseIcon, MdLockIcon, TSCIcon } from '@/components/svgs';
 import IdeaIcon from '@/components/svgs/IdeiaIcon';
 import { IntroTema } from '@/components/ui/alert-boxes/IntroTema';
 import { redirect } from 'next/navigation';
+import Link from 'next/link';
 
 // Types
 type CompletedModule = { module_id: number; completed: boolean };
@@ -170,7 +171,7 @@ export function ModuleList({ subjectId, realm }: ModuleListProps) {
 // Subject Info
 export function SubjectInfo({ subjectId, realm }: SubjectInfoProps) {
   const [pending, setPending] = useState(true);
-  const [subject, setSubject] = useState<{ name: string; description: string }>({ name: '', description: '' });
+  const [subject, setSubject] = useState<SubjectType>();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -198,16 +199,18 @@ export function SubjectInfo({ subjectId, realm }: SubjectInfoProps) {
       <div className='self-stretch justify-between items-center flex'>
         <div className='grow shrink basis-0 flex-col gap-4 flex'>
           <span className='self-stretch text-logo-200 text-sm proto:text-base font-bold uppercase'>
-            {realmName} &gt; {subject.name}
+            <Link href='/'>{realmName}</Link> &gt; {subject?.name || '...'}
           </span>
-          <h1 className='self-stretch text-2xl proto:text-4xl font-bold'>{subject.name}</h1>
+          <h1 className='self-stretch text-2xl proto:text-4xl font-bold'>
+            {subject?.name || <div className='animate-bounce'>...</div>}
+          </h1>
         </div>
         <Icon
           className='size-25'
           style={{ color: `var(--color-${realm}-100)` }}
         />
       </div>
-      <p className='self-strecth text-base proto:text-xl font-medium'>Descrição do tema inserir aqui!</p>
+      <p className='self-strecth text-base proto:text-xl font-medium'>{subject?.description || '...'}</p>
       <div className='self-stretch justify-end items-center gap-3 flex'>
         <span className='font-bold text-base proto:text-xl'>Orientação</span>
         <button
@@ -218,9 +221,10 @@ export function SubjectInfo({ subjectId, realm }: SubjectInfoProps) {
           <IdeaIcon />
         </button>
         <IntroTema
-          title={subject.name}
-          desc={subject.description}
+          title={subject?.name || '...'}
+          desc={subject?.orientation || '...'}
           id='intro-tema'
+          link={subject?.slug}
         />
       </div>
     </div>

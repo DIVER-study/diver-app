@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState, useTransition } from 'react';
+import { useRef, useState } from 'react';
 import { ExerciseType, updateUserProgress, updateUserXp } from './server';
 import { Button } from '@/components/ui/Button';
 import { CloseIcon } from '@/components/svgs';
@@ -35,7 +35,7 @@ export default function ExercisePageClient({ exercises, realm, subjectId, module
   const [exerciseProgress, setExerciseProgress] = useState<number>(0);
   const [selectedOption, setSelectedOption] = useState<number>(-1);
   const [finished, setFinished] = useState<boolean>(false);
-  const [isPending, startTransition] = useTransition();
+  const [isPending, setIsPending] = useState<boolean>(false);
 
   const handleSubmit = () => {
     const correct = selectedOption === currentExercise.answer;
@@ -66,24 +66,27 @@ export default function ExercisePageClient({ exercises, realm, subjectId, module
     setExerciseProgress((prev) => prev + 1);
     setSelectedOption(-1);
 
-    if (exerciseProgress + 1 === exercises.length) {
-      startTransition(async () => {
-        const { error } = await updateUserProgress(moduleId, subjectId, realm);
-        if (error) toast.error(error.message);
-        await updateUserXp(userXp.current);
-        wrongAnswer.current?.hidePopover();
-        rightAnswer.current?.hidePopover();
-        setFinished(true);
-      });
-    } else {
-      startTransition(async () => {
-        await new Promise((resolve) => setTimeout(resolve, 3000));
-        setCurrentExercise(exercises[exerciseProgress + 1]);
-        wrongAnswer.current?.hidePopover();
-        rightAnswer.current?.hidePopover();
-      });
-    }
+    setIsPending(true);
   };
+
+  const nextQuestion = async () => {
+    wrongAnswer.current?.hidePopover();
+    rightAnswer.current?.hidePopover();
+
+    if (exerciseProgress + 1 === exercises.length) {
+      setExerciseProgress((prev) => prev + 1);
+      const { error } = await updateUserProgress(moduleId, subjectId, realm);
+      if (error) toast.error(error.message);
+      await updateUserXp(userXp.current);
+      rightAnswer.current?.hidePopover();
+      setFinished(true);
+    } else {
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+      setCurrentExercise(exercises[exerciseProgress + 1]);
+    }
+    setIsPending(false);
+  };
+
   return (
     <div className='flex flex-col p-10 gap-16 items-center justify-between relative h-[100dvh]'>
       <ExitAlert
@@ -93,12 +96,12 @@ export default function ExercisePageClient({ exercises, realm, subjectId, module
         popover='manual'
       />
       <RightAnswerAlert
-        onActionPressed={() => rightAnswer.current?.hidePopover()}
+        onActionPressed={nextQuestion}
         ref={rightAnswer}
         popover='manual'
       />
       <WrongAnswerAlert
-        onActionPressed={() => wrongAnswer.current?.hidePopover()}
+        onActionPressed={nextQuestion}
         ref={wrongAnswer}
         popover='manual'
         explanation={currentExercise.explanation}

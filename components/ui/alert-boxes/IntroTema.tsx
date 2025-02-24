@@ -16,9 +16,10 @@ type IntroTemaProps = {
   title: string;
   desc: string;
   id: string;
+  link?: string;
 };
 
-export const IntroTema = ({ className, title, id, desc }: IntroTemaProps) => {
+export const IntroTema = ({ className, title, id, desc, link }: IntroTemaProps) => {
   return (
     <AlertBox
       popover='manual'
@@ -31,7 +32,7 @@ export const IntroTema = ({ className, title, id, desc }: IntroTemaProps) => {
       </AlertBoxHeader>
       <AlertBoxFooter>
         <AlertBoxAction asChild>
-          <Link href='/library'>Biblioteca</Link>
+          <Link href={`/library/${link}`}>Biblioteca</Link>
         </AlertBoxAction>
         <AlertBoxCancel
           popoverTarget={id}

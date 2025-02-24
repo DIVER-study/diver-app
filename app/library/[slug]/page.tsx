@@ -2,7 +2,6 @@ import { SideBar } from '@/components/SideBar';
 import { UserStore } from '@/components/UserStore';
 import { getLibraryBlog } from './server';
 import Markdown from 'react-markdown';
-import { toast } from 'sonner';
 import Link from 'next/link';
 import rehypeRaw from 'rehype-raw';
 
@@ -12,7 +11,7 @@ const LibraryBlogPage = async ({ params }: { params: Promise<{ slug: string }> }
     data: { markdown, title, category },
     error,
   } = await getLibraryBlog(slug);
-  if (error) toast.error(`Erro ao procurar conteúdo. ${error.message}`);
+  if (error) console.error(`Erro ao procurar conteúdo. ${error.message}`);
 
   return (
     <div className='flex h-screen'>

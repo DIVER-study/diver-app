@@ -89,23 +89,17 @@ export type Database = {
       modules: {
         Row: {
           badge: number | null
-          description: string
           id: number
-          name: string
           subject_id: number
         }
         Insert: {
           badge?: number | null
-          description?: string
           id?: number
-          name?: string
           subject_id: number
         }
         Update: {
           badge?: number | null
-          description?: string
           id?: number
-          name?: string
           subject_id?: number
         }
         Relationships: [
@@ -163,19 +157,25 @@ export type Database = {
           description: string
           id: number
           name: string
+          orientation: string
           realm: Database["public"]["Enums"]["realms"]
+          slug: string
         }
         Insert: {
           description?: string
           id?: number
           name?: string
+          orientation?: string
           realm?: Database["public"]["Enums"]["realms"]
+          slug?: string
         }
         Update: {
           description?: string
           id?: number
           name?: string
+          orientation?: string
           realm?: Database["public"]["Enums"]["realms"]
+          slug?: string
         }
         Relationships: []
       }
@@ -206,21 +206,21 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: "user_progress_module_id_fkey"
+            foreignKeyName: "user_completed_modules_module_id_fkey"
             columns: ["module_id"]
             isOneToOne: false
             referencedRelation: "modules"
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "user_progress_subject_id_fkey"
+            foreignKeyName: "user_completed_modules_subject_id_fkey"
             columns: ["subject_id"]
             isOneToOne: false
             referencedRelation: "subjects"
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "user_progress_user_id_fkey"
+            foreignKeyName: "user_completed_modules_user_id_fkey"
             columns: ["user_id"]
             isOneToOne: false
             referencedRelation: "profiles"

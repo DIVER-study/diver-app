@@ -57,14 +57,14 @@ function UserStatistics({ profile }: { profile: UserState['user']['profile'] }) 
       <div className='flex flex-row gap-4'>
         <div className='p-4 bg-white shadow-cogtec rounded-xl flex gap-2 items-center justify-between text-3xl flex-1'>
           <div className='flex gap-2 items-center'>
-            <FilledStar className='shrink-0 size-16' />
+            <FilledStar className='shrink-0 size-16 text-ranking-gold' />
             {profile?.xp || 0}
           </div>
           xp
         </div>
         <div className='p-4 bg-white shadow-cogtec rounded-xl flex gap-2 items-center justify-between text-3xl flex-1'>
           <div className='flex gap-2 items-center'>
-            <RankingStar className='shrink-0 size-16' />
+            <RankingStar className='shrink-0 size-16 text-ranking-gold' />
             Pódio
           </div>
           {isPending ? '...' : userPosition}
@@ -78,14 +78,7 @@ function UserAchivements() {
   return (
     <div className='flex flex-col gap-4 max-w-(--breakpoint-md) mx-auto text-4xl font-semibold mb-2'>
       Conquistas
-      <div className='grid grid-cols-2 gap-4'>
-        {new Array(2).fill('').map((_, idx) => (
-          <div
-            key={idx}
-            className='rounded-xl min-size-40 size-full aspect-square shadow-cogtec bg-white'
-          ></div>
-        ))}
-      </div>
+      <div className='flex px-20 py-15 mx-auto text-center text-lg font-medium'>Sem conquistas ainda :(</div>
     </div>
   );
 }

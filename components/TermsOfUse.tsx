@@ -1,7 +1,9 @@
 'use client';
 import { CloseIcon } from '@/components/svgs';
 
-export function TermsOfUse({ action }: { action: () => void }) {
+export function TermsOfUse({
+  action,
+}: React.HTMLAttributes<HTMLDivElement> & React.RefAttributes<HTMLDivElement> & { action: () => void }) {
   return (
     <div className='fixed inset-0 flex items-center justify-center bg-opacity-50 z-50'>
       <div className='bg-beige-100 p-6 rounded-lg shadow-lg w-[80%] h-[80%] relative px-[5%] flex flex-col'>

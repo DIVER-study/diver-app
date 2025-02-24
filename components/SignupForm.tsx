@@ -2,17 +2,17 @@
 
 import { signUpWithPassword } from '@/app/login/actions';
 import { redirect } from 'next/navigation';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { toast } from 'sonner';
 import Link from 'next/link';
 import CheckMarkIcon from '@/components/svgs/CheckMarkIcon';
 import ViewPasswordIcon from '@/components/svgs/ViewPasswordIcon';
 import { TermsOfUse } from '@/components/TermsOfUse';
+import { Button } from './ui/Button';
 
 export default function SignupForm() {
-  const [termsAccepted, setTermsAccepted] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [showTermsOfUse, setTermsOfUse] = useState(false);
+  const termsOfUse = useRef<HTMLDivElement>(null);
 
   const signUp = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -72,10 +72,6 @@ export default function SignupForm() {
     }
   };
 
-  const handleCloseTerms = () => {
-    setTermsOfUse(false);
-  };
-
   return (
     <form
       className='flex flex-col items-center mx-4'
@@ -85,14 +81,14 @@ export default function SignupForm() {
         id='title'
         className='flex flex-col items-start w-100'
       >
-        <h3 className='text-xl font-bold text-[#FD7401]'>Bem-Vindo(a)!</h3>
+        <h3 className='text-xl font-bold text-logo-200'>Boas-Vindas!</h3>
         <p className='text-lg font-medium'>Crie sua conta</p>
       </div>
       <div className='flex flex-col gap-7'>
         <div className='mt-4'>
           <label
             htmlFor='display_name'
-            className='text-sm text-[#555555] font-medium flex flex-col items-start w-full pb-1'
+            className='text-sm text-neutral-500 font-medium flex flex-col items-start w-full pb-1'
           >
             Nome de Usuário:
           </label>
@@ -109,7 +105,7 @@ export default function SignupForm() {
         <div>
           <label
             htmlFor='email'
-            className='text-sm text-[#555555] font-medium flex flex-col items-start w-full pb-1'
+            className='text-sm text-neutral-500 font-medium flex flex-col items-start w-full pb-1 peer-invalid/email:ring-warning peer-invalid/email:text-warning'
           >
             Email Institucional:
           </label>
@@ -118,8 +114,7 @@ export default function SignupForm() {
             name='email'
             type='email'
             required
-            className='peer p-1.5 px-4 w-100 rounded-3xl ring-2 ring-black-500 focus:outline-none text-sm placeholder-[#555555]
-                    peer-invalid:ring-red-500 peer-invalid:text-red-600'
+            className='peer/email p-1.5 px-4 w-100 rounded-3xl ring-2 ring-neutral-500 focus:outline-none text-sm placeholder-neutral-500 invalid:ring-warning invalid:text-warning'
             placeholder='exemplo@alu.ufc.br'
           />
         </div>
@@ -127,7 +122,7 @@ export default function SignupForm() {
         <div className='relative'>
           <label
             htmlFor='password'
-            className='text-sm text-[#555555] font-medium flex flex-col items-start w-full pb-1'
+            className='text-sm text-neutral-500 font-medium flex flex-col items-start w-full pb-1'
           >
             Senha:
           </label>
@@ -136,7 +131,7 @@ export default function SignupForm() {
             name='password'
             type={showPassword ? 'text' : 'password'}
             required
-            className='p-1.5 px-4 w-100 rounded-3xl ring-2 ring-black-500 focus:outline-none text-sm pr-10'
+            className='p-1.5 px-4 w-100 rounded-3xl ring-2 ring-neutral-500 focus:outline-none text-sm pr-10'
             placeholder='●●●●●●'
           />
           {/* Ícone de visualizar senha */}
@@ -155,16 +150,16 @@ export default function SignupForm() {
         <div className='relative'>
           <label
             htmlFor='confirm-password'
-            className='text-sm text-[#555555] font-medium flex flex-col items-start w-full pb-1'
+            className='text-sm text-neutral-500 font-medium flex flex-col items-start w-full pb-1'
           >
-            Senha:
+            Cofirme sua Senha:
           </label>
           <input
             id='confirm-password'
             name='confirm-password'
             type={showPassword ? 'text' : 'password'}
             required
-            className='p-1.5 px-4 w-100 rounded-3xl ring-2 ring-black-500 focus:outline-none text-sm pr-10'
+            className='p-1.5 px-4 w-100 rounded-3xl ring-2 ring-neutral-500 focus:outline-none text-sm pr-10'
             placeholder='●●●●●●'
           />
           {/* Ícone de visualizar senha */}
@@ -187,25 +182,21 @@ export default function SignupForm() {
             id='terms'
             name='terms'
             type='checkbox'
-            checked={termsAccepted}
-            onChange={(e) => setTermsAccepted(e.target.checked)}
-            className='hidden'
+            className='hidden peer/check'
           />
-          <span
-            className={`w-4 h-4 flex items-center justify-center border-2 border-orange-500 rounded-sm ${termsAccepted ? 'bg-[#FD7401]' : 'bg-white'}`}
-          >
-            {termsAccepted && (
-              <CheckMarkIcon
-                width={80}
-                height={80}
-                className='text-white'
-              />
-            )}
+          <span className='w-4 h-4 flex items-center justify-center border-2 border-logo-200 rounded-sm peer-checked/check:bg-logo-200 bg-white'>
+            <CheckMarkIcon
+              width={80}
+              height={80}
+              className='text-white hidden peer-checked/check:block'
+            />
           </span>
           <a
-            onClick={() => setTermsOfUse(true)}
+            onClick={(e) => e.preventDefault()}
             target='_blank'
-            className='text-sm text-[#1E2772] underline underline-offset-1 hover:underline'
+            popoverTarget='terms-of-use'
+            popoverTargetAction='show'
+            className='text-sm text-[#1E2772] underline underline-offset-1'
           >
             Concordar com os Termos de Uso
           </a>
@@ -213,28 +204,26 @@ export default function SignupForm() {
       </div>
 
       <div className='flex flex-col items-center justify-center gap-4 p-3'>
-        <button
-          className='text-sm font-bold cursor-pointer p-2 w-100 text-white bg-[#FD7401] rounded-3xl hover:bg-[#FFFFFF] hover:text-[#FD7401] focus:outline-none border-2 focus:border-[#FD7401]'
-          type='submit'
-        >
-          Cadastrar
-        </button>
+        <Button type='submit'>Cadastrar</Button>
 
         <div className='flex items-center w-full justify-center'>
           <div className='flex-grow border-t border-gray-400'></div>
-          <span className='px-2 text-[#C2C2C2] text-xs'>OU</span>
+          <span className='px-2 text-gray-400 text-xs'>OU</span>
           <div className='flex-grow border-t border-gray-400'></div>
         </div>
 
-        <Link
-          href='/login'
-          className='text-sm font-bold text-center cursor-pointer p-2 w-100 text-[#FD7401] bg-[#FFFFFF] rounded-3xl border-2 border-[#FD7401] hover:bg-[#FD7401] hover:text-white focus:outline-none focus:ring-2 focus:ring-[#FD7401] focus:border-[#FD7401]'
+        <Button
+          variant='outline'
+          asChild
         >
-          Já tem conta?
-        </Link>
+          <Link href='/login'>Já tem conta?</Link>
+        </Button>
       </div>
 
-      {showTermsOfUse && <TermsOfUse action={handleCloseTerms} />}
+      <TermsOfUse
+        action={() => termsOfUse.current?.hidePopover()}
+        popover='manual'
+      />
     </form>
   );
 }

@@ -14,5 +14,8 @@
   "prettier.useTabs": false,
   "prettier.experimentalTernaries": true,
   "prettier.withNodeModules": true,
-  "editor.defaultFormatter": "esbenp.prettier-vscode"
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  }
 }

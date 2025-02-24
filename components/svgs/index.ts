@@ -5,6 +5,7 @@ import IdeaIcon from './IdeiaIcon';
 import { AprendSocialIcon, CognitivoIcon, FerraCulturalIcon, TecAprendIcon } from './TSCIcons';
 import { BalancaIcon, BehaTecnologiaIcon, FundamentosIcon, ModelagemIcon } from './BehaviorismIcons';
 import { EmocaoIcon, AprendizagemIcon, DesignIcon, PercepcaoIcon } from './GestaltIcons';
+import { MdLockIcon, MdCheckIcon, MdExerciseIcon } from './ExerciseIcons';
 
 export type IconProps = SVGProps<SVGSVGElement>;
 
@@ -26,4 +27,7 @@ export {
   AprendizagemIcon,
   DesignIcon,
   PercepcaoIcon,
+  MdLockIcon,
+  MdCheckIcon,
+  MdExerciseIcon,
 };

@@ -4,7 +4,7 @@ import { Database } from '@/database.types';
 import { useEffect, useState, useTransition } from 'react';
 import { toast } from 'sonner';
 import { getModules, getSubject, getUserCompletedModules, type ModuleType } from './server';
-import { BehaviorismIcon, GestaltIcon, TSCIcon } from '@/components/svgs';
+import { BehaviorismIcon, GestaltIcon, MdCheckIcon, MdExerciseIcon, MdLockIcon, TSCIcon } from '@/components/svgs';
 import IdeaIcon from '@/components/svgs/IdeiaIcon';
 import { IntroTema } from '@/components/ui/alert-boxes/IntroTema';
 import { redirect } from 'next/navigation';
@@ -63,7 +63,15 @@ const ModuleItem = ({ id, isUnlocked, subjectId, realm, completed }: ModuleItemP
     data-realm={realm}
     onClick={() => redirect(`/${realm}/exercises?moduleId=${id}&temaId=${subjectId}`)}
     className='block exercise-realm w-full aspect-square data-completed:bg-finished-100'
-  ></button>
+  >
+    {!isUnlocked ? (
+      <MdLockIcon className='size-16' />
+    ) : completed ? (
+      <MdCheckIcon className='size-16' />
+    ) : (
+      <MdExerciseIcon className='size-16' />
+    )}
+  </button>
 );
 
 // Module List
@@ -111,46 +119,51 @@ export function ModuleList({ subjectId, realm }: ModuleListProps) {
   const height = 40 * Math.ceil((modules.length / 3) * 2);
 
   return (
-<div className='w-100 mx-auto' style={{ aspectRatio: `100 / ${height}` }}>
-	<svg
-	      viewBox={`0 0 100 ${height}`}
-	      fill='none'
-	      xmlns='http://www.w3.org/2000/svg'
-	      className='w-full h-full'
-	    >
-	      <path
-	        d={getPathString(modules)}
-	        stroke='var(--color-beige-200)'
-	        strokeWidth='7'
-	        strokeLinecap='round'
-	        strokeLinejoin='round'
-	      />
-	      {modules.map(({ id }, index) => {
-	        const offsetX = index % 3 === 0 ? 50 : index % 3 === 1 ? 70 : 30;
-	        const offsetY = index % 3 === 0 ? Math.floor((index / 3) * 2) : Math.round((index / 3) * 2);
-	        return (
-	          <foreignObject
-	            x={offsetX - 10}
-	            y={offsetY * 40}
-	            width='20'
-	            height='24'
-	            key={id}
-	          >
-	            <ModuleItem
-	              id={id}
-	              subjectId={subjectId}
-	              realm={realm}
-	              isUnlocked={
-	                completedModules.findIndex(({ module_id }) => module_id === id) === index ||
-	                completedModules.findLastIndex(({ completed }) => completed) + 1 === index
-	              }
-	              completed={completedModules.findIndex(({ module_id, completed }) => module_id === id && completed) !== -1}
-	            />
-	          </foreignObject>
-	        );
-	      })}
-	    </svg>
-</div>
+    <div
+      className='w-100 mx-auto'
+      style={{ aspectRatio: `100 / ${height}` }}
+    >
+      <svg
+        viewBox={`0 0 100 ${height}`}
+        fill='none'
+        xmlns='http://www.w3.org/2000/svg'
+        className='w-full h-full'
+      >
+        <path
+          d={getPathString(modules)}
+          stroke='var(--color-beige-200)'
+          strokeWidth='7'
+          strokeLinecap='round'
+          strokeLinejoin='round'
+        />
+        {modules.map(({ id }, index) => {
+          const offsetX = index % 3 === 0 ? 50 : index % 3 === 1 ? 70 : 30;
+          const offsetY = index % 3 === 0 ? Math.floor((index / 3) * 2) : Math.round((index / 3) * 2);
+          return (
+            <foreignObject
+              x={offsetX - 10}
+              y={offsetY * 40}
+              width='20'
+              height='24'
+              key={id}
+            >
+              <ModuleItem
+                id={id}
+                subjectId={subjectId}
+                realm={realm}
+                isUnlocked={
+                  completedModules.findIndex(({ module_id }) => module_id === id) === index ||
+                  completedModules.findLastIndex(({ completed }) => completed) + 1 === index
+                }
+                completed={
+                  completedModules.findIndex(({ module_id, completed }) => module_id === id && completed) !== -1
+                }
+              />
+            </foreignObject>
+          );
+        })}
+      </svg>
+    </div>
   );
 }
 

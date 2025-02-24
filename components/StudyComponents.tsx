@@ -5,7 +5,23 @@ import { createClient } from '@/utils/supabase/client';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
-import { BehaviorismIcon, GestaltIcon, TSCIcon } from './svgs';
+import {
+  AprendizagemIcon,
+  AprendSocialIcon,
+  BalancaIcon,
+  BehaTecnologiaIcon,
+  BehaviorismIcon,
+  CognitivoIcon,
+  DesignIcon,
+  EmocaoIcon,
+  FerraCulturalIcon,
+  FundamentosIcon,
+  GestaltIcon,
+  ModelagemIcon,
+  PercepcaoIcon,
+  TecAprendIcon,
+  TSCIcon,
+} from './svgs';
 
 type SectionType = Database['public']['Enums']['realms'];
 
@@ -107,7 +123,51 @@ const getIcon = (temaId: string | number) => {
   let i;
   switch (temaId) {
     case 1:
-      i = GestaltIcon;
+      i = FundamentosIcon;
+      break;
+
+    case 2:
+      i = BalancaIcon;
+      break;
+
+    case 3:
+      i = ModelagemIcon;
+      break;
+
+    case 4:
+      i = BehaTecnologiaIcon;
+      break;
+
+    case 5:
+      i = PercepcaoIcon;
+      break;
+
+    case 6:
+      i = AprendizagemIcon;
+      break;
+
+    case 7:
+      i = EmocaoIcon;
+      break;
+
+    case 8:
+      i = DesignIcon;
+      break;
+
+    case 9:
+      i = CognitivoIcon;
+      break;
+
+    case 10:
+      i = FerraCulturalIcon;
+      break;
+
+    case 11:
+      i = AprendSocialIcon;
+      break;
+
+    case 12:
+      i = TecAprendIcon;
       break;
 
     default:

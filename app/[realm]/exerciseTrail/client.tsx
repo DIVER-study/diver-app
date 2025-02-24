@@ -62,14 +62,14 @@ const ModuleItem = ({ id, isUnlocked, subjectId, realm, completed }: ModuleItemP
     data-completed={completed || null}
     data-realm={realm}
     onClick={() => redirect(`/${realm}/exercises?moduleId=${id}&temaId=${subjectId}`)}
-    className='block exercise-realm w-full aspect-square data-completed:bg-finished-100'
+    className='block exercise-realm w-full aspect-square data-completed:bg-finished-100 content-center *:mx-auto'
   >
     {!isUnlocked ? (
-      <MdLockIcon className='size-16' />
+      <MdLockIcon className='size-4' />
     ) : completed ? (
-      <MdCheckIcon className='size-16' />
+      <MdCheckIcon className='size-4' />
     ) : (
-      <MdExerciseIcon className='size-16' />
+      <MdExerciseIcon className='size-4' />
     )}
   </button>
 );

@@ -10,6 +10,9 @@ import ViewPasswordIcon from '@/components/svgs/ViewPasswordIcon';
 import { TermsOfUse } from '@/components/TermsOfUse';
 import { Button } from './ui/Button';
 
+const userRegex = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{3,29}$/gi;
+const passwdRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{6,}$/g;
+
 export default function SignupForm() {
   const [showPassword, setShowPassword] = useState(false);
   const termsOfUse = useRef<HTMLDivElement>(null);
@@ -41,8 +44,16 @@ export default function SignupForm() {
     }
 
     // Validação do nome de usuário
-    if (!displayName || displayName.length < 3) {
-      toast.error('O nome de usuário deve ter pelo menos 3 caracteres.');
+    if (!displayName.match(userRegex)) {
+      toast.error(
+        'O nome de usuário deve ter entre 3 e 29 caracteres.\nNão pode possuir espaços, somente letras, números e underlines "_"'
+      );
+      toast.dismiss('loading-toast');
+      return;
+    }
+
+    if (!password.match(passwdRegex)) {
+      toast.error('A senha deve conter 6 characteres com pelo menos 1 letra maiúscula, 1 letra minúscula e 1 numeral');
       toast.dismiss('loading-toast');
       return;
     }
@@ -99,7 +110,15 @@ export default function SignupForm() {
               type='text'
               required
               placeholder='Digite seu nome de usuário'
-              className='p-1.5 px-4 w-100 rounded-3xl ring-2 ring-black-500 focus:outline-none text-sm '
+              className='p-1.5 px-4 w-100 rounded-3xl ring-2 ring-black focus:outline-none text-sm invalid:ring-warning invalid text-warning'
+              onChange={(e) => {
+                const target = e.target as HTMLInputElement;
+                if (!target.value.match(userRegex)) {
+                  target.setCustomValidity(
+                    'O nome de usuário deve ter entre 3 e 29 caracteres.\nNão pode possuir espaços, somente letras, números e underlines "_"'
+                  );
+                } else target.setCustomValidity('');
+              }}
             />
           </div>
 
@@ -134,6 +153,14 @@ export default function SignupForm() {
               required
               className='p-1.5 px-4 w-100 rounded-3xl ring-2 ring-neutral-500 focus:outline-none text-sm pr-10'
               placeholder='●●●●●●'
+              onChange={(e) => {
+                const target = e.target as HTMLInputElement;
+                if (!target.value.match(passwdRegex)) {
+                  target.setCustomValidity(
+                    'A senha deve conter 6 characteres com pelo menos 1 letra maiúscula, 1 letra minúscula e 1 numeral'
+                  );
+                } else target.setCustomValidity('');
+              }}
             />
             {/* Ícone de visualizar senha */}
             <button
@@ -162,6 +189,14 @@ export default function SignupForm() {
               required
               className='p-1.5 px-4 w-100 rounded-3xl ring-2 ring-neutral-500 focus:outline-none text-sm pr-10'
               placeholder='●●●●●●'
+              onChange={(e) => {
+                const target = e.target as HTMLInputElement;
+                if (!target.value.match(passwdRegex)) {
+                  target.setCustomValidity(
+                    'A senha deve conter 6 characteres com pelo menos 1 letra maiúscula, 1 letra minúscula e 1 numeral'
+                  );
+                } else target.setCustomValidity('');
+              }}
             />
             {/* Ícone de visualizar senha */}
             <button

@@ -5,6 +5,8 @@ import { createClient } from '@/utils/supabase/client';
 import { useEffect, useState } from 'react';
 import { useUserStore, type UserProfile } from '@/stores/userStore';
 import { RankingTrophies } from '@/components/RankingTrophies';
+import { Button } from '@/components/ui/Button';
+import { GoldTrophy, Shine, WelcomeBanner } from '@/components/svgs/Svgs';
 
 export default function ClientRankingPage() {
   const supabase = createClient();
@@ -31,14 +33,26 @@ export default function ClientRankingPage() {
           currentUser={user.profile.display_name}
         />
       ) : (
-        <div className='text-center'>
-          <p className='text-3xl font-semibold'>Participe do Ranking!</p>
-          <button
-            className='p-2 border-2 border-black'
+        <div className='text-center flex flex-col gap-12 justify-center items-center h-full'>
+          <WelcomeBanner />
+          <div className='flex justify-center items-center'>
+            <div className='flex justify-end flex-col h-full'>
+              <Shine />
+            </div>
+            <GoldTrophy className='size-60' />
+            <div className='flex flex-col h-full'>
+              <Shine />
+            </div>
+          </div>
+          <p className='text-xl text-[#A87400] py-8 px-16 rounded-3xl bg-ranking-gold font-semibold'>
+            Participe e desafie seus amigos &gt;:)
+          </p>
+          <Button
+            className=''
             onClick={() => updateUserProfile({ accepted_ranking: true })}
           >
             Participe
-          </button>
+          </Button>
         </div>
       )}
     </main>

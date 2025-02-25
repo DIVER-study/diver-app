@@ -14,6 +14,7 @@ create table if not exists profiles (
   avatar_url text not null default EMPTY,
   email text not null,
   accepted_ranking boolean not null default false,
+  xp numeric not null default '0'::numeric,
 
   constraint display_name_length check (char_length(display_name) >= 3)
 );
@@ -51,53 +52,31 @@ create or replace trigger on_auth_user_created
   after insert or update on auth.users
   for each row execute procedure public.handle_new_user();
 
--- User study progress
-create table if not exists user_study_progress (
-    id uuid references public.profiles on delete cascade not null primary key,
-    updated_at timestamp with time zone not null default now(),
-    behaviorism int not null default 0,
-    gestalt int not null default 0,
-    tsc int not null default 0
-);
+creates table if not exists library_blogs (
+  id bigint primary key generated always as identity,
+  title text not null,
+  markdown text not null,
+  slug text not null unique,
+  category text not null
+)
 
 -- setup RLS
-alter table if exists user_study_progress
+alter table if exists subjects
   enable row level security;
 
-drop policy if exists "Users view their progress" on public.user_study_progress;
-create policy "Users view their progress" on user_study_progress
-  for select using ((select auth.uid()) = id);
-
-drop policy if exists "Users can insert their own progress" on public.user_study_progress;
-create policy "Users can insert their own progress" on user_study_progress
-  for insert with check ((select auth.uid()) = id);
-
-drop policy if exists "Users can update own progress" on public.user_study_progress;
-create policy "Users can update own progress" on user_study_progress
-  for update using ((select auth.uid()) = id);
-
-create or replace function public.handle_new_user_progress()
-returns trigger
-set search_path = ''
-as $$
-begin
-  insert into public.user_study_progress (id)
-  values (new.id)
-  on conflict (id) do nothing;
-  return new;
-end;
-$$ language plpgsql security definer;
-create or replace trigger on_profile_created
-  after insert or update on public.profiles
-  for each row execute procedure public.handle_new_user_progress();
+drop policy if exists "Users can select blogs" on public.library_blogs;
+create policy "Users can select blogs" on library_blogs
+  for select using (true);
 
 -- Exrcise related tables
 -- tema
 create table if not exists subjects (
   id bigint primary key generated always as identity,
-  updated_at timestamp with time zone not null default now(),
-  name text not null default '',
-  realm realms not null default behaviorism
+  name text not null default ''::text,
+  realm realms not null default 'behaviorism'::realms,
+  description text not null default ''::text,
+  orientation text not null default ''::text,
+  slug text references public.library_blogs on delete do nothing not null
 );
 -- setup RLS
 alter table if exists subjects
@@ -110,10 +89,6 @@ create policy "Users can select subjects" on subjects
 -- modules
 create table if not exists modules (
   id bigint primary key generated always as identity,
-  created_at timestamp with time zone not null default now(),
-  name text not null default '',
-  description text not null default '',
-  level text not null default 'easy',
   subject_id bigint references public.subjects.id not null
 );
 -- setup RLS
@@ -124,15 +99,39 @@ drop policy if exists "Users can select modules" on public.modules;
 create policy "Users can select modules" on modules
   for select using (true);
 
+-- User study progress
+create table if not exists user_completed_modules (
+  id bigint primary key generated always as identity,
+  user_id uuid references public.profiles.id on delete cascade not null default (auth.uid()),
+  module_id bigint references public.modules.id on delete cascade not null,
+  subject_id bigint references public.subjects.id on delete cascade not null,
+  completed boolean not null default false,
+  realm realms not null default 'behaviorism'::realms
+);
+
+-- setup RLS
+alter table if exists user_completed_modules
+  enable row level security;
+
+drop policy if exists "Users view their progress" on public.user_completed_modules;
+create policy "Users view their progress" on user_completed_modules
+  for select using ((select auth.uid()) = id);
+
+drop policy if exists "Users can insert their own progress" on public.user_completed_modules;
+create policy "Users can insert their own progress" on user_completed_modules
+  for insert with check ((select auth.uid()) = id);
+
+drop policy if exists "Users can update own progress" on public.user_completed_modules;
+create policy "Users can update own progress" on user_completed_modules
+  for update using ((select auth.uid()) = id);
 
 -- exercises
 create table if not exists exercises (
   id bigint primary key generated always as identity,
-  created_at timestamp with time zone not null default now(),
   module_id bigint references public.modules.id on delete cascade not null,
   question text not null default ''::text,
   options text[] not null default '{""}'::text[],
-  answer bigint not null default 0,
+  answer bigint not null default '0'::bigint,
   explanation text not null default ''::text
 );
 -- setup RLS

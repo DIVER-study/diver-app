@@ -21,12 +21,13 @@ export default async function ExercisePage({ params, searchParams }: PageProps) 
   const regex = /(?:behaviorism|gestalt|tsc)/g;
 
   const { data: exercises, error } = await grabExercises(Number(moduleId));
+  const shuffled = shuffleArray(exercises);
 
   if (error) console.error('Houve um erro buscando os exercícios. ', error.message);
 
   return (
     <ExercisePageClient
-      exercises={shuffleArray(exercises)}
+      exercises={shuffled}
       realm={realm.match(regex) ? (realm as 'behaviorism' | 'gestalt' | 'tsc') : 'behaviorism'}
       subjectId={Number(temaId)}
       moduleId={Number(moduleId)}

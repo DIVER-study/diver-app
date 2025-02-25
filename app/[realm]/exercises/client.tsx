@@ -63,7 +63,6 @@ export default function ExercisePageClient({ exercises, realm, subjectId, module
       }
     );
 
-    setExerciseProgress((prev) => prev + 1);
     setSelectedOption(-1);
 
     setIsPending(true);
@@ -73,8 +72,8 @@ export default function ExercisePageClient({ exercises, realm, subjectId, module
     wrongAnswer.current?.hidePopover();
     rightAnswer.current?.hidePopover();
 
+    setExerciseProgress((prev) => prev + 1);
     if (exerciseProgress + 1 === exercises.length) {
-      setExerciseProgress((prev) => prev + 1);
       const { error } = await updateUserProgress(moduleId, subjectId, realm);
       if (error) toast.error(error.message);
       await updateUserXp(userXp.current);
@@ -117,10 +116,7 @@ export default function ExercisePageClient({ exercises, realm, subjectId, module
           aria-label='Close Exercise'
           onClick={() => exitAlert.current?.showPopover()}
         >
-          <CloseIcon
-            width={32}
-            height={32}
-          />
+          <CloseIcon className='size-4' />
         </Button>
         <ProgressBar
           value={exerciseProgress}
@@ -196,7 +192,7 @@ function QuestionScreen({ number, question, options, onSubmit, selectedOption, o
 
 function ProgressBar({ value, maxValue = 100, minValue = 0 }: { value: number; maxValue?: number; minValue?: number }) {
   return (
-    <div className='rounded-full h-8 bg-neutral-300 overflow-hidden grow shrink-0'>
+    <div className='rounded-full h-4 bg-neutral-300 overflow-hidden grow shrink-0'>
       <div
         className='bg-finished-100 h-full transition-[width] motion-reduce:transition-none duration-1000'
         style={{ width: ((value - minValue) / maxValue) * 100 + '%' }}

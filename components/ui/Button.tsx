@@ -9,7 +9,7 @@ export const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          'border-2 border-logo-200 bg-logo-200 text-white shadow-cogtec hover:bg-logo-200/90 disabled:bg-neutral-500 disabled:text-black',
+          'border-2 border-logo-200 bg-logo-200 text-white shadow-cogtec hover:bg-logo-200/90 disabled:bg-neutral-500 disabled:text-black disabled:border-neutral-500',
         outline:
           'border-2 border-logo-200 bg-white shadow-cogtec hover:bg-logo-200 text-logo-200 hover:text-white disabled:border-neutral-600 disabled:bg-neutral-500 disabled:text-white',
         destructive: 'bg-warning text-white shadow-cogtec hover:bg-warning/90',

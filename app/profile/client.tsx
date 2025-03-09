@@ -5,41 +5,81 @@ import { UserState } from '@/stores/userStore';
 import Image from 'next/image';
 import { useState, useEffect, useTransition } from 'react';
 import { getUserRankingPos } from '../server';
+import { MdEditSquareIcon } from '@/components/svgs/ExerciseIcons';
+import { ChangeNameForm, ChangeProfileImageForm } from './ChangeUserInfoForms';
 
-export function ProfileClientPage({ profile }: { profile: UserState['user']['profile'] }) {
+type ProfileClientPageProps = {
+  profile: UserState['user']['profile'];
+  editable?: boolean;
+};
+
+export function ProfileClientPage({ profile, editable }: ProfileClientPageProps) {
   return (
     <div className='bg-white/80 rounded-3xl px-6 pb-8 pt-2 space-y-8 shadow-cogtec max-w-(--breakpoint-lg) mx-auto h-min'>
-      <UserProfile profile={profile} />
+      <UserProfile
+        profile={profile}
+        editable={editable}
+      />
       <UserStatistics profile={profile} />
       <UserAchivements />
     </div>
   );
 }
 
-function UserProfile({ profile }: { profile: UserState['user']['profile'] }) {
+function UserProfile({ profile, editable }: { profile: UserState['user']['profile']; editable?: boolean }) {
   return (
-    <div className='block text-center text-lg font-semibold space-y-4'>
-      <div className='w-40 h-20 flex items-end mx-auto'>
-        <div className='rounded-full shadow-cogtec size-40 overflow-hidden shadow-logo-200 bg-neutral-300 relative'>
-          <ProfileIcon className='absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2' />
-          {profile && profile.avatar_url && (
-            <Image
-              priority
-              src={profile.avatar_url}
-              fill
-              sizes='100%'
-              alt=''
-              onError={(e) => {
-                const target = e.target as HTMLImageElement;
-                target.hidden = true;
-              }}
-              className='object-cover'
-            />
+    <>
+      <div className='block text-center text-lg font-semibold space-y-4'>
+        <div className='w-40 h-20 flex items-end mx-auto relative'>
+          <div className='rounded-full shadow-cogtec size-40 overflow-hidden shadow-logo-200 bg-neutral-300 relative'>
+            <ProfileIcon className='absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2' />
+            {profile && profile.avatar_url && (
+              <Image
+                priority
+                src={profile.avatar_url}
+                fill
+                sizes='100%'
+                alt=''
+                onError={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  target.hidden = true;
+                }}
+                className='object-cover object-center'
+              />
+            )}
+          </div>
+          {editable && (
+            <button
+              className='cursor-pointer absolute bottom-0 right-0'
+              popoverTarget='image-form'
+              popoverTargetAction='show'
+            >
+              <MdEditSquareIcon className='size-4' />
+            </button>
           )}
         </div>
+        <span className='content-center'>
+          {profile.display_name}
+          {editable && (
+            <button
+              className='cursor-pointer'
+              popoverTarget='name-form'
+              popoverTargetAction='show'
+            >
+              <MdEditSquareIcon className='size-4' />
+            </button>
+          )}
+        </span>
       </div>
-      <span>{profile.display_name}</span>
-    </div>
+      <ChangeNameForm
+        oldUsername={profile.display_name}
+        id='name-form'
+      />
+      <ChangeProfileImageForm
+        profile={profile}
+        id='image-form'
+      />
+    </>
   );
 }
 

@@ -10,7 +10,7 @@ import ViewPasswordIcon from '@/components/svgs/ViewPasswordIcon';
 import { TermsOfUse } from '@/components/TermsOfUse';
 import { Button } from './ui/Button';
 
-const userRegex = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{3,29}$/gi;
+export const userDisplayNameRegex = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{2,29}$/gi;
 const passwdRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{6,}$/g;
 
 export default function SignupForm() {
@@ -44,7 +44,7 @@ export default function SignupForm() {
     }
 
     // Validação do nome de usuário
-    if (!displayName.match(userRegex)) {
+    if (!displayName.match(userDisplayNameRegex)) {
       toast.error(
         'O nome de usuário deve ter entre 3 e 29 caracteres.\nNão pode possuir espaços, somente letras, números e underlines "_"'
       );
@@ -113,7 +113,7 @@ export default function SignupForm() {
               className='p-1.5 px-4 w-100 rounded-3xl ring-2 ring-black focus:outline-none text-sm invalid:ring-warning invalid text-warning'
               onChange={(e) => {
                 const target = e.target as HTMLInputElement;
-                if (!target.value.match(userRegex)) {
+                if (!target.value.match(userDisplayNameRegex)) {
                   target.setCustomValidity(
                     'O nome de usuário deve ter entre 3 e 29 caracteres.\nNão pode possuir espaços, somente letras, números e underlines "_"'
                   );
